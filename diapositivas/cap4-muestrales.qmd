@@ -1,0 +1,634 @@
+---
+title: "Capítulo 4: Distribuciones muestrales"
+subtitle: "Estadística I"
+author: "Fabio Humberto Sepúlveda Murillo"
+institute: "Escuela de Matemáticas · Universidad Industrial de Santander"
+format:
+  revealjs:
+    menu:
+      side: left
+    transition: fade
+    code-overflow: wrap
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(readxl)
+theme_set(theme_minimal(base_size = 18))
+pizza <- read_excel("datos/pizza_delivery.xlsx")
+```
+
+## Contenido
+
+:::: {.columns}
+::: {.column width="50%"}
+1. Población, muestra y muestreo
+2. Estadísticos y distribuciones muestrales
+3. Distribución muestral de la media
+4. Teorema central del límite
+5. Distribución muestral de la proporción
+:::
+::: {.column width="50%"}
+6. Distribución chi-cuadrado
+7. Distribución t de Student
+8. Distribución F
+9. Distribuciones muestrales con R
+:::
+::::
+
+## Del modelo a la muestra
+
+:::: {.columns}
+::: {.column width="50%"}
+**Capítulos 2 y 3**
+
+Conocíamos el modelo y sus parámetros: $p$, $\mu$, $\sigma$.
+
+Calculábamos probabilidades.
+:::
+::: {.column width="50%"}
+**En la práctica**
+
+Los parámetros son **desconocidos**.
+
+Solo tenemos **una muestra**.
+:::
+::::
+
+. . .
+
+Este capítulo estudia cómo se comportan los estadísticos calculados con
+muestras aleatorias: es el puente hacia la **estimación** y las
+**pruebas de hipótesis** del curso de Estadística II.
+
+# Población, muestra y muestreo {background-color="#2c5d8f"}
+
+## Un recordatorio del capítulo 1
+
+| | Población | Muestra |
+|:--|:--|:--|
+| ¿Qué es? | Todas las unidades de interés | Las unidades que se observan |
+| Tamaño | $N$ | $n$ |
+| Medidas | **Parámetros**: fijos, desconocidos | **Estadísticos**: conocidos, variables |
+
+. . .
+
+La muestra debe ser **representativa**. ¿Cómo se elige?
+
+. . .
+
+- **Muestreo:** el procedimiento para seleccionar la muestra.
+- **Marco muestral:** el listado del que se extrae (matriculados,
+  directorio de empresas, base de clientes).
+
+## Probabilístico o no probabilístico
+
+:::: {.columns}
+::: {.column width="50%"}
+**Probabilístico**
+
+Cada unidad tiene una probabilidad **conocida y mayor que cero** de ser
+elegida, mediante un mecanismo aleatorio.
+
+✔ Permite **cuantificar el error**.
+:::
+::: {.column width="50%"}
+**No probabilístico**
+
+La selección depende del criterio del investigador, de la disponibilidad o
+de la decisión de participar.
+
+✘ Puede tener **sesgos** desconocidos.
+:::
+::::
+
+. . .
+
+Solo con un muestreo probabilístico se puede decir, por ejemplo, "margen
+de error de 3 puntos con 95 % de confianza" [@anderson2008, p. 290].
+
+## Técnicas probabilísticas
+
+Estudiar a los 20 000 estudiantes de una universidad:
+
+::: {.incremental}
+- **Aleatorio simple:** 400 estudiantes al azar del listado.
+- **Sistemático:** uno de cada $k = 50$, con arranque aleatorio.
+- **Estratificado:** una muestra aleatoria en **cada** facultad.
+- **Por conglomerados:** 20 grupos de clase al azar, y todos sus estudiantes.
+- **Polietápico:** municipios → manzanas → hogares (encuestas oficiales).
+:::
+
+. . .
+
+::: {.callout-tip title="¿Estratos o conglomerados?"}
+Estratos: grupos **distintos**, se muestrea en **todos**.
+Conglomerados: grupos **parecidos**, se eligen **algunos** completos.
+:::
+
+## Técnicas no probabilísticas
+
+- **Por conveniencia:** los más accesibles (la cafetería a las 10 a. m.).
+- **Intencional:** elegidos por el criterio del investigador.
+- **Por cuotas:** cuotas por grupo, llenadas por conveniencia.
+- **Bola de nieve:** los participantes reclutan a otros.
+- **Autoseleccionadas:** encuestas abiertas en redes o páginas web.
+
+. . .
+
+::: {.callout-warning title="Pregunta para el grupo"}
+Un periódico publica una encuesta en su página web y responden **50 000
+personas**. ¿Sirve para estimar la opinión de sus lectores?
+:::
+
+::: {.fragment}
+**No:** es autoseleccionada. Responde quien quiere, y eso puede sesgar el
+resultado sin importar cuántos respondan.
+:::
+
+## La técnica del resto del curso
+
+::: {.callout-note title="Muestreo aleatorio simple"}
+Todas las muestras posibles de tamaño $n$ tienen la **misma probabilidad**
+de ser elegidas. Sin reemplazo, hay ${}_{N}C_{n}$ muestras posibles; con
+reemplazo, hay $N^n$ muestras (ordenadas).
+:::
+
+. . .
+
+::: {.callout-note title="Muestra aleatoria"}
+$X_1, X_2, \ldots, X_n$ **independientes** y con la **misma distribución**
+de la población: **i.i.d.**
+:::
+
+Sin reemplazo y con $n/N < 0{,}05$ se trabaja como si fueran i.i.d.
+
+## Seleccionar una muestra en R
+
+```{r}
+#| echo: true
+set.seed(2027)
+seleccion <- sample(1:nrow(pizza), size = 8)
+pizza[seleccion, c("id", "branch", "time", "temperature")]
+```
+
+# Estadísticos y distribuciones muestrales {background-color="#2c5d8f"}
+
+## Un estadístico es una variable aleatoria
+
+$$
+\bar{X} = \frac{1}{n}\sum_{i=1}^{n} X_i
+\qquad\qquad
+S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar{X})^2
+\qquad\qquad
+\hat{p}
+$$
+
+- **Antes** de elegir la muestra, $\bar{X}$ es una variable aleatoria.
+- **Después**, se obtiene su valor observado $\bar{x}$.
+
+. . .
+
+**Distribución muestral:** la distribución de probabilidad de un
+estadístico, considerando **todas** las muestras posibles de tamaño $n$.
+
+## Todas las muestras de una población pequeña
+
+Experiencia de 5 empleados: 2, 4, 6, 8, 10 años. $\mu = 6$, $\sigma^2 = 8$.
+Muestras de tamaño 2 con reemplazo: $5 \times 5 = 25$.
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-align: center
+poblacion <- c(2, 4, 6, 8, 10)
+medias <- as.vector(outer(poblacion, poblacion, "+")) / 2
+dist_pobl <- data.frame(x = poblacion, p = 1/5, panel = "Población")
+dist_media <- as.data.frame(table(medias) / 25)
+dist_media <- data.frame(x = as.numeric(as.character(dist_media$medias)),
+                         p = dist_media$Freq, panel = "Media muestral (n = 2)")
+dist_ambas <- rbind(dist_pobl, dist_media)
+dist_ambas$panel <- factor(dist_ambas$panel, levels = c("Población", "Media muestral (n = 2)"))
+ggplot(dist_ambas, aes(x = x, y = p)) +
+  geom_segment(aes(xend = x, yend = 0), linewidth = 1.2, color = "steelblue") +
+  geom_point(size = 2.5, color = "steelblue") +
+  facet_wrap(~ panel) +
+  scale_x_continuous(breaks = seq(2, 10, by = 2)) +
+  labs(x = "Años de experiencia", y = "Probabilidad")
+```
+
+::: {.incremental}
+- $E(\bar{X}) = 6 = \mu$
+- $V(\bar{X}) = 4 = \sigma^2/2$
+- Más concentrada alrededor de $\mu$, y con otra forma.
+:::
+
+## Una población grande, por simulación
+
+1266 entregas de la pizzería ($\mu = 34{,}23$, $\sigma = 6{,}46$); hay
+${}_{1266}C_{25} \approx 1{,}8 \times 10^{52}$ muestras de tamaño 25.
+Simulamos 5000:
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.8
+#| fig-align: center
+set.seed(123)
+medias_pizza <- replicate(5000, mean(sample(pizza$time, size = 25)))
+ggplot(data.frame(media = medias_pizza), aes(x = media)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 40,
+                 fill = "lightsteelblue", color = "white") +
+  geom_vline(xintercept = mean(pizza$time), color = "firebrick", linewidth = 1) +
+  labs(x = "Media muestral del tiempo de entrega (minutos)", y = "Densidad")
+```
+
+Tiempos individuales: dispersión ≈ 6,5 min. Medias de 25: ≈ 1,3 min.
+
+# Distribución muestral de la media {background-color="#2c5d8f"}
+
+## Media y error estándar
+
+Muestra aleatoria de una población con media $\mu$ y varianza $\sigma^2$:
+$$
+E(\bar{X}) = \mu
+\qquad\qquad
+V(\bar{X}) = \frac{\sigma^2}{n}
+\qquad\qquad
+\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} \ \ \text{(error estándar)}
+$$
+
+. . .
+
+- En promedio, $\bar{X}$ **acierta**.
+- Para reducir el error estándar **a la mitad**, hay que **cuadruplicar** $n$.
+- Sin reemplazo: multiplicar la varianza por $\dfrac{N - n}{N - 1}$.
+
+. . .
+
+Si la población es **normal**: $\quad \bar{X} \sim N\!\left(\mu, \dfrac{\sigma^2}{n}\right)$ para cualquier $n$.
+
+## Ejemplo: botellas
+
+Volumen $\sim N(500,\ 8^2)$ ml.
+
+::: {.incremental}
+- **Una** botella con menos de 495 ml: $P(Z < -0{,}625) \approx 0{,}266$
+- **Promedio de 16** botellas menor que 495 ml:
+  error estándar $8/\sqrt{16} = 2$, $\quad P(Z < -2{,}5) \approx 0{,}006$
+:::
+
+. . .
+
+Una botella baja es frecuente; un **promedio** tan bajo es muy raro. Si
+se observara, habría razones para sospechar de la máquina: es la lógica de
+las **pruebas de hipótesis**.
+
+# Teorema central del límite {background-color="#2c5d8f"}
+
+## El teorema
+
+Muestra aleatoria de **cualquier** población con media $\mu$ y varianza
+$\sigma^2$ finita. Para $n$ grande:
+$$
+\bar{X} \approx N\!\left(\mu, \frac{\sigma^2}{n}\right)
+\qquad\Longleftrightarrow\qquad
+Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \approx N(0, 1)
+$$
+
+. . .
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.4
+#| fig-align: center
+set.seed(31)
+tams <- c(1, 5, 30)
+sim_tcl <- do.call(rbind, lapply(tams, function(n) {
+  data.frame(media = replicate(10000, mean(rexp(n, rate = 1))),
+             n = paste("n =", n))
+}))
+sim_tcl$n <- factor(sim_tcl$n, levels = paste("n =", tams))
+curvas_tcl <- do.call(rbind, lapply(tams, function(n) {
+  x <- seq(0, 4, length.out = 300)
+  data.frame(x = x, y = dnorm(x, mean = 1, sd = 1 / sqrt(n)), n = paste("n =", n))
+}))
+curvas_tcl$n <- factor(curvas_tcl$n, levels = paste("n =", tams))
+ggplot(sim_tcl, aes(x = media)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 50,
+                 fill = "lightsteelblue", color = "white") +
+  geom_line(data = curvas_tcl, aes(x = x, y = y), color = "firebrick", linewidth = 0.9) +
+  facet_wrap(~ n, scales = "free_y") +
+  coord_cartesian(xlim = c(0, 4)) +
+  labs(x = "Media muestral", y = "Densidad")
+```
+
+Población exponencial, muy asimétrica: con $n = 30$, la media ya es normal [@walpole2012, p. 234; @montgomery2018, p. 152].
+
+## ¿Qué tan grande debe ser $n$?
+
+- Población normal: cualquier $n$.
+- Población simétrica: suele bastar con muestras pequeñas.
+- Población asimétrica: más datos. Regla práctica: $n \ge 30$.
+
+. . .
+
+**Ejemplo:** tiempo de atención exponencial con media 4 min ($\sigma = 4$).
+¿Promedio de 40 clientes mayor que 5 min?
+
+$$
+P(\bar{X} > 5) \approx P\!\left(Z > \frac{5 - 4}{4/\sqrt{40}}\right) = P(Z > 1{,}58) \approx 0{,}057
+$$
+
+# Distribución muestral de la proporción {background-color="#2c5d8f"}
+
+## La proporción muestral
+
+$$
+\hat{p} = \frac{X}{n}, \qquad E(\hat{p}) = p, \qquad V(\hat{p}) = \frac{p(1 - p)}{n}
+$$
+
+Si $np \ge 5$ y $n(1-p) \ge 5$: $\quad \hat{p} \approx N\!\left(p, \dfrac{p(1-p)}{n}\right)$
+
+$\hat{p}$ es una **media** de unos y ceros: también la cubre el TCL.
+
+. . .
+
+**Pizzería:** el 75 % de las entregas tarda más de 30 minutos. En una
+muestra de 100:
+
+$$
+P(\hat{p} < 0{,}70) \approx P\!\left(Z < \frac{0{,}70 - 0{,}75}{0{,}0433}\right) = P(Z < -1{,}15) \approx 0{,}124
+$$
+
+Más de una de cada diez muestras daría menos de 70 %, **solo por azar**.
+
+# Distribución chi-cuadrado {background-color="#2c5d8f"}
+
+## Definición
+
+:::: {.columns}
+::: {.column width="50%"}
+$Z_1, \ldots, Z_\nu$ normales estándar independientes:
+$$
+\chi^2 = Z_1^2 + \cdots + Z_\nu^2
+$$
+tiene distribución $\chi^2(\nu)$, con
+$$
+E(\chi^2) = \nu, \qquad V(\chi^2) = 2\nu
+$$
+
+$\nu$: **grados de libertad**.
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 4
+#| fig-align: center
+x <- seq(0.01, 35, length.out = 600)
+gl_chi <- c(2, 5, 10, 20)
+chis <- do.call(rbind, lapply(gl_chi, function(v) {
+  data.frame(x = x, y = dchisq(x, df = v), gl = paste("gl =", v))
+}))
+chis$gl <- factor(chis$gl, levels = paste("gl =", gl_chi))
+ggplot(chis, aes(x = x, y = y, color = gl)) +
+  geom_line(linewidth = 1) +
+  coord_cartesian(ylim = c(0, 0.3)) +
+  labs(x = "x", y = "Densidad", color = NULL) +
+  theme(legend.position = "bottom")
+```
+:::
+::::
+
+## La varianza muestral
+
+Si la población es **normal**:
+$$
+\frac{(n - 1)\,S^2}{\sigma^2} \sim \chi^2(n - 1)
+$$
+
+. . .
+
+::: {.callout-warning title="Exige normalidad"}
+El TCL **no** rescata este resultado si la población no es normal.
+:::
+
+. . .
+
+**Notación de cuantiles:** $\chi^2_{p;\,\nu}$ deja una probabilidad $p$ a su
+**izquierda** (como `qchisq()`). Muchas tablas usan la convención
+contraria: ¡verifique siempre!
+
+## Ejemplo: variabilidad de las botellas
+
+$\sigma = 8$ ml, muestra de 10 botellas. ¿$P(S > 10)$?
+
+$$
+P(S^2 > 100) = P\!\left(\chi^2(9) > \frac{9 \times 100}{64}\right) = P(\chi^2 > 14{,}06) \approx 0{,}120
+$$
+
+. . .
+
+El 95 % central de una $\chi^2(9)$: entre $\chi^2_{0{,}025;\,9} = 2{,}700$ y
+$\chi^2_{0{,}975;\,9} = 19{,}023$.
+
+```{r}
+#| echo: true
+pchisq(14.06, df = 9, lower.tail = FALSE)
+qchisq(c(0.025, 0.975), df = 9)
+```
+
+# Distribución t de Student {background-color="#2c5d8f"}
+
+## Una historia cervecera
+
+¿Y si **no conocemos** $\sigma$? Reemplazarla por $S$ agrega variabilidad:
+$\dfrac{\bar{X} - \mu}{S/\sqrt{n}}$ ya **no** es normal.
+
+. . .
+
+William S. Gosset, de la cervecería **Guinness** en Dublín, trabajaba con
+muestras pequeñas. Como la empresa no dejaba publicar con el nombre
+propio, firmó su artículo de 1908 como **Student** [@walpole2012, p. 248].
+
+## Definición y propiedades
+
+:::: {.columns}
+::: {.column width="50%"}
+$Z \sim N(0,1)$ y $V \sim \chi^2(\nu)$ independientes:
+$$
+T = \frac{Z}{\sqrt{V/\nu}}
+$$
+tiene distribución $t(\nu)$.
+
+- Simétrica, centrada en 0.
+- Colas **más pesadas** que la normal.
+- Con muchos gl, se acerca a $N(0,1)$.
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 4.2
+#| fig-align: center
+x <- seq(-4.5, 4.5, length.out = 600)
+ts <- rbind(
+  data.frame(x = x, y = dt(x, df = 1),  curva = "t con 1 gl"),
+  data.frame(x = x, y = dt(x, df = 5),  curva = "t con 5 gl"),
+  data.frame(x = x, y = dt(x, df = 30), curva = "t con 30 gl"),
+  data.frame(x = x, y = dnorm(x),       curva = "Normal estándar")
+)
+ts$curva <- factor(ts$curva, levels = c("t con 1 gl", "t con 5 gl",
+                                        "t con 30 gl", "Normal estándar"))
+ggplot(ts, aes(x = x, y = y, color = curva, linetype = curva)) +
+  geom_line(linewidth = 1) +
+  scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73", "black")) +
+  scale_linetype_manual(values = c("solid", "solid", "solid", "dashed")) +
+  labs(x = "t", y = "Densidad", color = NULL, linetype = NULL) +
+  theme(legend.position = "bottom")
+```
+:::
+::::
+
+## La media con $\sigma$ desconocida
+
+Si la población es **normal**:
+$$
+T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t(n - 1)
+$$
+
+. . .
+
+| gl | 1 | 5 | 10 | 30 | 100 | Normal |
+|:--|:--:|:--:|:--:|:--:|:--:|:--:|
+| $t_{0{,}975}$ | 12,706 | 2,571 | 2,228 | 2,042 | 1,984 | 1,960 |
+
+. . .
+
+Con pocos datos, cuantiles más grandes → intervalos más anchos: el
+**precio** de no conocer $\sigma$.
+
+## Ejemplo y simulación
+
+Botellas, $n = 16$, $\sigma$ desconocida: $T = 2{,}1$. Si $\mu = 500$:
+$P(T \ge 2{,}1) \approx 0{,}027$ con 15 gl → ¿estará descalibrada?
+
+. . .
+
+¿Qué pasa si se usa la normal con $n = 5$?
+
+```{r}
+#| echo: true
+set.seed(7)
+T_sim <- replicate(10000, { x <- rnorm(5, 10, 2); (mean(x) - 10) / (sd(x) / sqrt(5)) })
+mean(abs(T_sim) > 1.96)                      # observado
+2 * pt(1.96, df = 4, lower.tail = FALSE)     # t(4); la normal diría 0.05
+```
+
+# Distribución F {background-color="#2c5d8f"}
+
+## Definición
+
+:::: {.columns}
+::: {.column width="50%"}
+$U \sim \chi^2(\nu_1)$ y $V \sim \chi^2(\nu_2)$ independientes:
+$$
+F = \frac{U/\nu_1}{V/\nu_2}
+$$
+tiene distribución $F(\nu_1, \nu_2)$.
+
+- Solo valores positivos.
+- El **orden** de los gl importa.
+- $F_{p;\,\nu_1,\nu_2} = \dfrac{1}{F_{1-p;\,\nu_2,\nu_1}}$
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 4
+#| fig-align: center
+x <- seq(0.01, 4, length.out = 600)
+fs <- rbind(
+  data.frame(x = x, y = df(x, 3, 10),  curva = "F(3, 10)"),
+  data.frame(x = x, y = df(x, 10, 20), curva = "F(10, 20)"),
+  data.frame(x = x, y = df(x, 30, 60), curva = "F(30, 60)")
+)
+ggplot(fs, aes(x = x, y = y, color = curva)) +
+  geom_line(linewidth = 1) +
+  labs(x = "x", y = "Densidad", color = NULL) +
+  theme(legend.position = "bottom")
+```
+:::
+::::
+
+## Comparar dos varianzas
+
+Dos poblaciones **normales**, muestras **independientes**:
+$$
+\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1,\ n_2 - 1)
+$$
+
+. . .
+
+Dos máquinas igual de precisas, 11 botellas de cada una:
+$$
+P\!\left(\frac{S_1^2}{S_2^2} > 2{,}5\right) \approx 0{,}082
+$$
+
+Con muestras pequeñas, las varianzas muestrales son muy **inestables**.
+
+. . .
+
+::: {.callout-tip title="Una familia emparentada"}
+Normal → $Z^2 \sim \chi^2(1)$ → suma: $\chi^2(\nu)$ → $t$ y $F$. Además, $t(\nu)^2 \sim F(1, \nu)$.
+:::
+
+# Distribuciones muestrales con R {background-color="#2c5d8f"}
+
+## Funciones y simulación
+
+| Distribución | R | Ejemplo |
+|:--|:--|:--|
+| $\chi^2(\nu)$ | `chisq` | `qchisq(0.975, df = 9)` |
+| $t(\nu)$ | `t` | `qt(0.975, df = 15)` |
+| $F(\nu_1, \nu_2)$ | `f` | `qf(0.95, df1 = 10, df2 = 15)` |
+
+. . .
+
+Simular una distribución muestral: **generar** una muestra, **calcular**
+el estadístico, **repetir** con `replicate()`.
+
+```{r}
+#| echo: true
+set.seed(123)
+medias <- replicate(5000, mean(sample(pizza$time, size = 25)))
+c(media = mean(medias), error_estandar = sd(medias))
+```
+
+## Resumen: el mapa de la inferencia
+
+| Estadístico | Supuestos | Distribución | Para |
+|:--|:--|:--|:--|
+| $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$ | Normal o $n$ grande | $N(0,1)$ | Media, $\sigma$ conocida |
+| $\frac{\bar{X} - \mu}{S/\sqrt{n}}$ | Normal | $t(n-1)$ | Media, $\sigma$ desconocida |
+| $\frac{\hat{p} - p}{\sqrt{p(1-p)/n}}$ | $np, n(1-p) \ge 5$ | $\approx N(0,1)$ | Proporción |
+| $\frac{(n-1)S^2}{\sigma^2}$ | Normal | $\chi^2(n-1)$ | Varianza |
+| $\frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}$ | Dos normales | $F(n_1-1, n_2-1)$ | Dos varianzas |
+
+Cada fila será un método del curso de **Estadística II**.
+
+## Para practicar
+
+- Los **16 ejercicios** del capítulo están en los apuntes.
+- Incluyen técnicas de muestreo, el TCL, proporciones y simulaciones en R
+  que muestran por qué importan los supuestos.
+
+## Referencias {.smaller .scrollable}
+
+::: {#refs}
+:::

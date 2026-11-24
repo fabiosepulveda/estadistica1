@@ -1,0 +1,68 @@
+project:
+  type: website
+  output-dir: docs
+  execute-dir: project
+  resources:
+    - "datos/*"
+
+execute:
+  freeze: auto      # solo re-ejecuta el código R de los archivos modificados
+  warning: false
+  message: false
+
+lang: es
+bibliography: referencias.bib
+csl: apa.csl
+link-citations: true
+
+website:
+  title: "Estadística I"
+  site-url: "https://fabiosepulveda.github.io/estadistica1/"
+  repo-url: "https://github.com/fabiosepulveda/estadistica1"
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
+  navbar:
+    background: primary
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: programa.qmd
+        text: Programa
+      - text: Apuntes
+        menu:
+          - href: apuntes/cap1-descriptiva.qmd
+            text: "1. Estadística descriptiva"
+          - href: apuntes/cap2-probabilidad.qmd
+            text: "2. Teoría de la probabilidad"
+          - href: apuntes/cap3-distribuciones.qmd
+            text: "3. Variables aleatorias y distribuciones"
+          - href: apuntes/cap4-muestrales.qmd
+            text: "4. Distribuciones muestrales"
+      - text: Diapositivas
+        menu:
+          - href: diapositivas/cap1-descriptiva.qmd
+            text: "1. Estadística descriptiva"
+          - href: diapositivas/cap2-probabilidad.qmd
+            text: "2. Teoría de la probabilidad"
+          - href: diapositivas/cap3-distribuciones.qmd
+            text: "3. Variables aleatorias y distribuciones"
+          - href: diapositivas/cap4-muestrales.qmd
+            text: "4. Distribuciones muestrales"
+    right:
+      - icon: github
+        href: "https://github.com/fabiosepulveda/estadistica1"
+  page-footer:
+    center: "Estadística I · Escuela de Matemáticas · Universidad Industrial de Santander"
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly     # el estudiante puede alternar modo claro/oscuro
+    css: styles.css
+    toc: true
+    toc-title: "En esta página"
+    code-copy: true
+    code-overflow: wrap
+    fig-align: center

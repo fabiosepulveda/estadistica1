@@ -1,0 +1,62 @@
+---
+title: "Programa del curso"
+---
+
+## Capítulo 1: Estadística descriptiva
+Conceptos básicos (estadística, población, muestra, variables y sus tipos,
+escalas de medida, estadístico y parámetro); análisis de datos cualitativos
+y cuantitativos mediante tablas y gráficos; medidas de tendencia central,
+dispersión, posición y forma; análisis de datos con R.
+
+## Capítulo 2: Teoría de la probabilidad
+Experimento aleatorio, interpretaciones de la probabilidad, espacio muestral,
+eventos, eventos mutuamente excluyentes, reglas básicas, técnicas de conteo,
+probabilidad conjunta, marginal y condicional, independencia y teorema de Bayes.
+
+## Capítulo 3: Variables aleatorias y distribuciones de probabilidad
+Variables aleatorias discretas y continuas, función de probabilidad y de
+densidad, valor esperado y varianza; distribuciones binomial, de Poisson e
+hipergeométrica; distribuciones uniforme, normal y exponencial.
+
+## Capítulo 4: Distribuciones muestrales
+Estadísticos como variables aleatorias; distribución muestral de la media y
+de la proporción; teorema central del límite; distribuciones t de Student,
+chi-cuadrado y F.
+
+## Referencias
+
+### Bibliografía básica
+
+::: {.referencias}
+Anderson, D. R., Sweeney, D. J., & Williams, T. A. (2008). *Estadística para administración y economía* (10.ª ed.). Cengage Learning.
+
+Devore, J. L. (2008). *Probabilidad y estadística para ingeniería y ciencias* (7.ª ed.). Cengage Learning.
+
+Montgomery, D. C., & Runger, G. C. (2018). *Applied statistics and probability for engineers* (7.ª ed.). Wiley.
+
+Walpole, R. E., Myers, R. H., Myers, S. L., & Ye, K. (2012). *Probabilidad y estadística para ingeniería y ciencias* (9.ª ed.). Pearson Educación.
+:::
+
+### Bibliografía complementaria
+
+::: {.referencias}
+Çetinkaya-Rundel, M., & Hardin, J. (2021). *Introduction to modern statistics*. OpenIntro. <https://www.openintro.org/book/ims/>
+
+Daniel, W. W. (1987). *Bioestadística: Base para el análisis de las ciencias de la salud* (M. Guzmán Ortiz & A. L. Babinsky Epstein, Trads.; 3.ª ed.). Limusa.
+
+Diez, D. M., Çetinkaya-Rundel, M., & Barr, C. D. (2019). *OpenIntro statistics* (4.ª ed.). OpenIntro. <https://www.openintro.org/book/os/>
+
+Heumann, C., Schomaker, M., & Shalabh. (2022). *Introduction to statistics and data analysis: With exercises, solutions and applications in R* (2.ª ed.). Springer. <https://doi.org/10.1007/978-3-031-11833-3>
+
+Ugarte, M. D., Militino, A. F., & Arnholt, A. T. (2016). *Probability and statistics with R* (2.ª ed.). CRC Press. <https://doi.org/10.1201/b18682>
+
+Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science* (2.ª ed.). O'Reilly Media. <https://r4ds.hadley.nz/>
+:::
+
+### Software y recursos en línea
+
+::: {.referencias}
+Posit team. (2025). *RStudio: Integrated development environment for R* [Software]. Posit Software, PBC. <https://posit.co/>
+
+R Core Team. (2024). *R: A language and environment for statistical computing* [Software]. R Foundation for Statistical Computing. <https://www.R-project.org/>
+:::

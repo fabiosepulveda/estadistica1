@@ -1,0 +1,25 @@
+---
+title: "Estadística I"
+---
+
+Bienvenidos al sitio del curso **Estadística I**, semestre {{< var semestre >}}.
+
+**Docente:** {{< var docente >}} — {{< var escuela >}}, {{< var universidad >}}.  
+**Contacto:** {{< var correo >}}
+
+## ¿Cómo usar este sitio?
+
+En el menú **Apuntes** encontrará las notas de cada capítulo; cada página
+tiene un enlace para descargarla en **PDF**. En **Diapositivas** están las
+presentaciones de clase (dentro de una presentación, presione `F` para pantalla
+completa). Todo el código R de los apuntes se puede copiar con el botón que
+aparece en cada bloque.
+
+## Contenido
+
+| Capítulo | Tema |
+|:--:|:--|
+| 1 | [Estadística descriptiva](apuntes/cap1-descriptiva.qmd) |
+| 2 | [Teoría de la probabilidad](apuntes/cap2-probabilidad.qmd) |
+| 3 | [Variables aleatorias y distribuciones de probabilidad](apuntes/cap3-distribuciones.qmd) |
+| 4 | [Distribuciones muestrales](apuntes/cap4-muestrales.qmd) |

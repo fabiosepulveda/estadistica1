@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Capítulo 3: Variables aleatorias y distribuciones de probabilidad – Estadística I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-80108d5cb44f5b9fc79a3a6e84303618.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-249f407ffdbc08f6e4c3f777220c47f4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-80108d5cb44f5b9fc79a3a6e84303618.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Estadística I</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../programa.html"> 
+<span class="menu-text">Programa</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apuntes" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Apuntes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apuntes">    
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap1-descriptiva.html">
+ <span class="dropdown-text">1. Estadística descriptiva</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap2-probabilidad.html">
+ <span class="dropdown-text">2. Teoría de la probabilidad</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap3-distribuciones.html">
+ <span class="dropdown-text">3. Variables aleatorias y distribuciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap4-muestrales.html">
+ <span class="dropdown-text">4. Distribuciones muestrales</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapositivas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Diapositivas</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-diapositivas">    
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap1-descriptiva.html">
+ <span class="dropdown-text">1. Estadística descriptiva</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap2-probabilidad.html">
+ <span class="dropdown-text">2. Teoría de la probabilidad</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap3-distribuciones.html">
+ <span class="dropdown-text">3. Variables aleatorias y distribuciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap4-muestrales.html">
+ <span class="dropdown-text">4. Distribuciones muestrales</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fabiosepulveda/estadistica1"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#variables-aleatorias" id="toc-variables-aleatorias" class="nav-link active" data-scroll-target="#variables-aleatorias"><span class="header-section-number">1</span> Variables aleatorias</a></li>
+  <li><a href="#distribuciones-de-probabilidad-discretas" id="toc-distribuciones-de-probabilidad-discretas" class="nav-link" data-scroll-target="#distribuciones-de-probabilidad-discretas"><span class="header-section-number">2</span> Distribuciones de probabilidad discretas</a></li>
+  <li><a href="#valor-esperado-y-varianza" id="toc-valor-esperado-y-varianza" class="nav-link" data-scroll-target="#valor-esperado-y-varianza"><span class="header-section-number">3</span> Valor esperado y varianza</a></li>
+  <li><a href="#distribución-binomial" id="toc-distribución-binomial" class="nav-link" data-scroll-target="#distribución-binomial"><span class="header-section-number">4</span> Distribución binomial</a></li>
+  <li><a href="#distribución-de-poisson" id="toc-distribución-de-poisson" class="nav-link" data-scroll-target="#distribución-de-poisson"><span class="header-section-number">5</span> Distribución de Poisson</a></li>
+  <li><a href="#distribución-hipergeométrica" id="toc-distribución-hipergeométrica" class="nav-link" data-scroll-target="#distribución-hipergeométrica"><span class="header-section-number">6</span> Distribución hipergeométrica</a></li>
+  <li><a href="#distribuciones-de-probabilidad-continuas" id="toc-distribuciones-de-probabilidad-continuas" class="nav-link" data-scroll-target="#distribuciones-de-probabilidad-continuas"><span class="header-section-number">7</span> Distribuciones de probabilidad continuas</a>
+  <ul class="collapse">
+  <li><a href="#de-los-histogramas-a-las-curvas" id="toc-de-los-histogramas-a-las-curvas" class="nav-link" data-scroll-target="#de-los-histogramas-a-las-curvas"><span class="header-section-number">7.1</span> De los histogramas a las curvas</a></li>
+  <li><a href="#función-de-densidad" id="toc-función-de-densidad" class="nav-link" data-scroll-target="#función-de-densidad"><span class="header-section-number">7.2</span> Función de densidad</a></li>
+  <li><a href="#la-distribución-uniforme" id="toc-la-distribución-uniforme" class="nav-link" data-scroll-target="#la-distribución-uniforme"><span class="header-section-number">7.3</span> La distribución uniforme</a></li>
+  </ul></li>
+  <li><a href="#distribución-normal" id="toc-distribución-normal" class="nav-link" data-scroll-target="#distribución-normal"><span class="header-section-number">8</span> Distribución normal</a>
+  <ul class="collapse">
+  <li><a href="#la-normal-estándar" id="toc-la-normal-estándar" class="nav-link" data-scroll-target="#la-normal-estándar"><span class="header-section-number">8.1</span> La normal estándar</a></li>
+  <li><a href="#cálculo-de-probabilidades-y-percentiles" id="toc-cálculo-de-probabilidades-y-percentiles" class="nav-link" data-scroll-target="#cálculo-de-probabilidades-y-percentiles"><span class="header-section-number">8.2</span> Cálculo de probabilidades y percentiles</a></li>
+  <li><a href="#se-ajustan-los-datos-a-una-normal" id="toc-se-ajustan-los-datos-a-una-normal" class="nav-link" data-scroll-target="#se-ajustan-los-datos-a-una-normal"><span class="header-section-number">8.3</span> ¿Se ajustan los datos a una normal?</a></li>
+  </ul></li>
+  <li><a href="#distribución-exponencial" id="toc-distribución-exponencial" class="nav-link" data-scroll-target="#distribución-exponencial"><span class="header-section-number">9</span> Distribución exponencial</a>
+  <ul class="collapse">
+  <li><a href="#relación-con-la-distribución-de-poisson" id="toc-relación-con-la-distribución-de-poisson" class="nav-link" data-scroll-target="#relación-con-la-distribución-de-poisson"><span class="header-section-number">9.1</span> Relación con la distribución de Poisson</a></li>
+  <li><a href="#la-propiedad-de-falta-de-memoria" id="toc-la-propiedad-de-falta-de-memoria" class="nav-link" data-scroll-target="#la-propiedad-de-falta-de-memoria"><span class="header-section-number">9.2</span> La propiedad de falta de memoria</a></li>
+  </ul></li>
+  <li><a href="#distribuciones-de-probabilidad-con-r" id="toc-distribuciones-de-probabilidad-con-r" class="nav-link" data-scroll-target="#distribuciones-de-probabilidad-con-r"><span class="header-section-number">10</span> Distribuciones de probabilidad con R</a></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos"><span class="header-section-number">11</span> Ejercicios propuestos</a>
+  <ul class="collapse">
+  <li><a href="#variables-aleatorias-discretas-valor-esperado-y-varianza" id="toc-variables-aleatorias-discretas-valor-esperado-y-varianza" class="nav-link" data-scroll-target="#variables-aleatorias-discretas-valor-esperado-y-varianza"><span class="header-section-number">11.1</span> Variables aleatorias discretas, valor esperado y varianza</a></li>
+  <li><a href="#distribuciones-binomial-de-poisson-e-hipergeométrica" id="toc-distribuciones-binomial-de-poisson-e-hipergeométrica" class="nav-link" data-scroll-target="#distribuciones-binomial-de-poisson-e-hipergeométrica"><span class="header-section-number">11.2</span> Distribuciones binomial, de Poisson e hipergeométrica</a></li>
+  <li><a href="#distribuciones-continuas" id="toc-distribuciones-continuas" class="nav-link" data-scroll-target="#distribuciones-continuas"><span class="header-section-number">11.3</span> Distribuciones continuas</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="cap3-distribuciones.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Capítulo 3: Variables aleatorias y distribuciones de probabilidad</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="Objetivos del capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Objetivos del capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al terminar este capítulo, usted estará en capacidad de:</p>
+<ul>
+<li>definir una variable aleatoria y distinguir entre variables discretas y continuas;</li>
+<li>describir una variable aleatoria mediante su función de probabilidad o de densidad y su función de distribución acumulada;</li>
+<li>calcular e interpretar el valor esperado y la varianza;</li>
+<li>reconocer y aplicar las distribuciones binomial, de Poisson, hipergeométrica, uniforme, normal y exponencial;</li>
+<li>calcular probabilidades y cuantiles de estas distribuciones con R.</li>
+</ul>
+</div>
+</div>
+<p>En el capítulo 1 describimos datos ya observados con tablas, gráficos y medidas como la media y la desviación estándar. En el capítulo 2 aprendimos a calcular probabilidades de eventos. Este capítulo une las dos ideas: un <strong>modelo de probabilidad</strong> describe cómo se comportaría una variable si pudiéramos observarla infinitas veces, y sus características (su “media” y su “desviación estándar” teóricas) son los <strong>parámetros</strong> que, en el curso de Estadística II, aprenderemos a estimar a partir de una muestra <span class="citation" data-cites="devore2008">(<a href="#ref-devore2008" role="doc-biblioref">Devore, 2008, p. 95</a>)</span>.</p>
+<section id="variables-aleatorias" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="variables-aleatorias"><span class="header-section-number">1</span> Variables aleatorias</h2>
+<p>En muchos experimentos aleatorios no interesa el resultado detallado, sino un número asociado a él. Al inspeccionar tres piezas, el inspector anota el resultado completo (<span class="math inline">\(NND\)</span>, <span class="math inline">\(DND\)</span>, …), pero lo que realmente le importa es <strong>cuántas</strong> son defectuosas.</p>
+<div id="def-va" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 1 (Variable aleatoria)</strong></span> Una <strong>variable aleatoria</strong> es una función que asigna un número real a cada resultado del espacio muestral de un experimento aleatorio. Las variables aleatorias se denotan con letras mayúsculas, como <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> o <span class="math inline">\(Z\)</span>, y los valores que toman, con letras minúsculas, como <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span> o <span class="math inline">\(z\)</span>.</p>
+</div>
+<div id="exm-va-piezas" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1</strong></span> Al inspeccionar tres piezas, sea <span class="math inline">\(X\)</span> el número de piezas defectuosas. La <a href="#tbl-va-piezas" class="quarto-xref">Tabla&nbsp;1</a> muestra el valor que <span class="math inline">\(X\)</span> asigna a cada resultado del espacio muestral.</p>
+<div id="tbl-va-piezas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-va-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;1: Valores de la variable aleatoria X, número de piezas defectuosas.
+</figcaption>
+<div aria-describedby="tbl-va-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resultado</th>
+<th style="text-align: center;"><span class="math inline">\(NNN\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(NND\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(NDN\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(DNN\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(NDD\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(DND\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(DDN\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(DDD\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>El evento “exactamente una pieza es defectuosa” se escribe ahora, de forma compacta, <span class="math inline">\(\{X = 1\} = \{NND, NDN, DNN\}\)</span>.</p>
+</div>
+<p>Igual que las variables del capítulo 1, las variables aleatorias se clasifican según los valores que pueden tomar.</p>
+<div id="def-va-tipos" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 2 (Variables aleatorias discretas y continuas)</strong></span> Una variable aleatoria es <strong>discreta</strong> si toma un número finito o infinito numerable de valores, que pueden enumerarse; habitualmente surge de <strong>contar</strong>. Es <strong>continua</strong> si puede tomar cualquier valor en un intervalo de números reales; habitualmente surge de <strong>medir</strong>.</p>
+</div>
+<p>Son discretas el número de piezas defectuosas en un lote, el número de clientes que llegan a un banco en una hora o el número de pizzas de un pedido. Son continuas el tiempo de entrega de una pizza, la resistencia de un cilindro de concreto o el ingreso de un hogar. Observe la relación con el capítulo 2: una variable discreta proviene de un espacio muestral discreto, y una continua, de uno continuo.</p>
+</section>
+<section id="distribuciones-de-probabilidad-discretas" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="distribuciones-de-probabilidad-discretas"><span class="header-section-number">2</span> Distribuciones de probabilidad discretas</h2>
+<p>Para describir una variable aleatoria discreta basta con decir qué valores puede tomar y con qué probabilidad toma cada uno.</p>
+<div id="def-fmp" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3 (Función de probabilidad)</strong></span> La <strong>función de probabilidad</strong> (o función de masa de probabilidad) de una variable aleatoria discreta <span class="math inline">\(X\)</span> es <span class="math display">\[
+p(x) = P(X = x)
+\]</span> para cada valor posible <span class="math inline">\(x\)</span>. Debe cumplir dos condiciones: <span class="math display">\[
+p(x) \ge 0 \quad \text{para todo } x
+\qquad \text{y} \qquad
+\sum_{x} p(x) = 1 .
+\]</span> El conjunto de valores posibles de <span class="math inline">\(X\)</span> junto con sus probabilidades se llama <strong>distribución de probabilidad</strong> de <span class="math inline">\(X\)</span>.</p>
+</div>
+<div id="exm-fmp-piezas" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 2</strong></span> Supongamos que cada pieza es defectuosa con probabilidad 0,1, de manera independiente de las demás. Por la independencia, la probabilidad de un resultado como <span class="math inline">\(NND\)</span> es <span class="math inline">\(0{,}9 \times 0{,}9 \times 0{,}1 = 0{,}081\)</span>, y como hay tres resultados con exactamente una pieza defectuosa, <span class="math inline">\(P(X = 1) = 3 \times 0{,}081 = 0{,}243\)</span>. Calculando así cada valor se obtiene la distribución de la <a href="#tbl-fmp-piezas" class="quarto-xref">Tabla&nbsp;2</a>, representada en la <a href="#fig-fmp-piezas" class="quarto-xref">Figura&nbsp;1</a>.</p>
+<div id="tbl-fmp-piezas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fmp-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;2: Función de probabilidad y función de distribución acumulada del número de piezas defectuosas.
+</figcaption>
+<div aria-describedby="tbl-fmp-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(p(x)\)</span></td>
+<td style="text-align: center;">0,729</td>
+<td style="text-align: center;">0,243</td>
+<td style="text-align: center;">0,027</td>
+<td style="text-align: center;">0,001</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(F(x)\)</span></td>
+<td style="text-align: center;">0,729</td>
+<td style="text-align: center;">0,972</td>
+<td style="text-align: center;">0,999</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-fmp-piezas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fmp-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-fmp-piezas-1.png" class="img-fluid figure-img" width="528">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fmp-piezas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de probabilidad del número de piezas defectuosas entre tres.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>El gráfico de la función de probabilidad es un diagrama de bastones, como los que usamos en el capítulo 1 para variables discretas: la diferencia es que allí las alturas eran frecuencias relativas <strong>observadas</strong> en una muestra, y aquí son probabilidades de un <strong>modelo</strong>.</p>
+<div id="def-fda-discreta" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4 (Función de distribución acumulada)</strong></span> La <strong>función de distribución acumulada</strong> de una variable aleatoria <span class="math inline">\(X\)</span> es <span class="math display">\[
+F(x) = P(X \le x), \qquad -\infty &lt; x &lt; \infty .
+\]</span> Para una variable discreta, <span class="math inline">\(F(x) = \sum_{t \le x} p(t)\)</span>.</p>
+</div>
+<p>La función de distribución acumulada es la versión teórica de la frecuencia relativa acumulada <span class="math inline">\(H_i\)</span> del capítulo 1 (y de la ojiva). Es no decreciente, vale 0 a la izquierda de todos los valores posibles y 1 a la derecha, y permite calcular la probabilidad de cualquier intervalo: <span class="math display">\[
+P(a &lt; X \le b) = F(b) - F(a) .
+\]</span> En el ejemplo, la probabilidad de encontrar a lo sumo una pieza defectuosa es <span class="math inline">\(F(1) = 0{,}972\)</span>, y la de encontrar al menos una es <span class="math inline">\(P(X \ge 1) = 1 - F(0) = 1 - 0{,}729 = 0{,}271\)</span>.</p>
+</section>
+<section id="valor-esperado-y-varianza" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="valor-esperado-y-varianza"><span class="header-section-number">3</span> Valor esperado y varianza</h2>
+<p>Así como la media y la varianza resumen un conjunto de datos, el valor esperado y la varianza resumen una distribución de probabilidad.</p>
+<div id="def-esperanza" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 5 (Valor esperado)</strong></span> El <strong>valor esperado</strong> (o esperanza, o media) de una variable aleatoria discreta <span class="math inline">\(X\)</span> con función de probabilidad <span class="math inline">\(p(x)\)</span> es <span class="math display">\[
+\mu = E(X) = \sum_{x} x\, p(x) .
+\]</span></p>
+</div>
+<p>El valor esperado es un promedio de los valores posibles, <strong>ponderado</strong> por sus probabilidades. Por la interpretación frecuentista, es el valor al que se acercaría el promedio de los resultados si el experimento se repitiera muchísimas veces. Compare con la media de una tabla de frecuencias del capítulo 1, <span class="math inline">\(\bar{x} = \sum x_i h_i\)</span>: la fórmula es la misma, con las frecuencias relativas observadas reemplazadas por probabilidades.</p>
+<div id="def-varianza-va" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 6 (Varianza y desviación estándar)</strong></span> La <strong>varianza</strong> de una variable aleatoria discreta <span class="math inline">\(X\)</span> con media <span class="math inline">\(\mu\)</span> es <span class="math display">\[
+\sigma^2 = V(X) = \sum_{x} (x - \mu)^2\, p(x) = E(X^2) - \mu^2,
+\qquad \text{con} \qquad E(X^2) = \sum_{x} x^2\, p(x),
+\]</span> y su <strong>desviación estándar</strong> es <span class="math inline">\(\sigma = \sqrt{\sigma^2}\)</span>.</p>
+</div>
+<p>La segunda forma de la varianza, <span class="math inline">\(E(X^2) - \mu^2\)</span>, suele ser más cómoda para calcular a mano.</p>
+<div id="exm-esperanza-piezas" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3</strong></span> Para el número de piezas defectuosas de la <a href="#tbl-fmp-piezas" class="quarto-xref">Tabla&nbsp;2</a>: <span class="math display">\[
+E(X) = 0 \times 0{,}729 + 1 \times 0{,}243 + 2 \times 0{,}027 + 3 \times 0{,}001 = 0{,}3 ,
+\]</span> <span class="math display">\[
+E(X^2) = 0^2 \times 0{,}729 + 1^2 \times 0{,}243 + 2^2 \times 0{,}027 + 3^2 \times 0{,}001 = 0{,}36 ,
+\]</span> de modo que <span class="math inline">\(V(X) = 0{,}36 - 0{,}3^2 = 0{,}27\)</span> y <span class="math inline">\(\sigma = \sqrt{0{,}27} \approx 0{,}52\)</span>. Si se inspeccionaran muchos grupos de tres piezas, se encontrarían en promedio 0,3 piezas defectuosas por grupo.</p>
+</div>
+<div id="exm-seguro" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 4</strong></span> <strong>El negocio de los seguros.</strong> Una aseguradora vende una póliza de vida a un año por 500 000 pesos. Si el asegurado fallece durante el año, lo que ocurre con probabilidad 0,002, la aseguradora paga 100 millones. Sea <span class="math inline">\(G\)</span> la ganancia de la aseguradora con una póliza: <span class="math inline">\(G = 500\,000\)</span> con probabilidad 0,998 y <span class="math inline">\(G = 500\,000 - 100\,000\,000 = -99\,500\,000\)</span> con probabilidad 0,002. Entonces <span class="math display">\[
+E(G) = 500\,000 \times 0{,}998 + (-99\,500\,000) \times 0{,}002 = 300\,000 .
+\]</span> En una sola póliza la aseguradora puede perder mucho dinero, pero en promedio, sobre miles de pólizas, gana 300 000 pesos por cada una. Así es como la probabilidad permite que exista el negocio de los seguros.</p>
+</div>
+<p>El valor esperado y la varianza tienen propiedades muy útiles cuando la variable se transforma linealmente, por ejemplo, al cambiar de unidades (compárelas con el ejercicio 13 del capítulo 1).</p>
+<div id="thm-propiedades-esperanza" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 1 (Propiedades del valor esperado y la varianza)</strong></span> Para una variable aleatoria <span class="math inline">\(X\)</span> y constantes <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span>: <span class="math display">\[
+E(aX + b) = a\,E(X) + b
+\qquad \text{y} \qquad
+V(aX + b) = a^2\,V(X) .
+\]</span></p>
+</div>
+<p>Sumar una constante desplaza la media pero no cambia la dispersión; multiplicar por una constante multiplica la media por <span class="math inline">\(a\)</span> y la varianza por <span class="math inline">\(a^2\)</span> (y, por tanto, la desviación estándar por <span class="math inline">\(|a|\)</span>).</p>
+</section>
+<section id="distribución-binomial" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="distribución-binomial"><span class="header-section-number">4</span> Distribución binomial</h2>
+<p>Algunas distribuciones aparecen con tanta frecuencia que tienen nombre propio. La primera de ellas modela el número de “éxitos” en una serie de ensayos independientes.</p>
+<div id="def-bernoulli" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 7 (Ensayo de Bernoulli)</strong></span> Un <strong>ensayo de Bernoulli</strong> es un experimento aleatorio con solo dos resultados posibles, que llamamos <strong>éxito</strong> y <strong>fracaso</strong>, donde el éxito ocurre con probabilidad <span class="math inline">\(p\)</span> y el fracaso con probabilidad <span class="math inline">\(1 - p\)</span>.</p>
+</div>
+<p>“Éxito” no significa algo deseable: es simplemente el resultado que se cuenta. Una pieza defectuosa, un cliente que no paga o un paciente que responde al tratamiento pueden ser “éxitos”.</p>
+<div id="def-binomial" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 8 (Distribución binomial)</strong></span> Un <strong>experimento binomial</strong> cumple cuatro condiciones:</p>
+<ol type="1">
+<li>consiste en un número fijo <span class="math inline">\(n\)</span> de ensayos;</li>
+<li>cada ensayo es un ensayo de Bernoulli;</li>
+<li>la probabilidad de éxito <span class="math inline">\(p\)</span> es la misma en todos los ensayos;</li>
+<li>los ensayos son independientes.</li>
+</ol>
+<p>El número <span class="math inline">\(X\)</span> de éxitos en los <span class="math inline">\(n\)</span> ensayos tiene <strong>distribución binomial</strong> con parámetros <span class="math inline">\(n\)</span> y <span class="math inline">\(p\)</span>, lo que se escribe <span class="math inline">\(X \sim \text{Bin}(n, p)\)</span>, y su función de probabilidad es <span class="math display">\[
+P(X = x) = \binom{n}{x} p^x (1 - p)^{n - x},
+\qquad x = 0, 1, 2, \ldots, n .
+\]</span></p>
+</div>
+<p>La fórmula se justifica con lo visto en el capítulo 2. Una secuencia particular con <span class="math inline">\(x\)</span> éxitos y <span class="math inline">\(n - x\)</span> fracasos tiene probabilidad <span class="math inline">\(p^x (1 - p)^{n - x}\)</span>, por la independencia de los ensayos; y hay <span class="math inline">\({}_{n}C_{x} = \binom{n}{x}\)</span> secuencias distintas con exactamente <span class="math inline">\(x\)</span> éxitos, según dónde se ubiquen. El número de piezas defectuosas del <a href="#exm-fmp-piezas" class="quarto-xref">Ejemplo&nbsp;2</a> es, precisamente, una variable <span class="math inline">\(\text{Bin}(3;\ 0{,}1)\)</span>.</p>
+<div id="thm-binomial-media" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 2 (Media y varianza de la binomial)</strong></span> Si <span class="math inline">\(X \sim \text{Bin}(n, p)\)</span>, entonces <span class="math display">\[
+E(X) = np
+\qquad \text{y} \qquad
+V(X) = np(1 - p) .
+\]</span></p>
+</div>
+<p>Para <span class="math inline">\(\text{Bin}(3;\ 0{,}1)\)</span>, <span class="math inline">\(E(X) = 3 \times 0{,}1 = 0{,}3\)</span> y <span class="math inline">\(V(X) = 3 \times 0{,}1 \times 0{,}9 = 0{,}27\)</span>, los mismos valores que calculamos en el <a href="#exm-esperanza-piezas" class="quarto-xref">Ejemplo&nbsp;3</a> con la definición.</p>
+<div id="exm-binomial" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 5</strong></span> Un proceso de fabricación produce un 5 % de piezas defectuosas. Se toma una muestra de 10 piezas, y <span class="math inline">\(X\)</span> es el número de defectuosas, de modo que <span class="math inline">\(X \sim \text{Bin}(10;\ 0{,}05)\)</span>.</p>
+<ol type="a">
+<li>Probabilidad de que ninguna sea defectuosa: <span class="math inline">\(P(X = 0) = \binom{10}{0} 0{,}05^0\, 0{,}95^{10} \approx 0{,}599\)</span>.</li>
+<li>Probabilidad de que exactamente una sea defectuosa: <span class="math inline">\(P(X = 1) = \binom{10}{1} 0{,}05^1\, 0{,}95^{9} \approx 0{,}315\)</span>.</li>
+<li>Probabilidad de que dos o más sean defectuosas: <span class="math inline">\(P(X \ge 2) = 1 - P(X = 0) - P(X = 1) \approx 1 - 0{,}599 - 0{,}315 = 0{,}086\)</span>.</li>
+<li>Número esperado de defectuosas: <span class="math inline">\(E(X) = 10 \times 0{,}05 = 0{,}5\)</span>, con desviación estándar <span class="math inline">\(\sqrt{10 \times 0{,}05 \times 0{,}95} \approx 0{,}69\)</span>.</li>
+</ol>
+</div>
+<p>La forma de la distribución binomial depende de <span class="math inline">\(p\)</span>: es asimétrica a la derecha cuando <span class="math inline">\(p\)</span> es pequeño, simétrica cuando <span class="math inline">\(p = 0{,}5\)</span> y asimétrica a la izquierda cuando <span class="math inline">\(p\)</span> es grande (<a href="#fig-binomial" class="quarto-xref">Figura&nbsp;2</a>).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-binomial" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binomial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-binomial-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binomial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Función de probabilidad de la distribución binomial con n = 10 para tres valores de p.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>En R, la función de probabilidad binomial se calcula con <code>dbinom()</code> y la función de distribución acumulada con <code>pbinom()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">0</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.05</span>)       <span class="co"># P(X = 0)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5987369</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.05</span>)     <span class="co"># P(X = 0), P(X = 1), P(X = 2)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5987369 0.3151247 0.0746348</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.05</span>)       <span class="co"># P(X &lt;= 1)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9138616</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.05</span>)   <span class="co"># P(X &gt;= 2)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08613836</code></pre>
+</div>
+</div>
+</section>
+<section id="distribución-de-poisson" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="distribución-de-poisson"><span class="header-section-number">5</span> Distribución de Poisson</h2>
+<p>La distribución de Poisson, que lleva el nombre del matemático francés Siméon Denis Poisson, modela el <strong>número de veces que ocurre un evento en un intervalo</strong> de tiempo, de espacio o de cualquier otra magnitud continua: llamadas que llegan a una central en un minuto, accidentes de tránsito en un día, defectos en un metro de tela o errores en una página <span class="citation" data-cites="devore2008">(<a href="#ref-devore2008" role="doc-biblioref">Devore, 2008, p. 124</a>)</span>.</p>
+<div id="def-poisson" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 9 (Distribución de Poisson)</strong></span> Una variable aleatoria <span class="math inline">\(X\)</span> que cuenta el número de ocurrencias de un evento en un intervalo tiene <strong>distribución de Poisson</strong> con parámetro <span class="math inline">\(\lambda &gt; 0\)</span>, lo que se escribe <span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>, si su función de probabilidad es <span class="math display">\[
+P(X = x) = \frac{e^{-\lambda} \lambda^x}{x!},
+\qquad x = 0, 1, 2, \ldots
+\]</span></p>
+</div>
+<p>El modelo es adecuado cuando las ocurrencias suceden de manera independiente unas de otras, a una tasa promedio constante, y nunca dos exactamente al mismo tiempo. El parámetro <span class="math inline">\(\lambda\)</span> es el número promedio de ocurrencias en el intervalo, y tiene una propiedad muy particular:</p>
+<div id="thm-poisson-media" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3 (Media y varianza de la Poisson)</strong></span> Si <span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>, entonces <span class="math inline">\(E(X) = V(X) = \lambda\)</span>.</p>
+</div>
+<div id="exm-poisson" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 6</strong></span> Una central de atención recibe en promedio 3 llamadas por minuto. Si <span class="math inline">\(X\)</span> es el número de llamadas en un minuto, <span class="math inline">\(X \sim \text{Poisson}(3)\)</span>.</p>
+<ol type="a">
+<li>Probabilidad de que en un minuto no llegue ninguna llamada: <span class="math inline">\(P(X = 0) = e^{-3} \approx 0{,}050\)</span>.</li>
+<li>Probabilidad de que lleguen a lo sumo dos: <span class="math inline">\(P(X \le 2) = e^{-3}\left(1 + 3 + \frac{3^2}{2!}\right) = 8{,}5\, e^{-3} \approx 0{,}423\)</span>.</li>
+<li>Probabilidad de que lleguen más de cinco, lo que saturaría a los operadores: <span class="math inline">\(P(X &gt; 5) = 1 - P(X \le 5) \approx 0{,}084\)</span>.</li>
+<li>Si el intervalo cambia, el parámetro cambia en la misma proporción: en dos minutos llegan en promedio 6 llamadas, de modo que el número de llamadas en dos minutos es <span class="math inline">\(\text{Poisson}(6)\)</span>.</li>
+</ol>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-poisson-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Función de probabilidad de la distribución de Poisson para tres valores de <span class="math inline">\(\lambda\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Como muestra la <a href="#fig-poisson" class="quarto-xref">Figura&nbsp;3</a>, la distribución es muy asimétrica a la derecha cuando <span class="math inline">\(\lambda\)</span> es pequeño y se vuelve más simétrica a medida que <span class="math inline">\(\lambda\)</span> crece.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="La Poisson como aproximación de la binomial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+La Poisson como aproximación de la binomial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando <span class="math inline">\(n\)</span> es grande y <span class="math inline">\(p\)</span> es pequeño, una binomial <span class="math inline">\(\text{Bin}(n, p)\)</span> se parece mucho a una <span class="math inline">\(\text{Poisson}(\lambda)\)</span> con <span class="math inline">\(\lambda = np\)</span>. Por ejemplo, si el 0,2 % de los productos tiene un defecto grave y se revisan 1000, el número de productos con ese defecto es <span class="math inline">\(\text{Bin}(1000;\ 0{,}002)\)</span>, y <span class="math inline">\(P(X \le 1) \approx 0{,}4057\)</span>. Con la Poisson de parámetro <span class="math inline">\(\lambda = 1000 \times 0{,}002 = 2\)</span> se obtiene <span class="math inline">\(P(X \le 1) = e^{-2}(1 + 2) \approx 0{,}4060\)</span>, prácticamente igual. Por eso a la Poisson se le llama a veces la “ley de los eventos raros”.</p>
+</div>
+</div>
+<p>En R se usan <code>dpois()</code> y <code>ppois()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(<span class="dv">0</span>, <span class="at">lambda =</span> <span class="dv">3</span>)                <span class="co"># P(X = 0)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04978707</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ppois</span>(<span class="dv">2</span>, <span class="at">lambda =</span> <span class="dv">3</span>)                <span class="co"># P(X &lt;= 2)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4231901</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">ppois</span>(<span class="dv">5</span>, <span class="at">lambda =</span> <span class="dv">3</span>)            <span class="co"># P(X &gt; 5)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08391794</code></pre>
+</div>
+</div>
+</section>
+<section id="distribución-hipergeométrica" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="distribución-hipergeométrica"><span class="header-section-number">6</span> Distribución hipergeométrica</h2>
+<p>La binomial supone ensayos independientes con probabilidad de éxito constante, lo que ocurre al muestrear <strong>con reemplazo</strong> o de una población muy grande. Cuando se muestrea <strong>sin reemplazo</strong> de una población pequeña, como en el control de calidad de un lote, cada extracción cambia la composición de lo que queda, y la distribución adecuada es la hipergeométrica <span class="citation" data-cites="walpole2012">(<a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 143</a>)</span>.</p>
+<div id="def-hipergeometrica" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 10 (Distribución hipergeométrica)</strong></span> Una población tiene <span class="math inline">\(N\)</span> elementos, de los cuales <span class="math inline">\(K\)</span> son “éxitos” y <span class="math inline">\(N - K\)</span> “fracasos”. Se extrae al azar una muestra de <span class="math inline">\(n\)</span> elementos sin reemplazo. El número <span class="math inline">\(X\)</span> de éxitos en la muestra tiene <strong>distribución hipergeométrica</strong> con parámetros <span class="math inline">\(N\)</span>, <span class="math inline">\(K\)</span> y <span class="math inline">\(n\)</span>, lo que se escribe <span class="math inline">\(X \sim \text{Hip}(N, K, n)\)</span>, y su función de probabilidad es <span class="math display">\[
+P(X = x) = \frac{\binom{K}{x}\binom{N - K}{n - x}}{\binom{N}{n}},
+\]</span> para los valores enteros de <span class="math inline">\(x\)</span> entre <span class="math inline">\(\max(0,\ n - N + K)\)</span> y <span class="math inline">\(\min(n, K)\)</span>.</p>
+</div>
+<p>Esta es exactamente la fórmula que usamos en el <a href="../apuntes/cap2-probabilidad.html#exm-control-calidad">ejemplo de control de calidad</a> del capítulo 2: se cuentan las formas de elegir <span class="math inline">\(x\)</span> éxitos entre los <span class="math inline">\(K\)</span> y <span class="math inline">\(n - x\)</span> fracasos entre los <span class="math inline">\(N - K\)</span>, y se divide entre el número total de muestras posibles.</p>
+<div id="thm-hiper-media" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 4 (Media y varianza de la hipergeométrica)</strong></span> Si <span class="math inline">\(X \sim \text{Hip}(N, K, n)\)</span> y <span class="math inline">\(p = K/N\)</span> es la proporción de éxitos en la población, entonces <span class="math display">\[
+E(X) = np
+\qquad \text{y} \qquad
+V(X) = np(1 - p)\, \frac{N - n}{N - 1} .
+\]</span></p>
+</div>
+<p>La media es la misma de la binomial, y la varianza es la de la binomial multiplicada por el <strong>factor de corrección por población finita</strong>, <span class="math inline">\((N - n)/(N - 1)\)</span>, que es menor que 1: al muestrear sin reemplazo hay menos variabilidad que con reemplazo.</p>
+<div id="exm-hipergeometrica" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 7</strong></span> Retomemos el lote de 20 piezas con 4 defectuosas, del que se eligen 3 al azar: <span class="math inline">\(X \sim \text{Hip}(20, 4, 3)\)</span>. La distribución del número de defectuosas en la muestra es:</p>
+<div id="tbl-hiper" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hiper-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3: Distribución Hip(20, 4, 3) del número de piezas defectuosas.
+</figcaption>
+<div aria-describedby="tbl-hiper-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P(X = x)\)</span></td>
+<td style="text-align: center;">0,491</td>
+<td style="text-align: center;">0,421</td>
+<td style="text-align: center;">0,084</td>
+<td style="text-align: center;">0,004</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Su media es <span class="math inline">\(E(X) = 3 \times 4/20 = 0{,}6\)</span> piezas defectuosas, y su varianza, <span class="math inline">\(V(X) = 3 \times 0{,}2 \times 0{,}8 \times 17/19 \approx 0{,}43\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Binomial o hipergeométrica?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Binomial o hipergeométrica?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la muestra es pequeña en comparación con la población (como regla práctica, si <span class="math inline">\(n/N &lt; 0{,}05\)</span>), extraer sin reemplazo casi no cambia la composición de la población, y la binomial con <span class="math inline">\(p = K/N\)</span> da una muy buena aproximación. Por ejemplo, si de un lote de 1000 piezas con 100 defectuosas se eligen 10, la probabilidad de no encontrar ninguna es 0,3469 con la hipergeométrica y 0,3487 con la binomial <span class="math inline">\(\text{Bin}(10;\ 0{,}1)\)</span>.</p>
+</div>
+</div>
+<p>En R se usan <code>dhyper()</code> y <code>phyper()</code>, pero <strong>con otros nombres para los parámetros</strong>: <code>m</code> es el número de éxitos en la población (<span class="math inline">\(K\)</span>), <code>n</code> el de fracasos (<span class="math inline">\(N - K\)</span>) y <code>k</code> el tamaño de la muestra (<span class="math inline">\(n\)</span>). Hay que tener cuidado de no confundir la <code>n</code> de R con nuestra <span class="math inline">\(n\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dhyper</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">m =</span> <span class="dv">4</span>, <span class="at">n =</span> <span class="dv">16</span>, <span class="at">k =</span> <span class="dv">3</span>)      <span class="co"># P(X = 0), ..., P(X = 3)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.491228070 0.421052632 0.084210526 0.003508772</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">phyper</span>(<span class="dv">1</span>, <span class="at">m =</span> <span class="dv">4</span>, <span class="at">n =</span> <span class="dv">16</span>, <span class="at">k =</span> <span class="dv">3</span>)        <span class="co"># P(X &lt;= 1)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9122807</code></pre>
+</div>
+</div>
+<p>La <a href="#tbl-discretas" class="quarto-xref">Tabla&nbsp;4</a> resume las tres distribuciones discretas.</p>
+<div id="tbl-discretas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-discretas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;4: Resumen de las distribuciones discretas. En la hipergeométrica, p = K/N.
+</figcaption>
+<div aria-describedby="tbl-discretas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribución</th>
+<th style="text-align: left;">Qué cuenta</th>
+<th style="text-align: left;">Parámetros</th>
+<th style="text-align: center;"><span class="math inline">\(E(X)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(V(X)\)</span></th>
+<th style="text-align: left;">En R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Binomial, <span class="math inline">\(\text{Bin}(n, p)\)</span></td>
+<td style="text-align: left;">Éxitos en <span class="math inline">\(n\)</span> ensayos independientes</td>
+<td style="text-align: left;"><span class="math inline">\(n\)</span>, <span class="math inline">\(p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\)</span></td>
+<td style="text-align: left;"><code>dbinom()</code>, <code>pbinom()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poisson, <span class="math inline">\(\text{Poisson}(\lambda)\)</span></td>
+<td style="text-align: left;">Ocurrencias en un intervalo</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;"><code>dpois()</code>, <code>ppois()</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipergeométrica, <span class="math inline">\(\text{Hip}(N, K, n)\)</span></td>
+<td style="text-align: left;">Éxitos en una muestra sin reemplazo</td>
+<td style="text-align: left;"><span class="math inline">\(N\)</span>, <span class="math inline">\(K\)</span>, <span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(np(1-p)\frac{N-n}{N-1}\)</span></td>
+<td style="text-align: left;"><code>dhyper()</code>, <code>phyper()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="distribuciones-de-probabilidad-continuas" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="distribuciones-de-probabilidad-continuas"><span class="header-section-number">7</span> Distribuciones de probabilidad continuas</h2>
+<p>Una variable continua, como el tiempo de entrega de una pizza, puede tomar cualquier valor de un intervalo. Ya no es posible listar sus valores y asignar una probabilidad a cada uno: hay infinitos valores, y si cada uno tuviera probabilidad positiva, la suma no podría ser 1. Por eso, para variables continuas la probabilidad se asigna a <strong>intervalos</strong>, mediante una curva <span class="citation" data-cites="devore2008">(<a href="#ref-devore2008" role="doc-biblioref">Devore, 2008, p. 132</a>)</span>.</p>
+<section id="de-los-histogramas-a-las-curvas" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="de-los-histogramas-a-las-curvas"><span class="header-section-number">7.1</span> De los histogramas a las curvas</h3>
+<p>Recordemos el histograma del capítulo 1. Si se dibuja con frecuencias relativas divididas entre la amplitud de las clases (es decir, con <strong>densidades</strong>), el área de cada rectángulo es la proporción de datos de esa clase, y el área total es 1. A medida que aumenta el número de datos y las clases se hacen más angostas, el contorno del histograma se parece cada vez más a una curva suave (<a href="#fig-histograma-curva" class="quarto-xref">Figura&nbsp;4</a>). Esa curva es la <strong>función de densidad</strong> de la variable.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histograma-curva" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-histograma-curva-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-histograma-curva-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histograma-curva-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Histogramas de densidad de muestras simuladas de tamaño creciente. A medida que crece n, el histograma se aproxima a la función de densidad (curva roja).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="función-de-densidad" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="función-de-densidad"><span class="header-section-number">7.2</span> Función de densidad</h3>
+<div id="def-fdp" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 11 (Función de densidad de probabilidad)</strong></span> La <strong>función de densidad de probabilidad</strong> de una variable aleatoria continua <span class="math inline">\(X\)</span> es una función <span class="math inline">\(f(x)\)</span> que cumple:</p>
+<ol type="1">
+<li><span class="math inline">\(f(x) \ge 0\)</span> para todo <span class="math inline">\(x\)</span>;</li>
+<li>el área total bajo la curva es 1: <span class="math inline">\(\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1\)</span>;</li>
+<li>la probabilidad de que <span class="math inline">\(X\)</span> esté en un intervalo es el <strong>área bajo la curva</strong> sobre ese intervalo: <span class="math display">\[
+P(a \le X \le b) = \int_{a}^{b} f(x)\,dx .
+\]</span></li>
+</ol>
+</div>
+<p>La tercera propiedad tiene una consecuencia importante: para una variable continua, la probabilidad de que tome <strong>exactamente</strong> un valor es cero, porque el área sobre un solo punto es cero: <span class="math inline">\(P(X = a) = 0\)</span>. Por eso, para variables continuas da lo mismo usar desigualdades estrictas o no: <span class="math display">\[
+P(a \le X \le b) = P(a &lt; X \le b) = P(a \le X &lt; b) = P(a &lt; X &lt; b) .
+\]</span> Esta es la razón, anunciada en el capítulo 1, por la cual en variables continuas con muchos datos desaparece la diferencia entre “menos de” y “como máximo”. Observe también que <span class="math inline">\(f(x)\)</span> <strong>no</strong> es una probabilidad (puede ser mayor que 1): lo que es una probabilidad es el área bajo ella.</p>
+<div id="def-fda-continua" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 12 (Función de distribución acumulada de una variable continua)</strong></span> La <strong>función de distribución acumulada</strong> de una variable continua <span class="math inline">\(X\)</span> es <span class="math display">\[
+F(x) = P(X \le x) = \int_{-\infty}^{x} f(t)\,dt ,
+\]</span> el área bajo la densidad a la izquierda de <span class="math inline">\(x\)</span>. Con ella, <span class="math inline">\(P(a \le X \le b) = F(b) - F(a)\)</span>.</p>
+</div>
+<p>El valor esperado y la varianza se definen igual que en el caso discreto, reemplazando las sumas por integrales: <span class="math display">\[
+\mu = E(X) = \int_{-\infty}^{\infty} x\, f(x)\,dx,
+\qquad
+\sigma^2 = V(X) = \int_{-\infty}^{\infty} (x - \mu)^2 f(x)\,dx = E(X^2) - \mu^2 ,
+\]</span> y conservan las mismas propiedades e interpretación. En la práctica, casi nunca hace falta calcular estas integrales: para las distribuciones más usadas, la media, la varianza y las probabilidades ya se conocen, y R las calcula directamente.</p>
+</section>
+<section id="la-distribución-uniforme" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="la-distribución-uniforme"><span class="header-section-number">7.3</span> La distribución uniforme</h3>
+<p>El caso más sencillo de distribución continua es aquel en el que todos los valores de un intervalo son “igualmente probables”.</p>
+<div id="def-uniforme" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 13 (Distribución uniforme)</strong></span> Una variable <span class="math inline">\(X\)</span> tiene <strong>distribución uniforme</strong> en el intervalo <span class="math inline">\([a, b]\)</span>, lo que se escribe <span class="math inline">\(X \sim U(a, b)\)</span>, si su densidad es constante en ese intervalo: <span class="math display">\[
+f(x) = \frac{1}{b - a}, \qquad a \le x \le b,
+\]</span> y cero fuera de él. Su media y su varianza son <span class="math display">\[
+E(X) = \frac{a + b}{2}
+\qquad \text{y} \qquad
+V(X) = \frac{(b - a)^2}{12} .
+\]</span></p>
+</div>
+<div id="exm-uniforme" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 8</strong></span> Un bus pasa por un paradero cada 15 minutos. Una persona que llega al paradero sin conocer el horario espera un tiempo <span class="math inline">\(X \sim U(0, 15)\)</span>, en minutos. La probabilidad de que espere más de 10 minutos es el área del rectángulo entre 10 y 15 (<a href="#fig-uniforme" class="quarto-xref">Figura&nbsp;5</a>): <span class="math display">\[
+P(X &gt; 10) = (15 - 10) \times \frac{1}{15} = \frac{1}{3} \approx 0{,}333 .
+\]</span> En promedio espera <span class="math inline">\(E(X) = (0 + 15)/2 = 7{,}5\)</span> minutos, con desviación estándar <span class="math inline">\(\sqrt{15^2/12} \approx 4{,}33\)</span> minutos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-uniforme" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniforme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-uniforme-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniforme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Densidad de la distribución U(0, 15). El área sombreada es P(X &gt; 10).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="distribución-normal" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="distribución-normal"><span class="header-section-number">8</span> Distribución normal</h2>
+<p>La <strong>distribución normal</strong>, también llamada gaussiana por el matemático alemán Carl Friedrich Gauss, es la más importante de la estadística. Por un lado, describe bien muchas variables medidas en la naturaleza y en la industria: errores de medición, estaturas, pesos, dimensiones de piezas fabricadas, puntajes de pruebas estandarizadas. Por otro, y sobre todo, es la distribución a la que se aproximan los promedios de muestras grandes, como veremos con el teorema central del límite en el capítulo 4 <span class="citation" data-cites="walpole2012 montgomery2018">(<a href="#ref-montgomery2018" role="doc-biblioref">Montgomery &amp; Runger, 2018, p. 15</a>; <a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 172</a>)</span>.</p>
+<div id="def-normal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 14 (Distribución normal)</strong></span> Una variable aleatoria <span class="math inline">\(X\)</span> tiene <strong>distribución normal</strong> con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>, lo que se escribe <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, si su función de densidad es <span class="math display">\[
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2},
+\qquad -\infty &lt; x &lt; \infty .
+\]</span></p>
+</div>
+<p>Sus propiedades principales son:</p>
+<ul>
+<li>tiene forma de <strong>campana</strong> y es <strong>simétrica</strong> alrededor de <span class="math inline">\(\mu\)</span>, de modo que su media, su mediana y su moda coinciden en <span class="math inline">\(\mu\)</span>;</li>
+<li><span class="math inline">\(\mu\)</span> determina la <strong>ubicación</strong> del centro y <span class="math inline">\(\sigma\)</span> la <strong>dispersión</strong>: cuanto mayor es <span class="math inline">\(\sigma\)</span>, más baja y extendida es la campana (<a href="#fig-normal-parametros" class="quarto-xref">Figura&nbsp;6</a>);</li>
+<li>la curva tiene sus puntos de inflexión en <span class="math inline">\(\mu - \sigma\)</span> y <span class="math inline">\(\mu + \sigma\)</span>;</li>
+<li>toma valores en toda la recta real, aunque fuera de <span class="math inline">\(\mu \pm 3\sigma\)</span> el área es prácticamente nula;</li>
+<li>su asimetría es 0 y su exceso de curtosis también es 0: es la referencia con la que comparamos las medidas de forma del capítulo 1.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-normal-parametros" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-parametros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-normal-parametros-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-parametros-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Efecto de los parámetros de la normal. Izquierda: igual desviación estándar y distinta media. Derecha: igual media y distinta desviación estándar.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="la-normal-estándar" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="la-normal-estándar"><span class="header-section-number">8.1</span> La normal estándar</h3>
+<p>Hay infinitas distribuciones normales, una para cada par de valores <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>. Afortunadamente, todas se pueden llevar a una sola.</p>
+<div id="def-normal-estandar" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 15 (Normal estándar y estandarización)</strong></span> La <strong>normal estándar</strong> es la normal con media 0 y varianza 1, y se denota <span class="math inline">\(Z \sim N(0, 1)\)</span>. Su función de distribución acumulada se denota <span class="math inline">\(\Phi(z) = P(Z \le z)\)</span>. Si <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, entonces la variable <strong>estandarizada</strong> <span class="math display">\[
+Z = \frac{X - \mu}{\sigma}
+\]</span> tiene distribución normal estándar.</p>
+</div>
+<p>El valor <span class="math inline">\(z\)</span> indica a cuántas desviaciones estándar está <span class="math inline">\(x\)</span> de la media: es la misma estandarización <span class="math inline">\(z_i = (x_i - \bar{x})/s\)</span> que usamos para transformar variables en el capítulo 1, ahora aplicada a una población. Gracias a ella, cualquier probabilidad de una normal se calcula con la normal estándar: <span class="math display">\[
+P(X \le x) = P\!\left(Z \le \frac{x - \mu}{\sigma}\right) = \Phi\!\left(\frac{x - \mu}{\sigma}\right).
+\]</span> Tradicionalmente, los valores de <span class="math inline">\(\Phi(z)\)</span> se buscaban en una tabla impresa; hoy se obtienen con la función <code>pnorm()</code> de R.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="La regla empírica, demostrada">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+La regla empírica, demostrada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En el capítulo 1 usamos la regla empírica del 68 % y el 95 %. Ahora podemos calcular sus valores exactos para la normal: <span class="math display">\[
+P(\mu - \sigma &lt; X &lt; \mu + \sigma) = P(-1 &lt; Z &lt; 1) = 0{,}6827,
+\]</span> <span class="math display">\[
+P(\mu - 2\sigma &lt; X &lt; \mu + 2\sigma) = P(-2 &lt; Z &lt; 2) = 0{,}9545,
+\]</span> <span class="math display">\[
+P(\mu - 3\sigma &lt; X &lt; \mu + 3\sigma) = P(-3 &lt; Z &lt; 3) = 0{,}9973 .
+\]</span> Por eso se conoce también como la regla del <strong>68-95-99,7</strong>.</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-normal-regla" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-regla-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-normal-regla-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-regla-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: Áreas bajo la normal estándar entre -1 y 1, -2 y 2, y -3 y 3.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cálculo-de-probabilidades-y-percentiles" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="cálculo-de-probabilidades-y-percentiles"><span class="header-section-number">8.2</span> Cálculo de probabilidades y percentiles</h3>
+<div id="exm-normal" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 9</strong></span> Los puntajes de una prueba de admisión tienen distribución normal con media <span class="math inline">\(\mu = 250\)</span> y desviación estándar <span class="math inline">\(\sigma = 50\)</span> puntos.</p>
+<ol type="a">
+<li><strong>Probabilidad de obtener más de 320 puntos.</strong> Se estandariza: <span class="math inline">\(z = (320 - 250)/50 = 1{,}4\)</span>, y <span class="math inline">\(P(X &gt; 320) = P(Z &gt; 1{,}4) = 1 - \Phi(1{,}4) = 1 - 0{,}9192 = 0{,}0808\)</span>. Aproximadamente el 8 % de los aspirantes supera los 320 puntos.</li>
+<li><strong>Probabilidad de obtener entre 200 y 300.</strong> Como 200 y 300 están a una desviación estándar de la media, <span class="math inline">\(P(200 &lt; X &lt; 300) = P(-1 &lt; Z &lt; 1) = 0{,}6827\)</span>.</li>
+<li><strong>Percentil 95.</strong> Se busca el puntaje <span class="math inline">\(x\)</span> que deja el 95 % por debajo. En la normal estándar, <span class="math inline">\(\Phi(1{,}645) = 0{,}95\)</span>; regresando a la escala original, <span class="math inline">\(x = \mu + z\sigma = 250 + 1{,}645 \times 50 \approx 332{,}2\)</span>. Solo el 5 % de los aspirantes obtiene más de 332 puntos.</li>
+</ol>
+</div>
+<p>En el literal c se usó la operación inversa: dada una probabilidad, encontrar el valor. Ese valor es un <strong>cuantil</strong> de la distribución, y se calcula con la función <code>qnorm()</code> de R. Algunos cuantiles de la normal estándar aparecerán una y otra vez en los capítulos de inferencia (<a href="#tbl-z-comunes" class="quarto-xref">Tabla&nbsp;5</a>).</p>
+<div id="tbl-z-comunes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-z-comunes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;5: Cuantiles de la normal estándar de uso frecuente.
+</figcaption>
+<div aria-describedby="tbl-z-comunes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 49%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Probabilidad acumulada <span class="math inline">\(\Phi(z)\)</span></th>
+<th style="text-align: center;">0,90</th>
+<th style="text-align: center;">0,95</th>
+<th style="text-align: center;">0,975</th>
+<th style="text-align: center;">0,99</th>
+<th style="text-align: center;">0,995</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cuantil <span class="math inline">\(z\)</span></td>
+<td style="text-align: center;">1,282</td>
+<td style="text-align: center;">1,645</td>
+<td style="text-align: center;">1,960</td>
+<td style="text-align: center;">2,326</td>
+<td style="text-align: center;">2,576</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">320</span>, <span class="at">mean =</span> <span class="dv">250</span>, <span class="at">sd =</span> <span class="dv">50</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)   <span class="co"># P(X &gt; 320)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08075666</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">300</span>, <span class="dv">250</span>, <span class="dv">50</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">200</span>, <span class="dv">250</span>, <span class="dv">50</span>)            <span class="co"># P(200 &lt; X &lt; 300)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6826895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="at">mean =</span> <span class="dv">250</span>, <span class="at">sd =</span> <span class="dv">50</span>)                     <span class="co"># percentil 95</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 332.2427</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.95</span>, <span class="fl">0.975</span>, <span class="fl">0.99</span>, <span class="fl">0.995</span>))             <span class="co"># cuantiles de Z</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.281552 1.644854 1.959964 2.326348 2.575829</code></pre>
+</div>
+</div>
+</section>
+<section id="se-ajustan-los-datos-a-una-normal" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="se-ajustan-los-datos-a-una-normal"><span class="header-section-number">8.3</span> ¿Se ajustan los datos a una normal?</h3>
+<p>En la práctica, la normal es un <strong>modelo</strong>: nunca se ajusta perfectamente a datos reales, pero muchas veces lo hace lo bastante bien como para ser útil. Veámoslo con los tiempos de entrega de la pizzería del capítulo 1, cuya media es 34,23 minutos y su desviación estándar 6,46 minutos. La <a href="#fig-pizza-normal" class="quarto-xref">Figura&nbsp;8</a> superpone al histograma la densidad de una normal con esos parámetros.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-pizza-normal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pizza-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-pizza-normal-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pizza-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8: Histograma de densidad de los 1266 tiempos de entrega de la pizzería, con la densidad normal de igual media y desviación estándar.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>El ajuste es muy bueno. Por ejemplo, en los datos el 25,0 % de las entregas tardó como máximo 30 minutos, y la normal predice <span class="math inline">\(P(X \le 30) = \Phi\big((30 - 34{,}23)/6{,}46\big) \approx 0{,}256\)</span>; el 18,0 % tardó más de 40 minutos, y la normal predice 0,186.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="La normal como aproximación de la binomial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+La normal como aproximación de la binomial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando <span class="math inline">\(n\)</span> es grande, la binomial <span class="math inline">\(\text{Bin}(n, p)\)</span> tiene forma de campana (véase la <a href="#fig-binomial" class="quarto-xref">Figura&nbsp;2</a> con <span class="math inline">\(p = 0{,}5\)</span>) y puede aproximarse con una normal de media <span class="math inline">\(np\)</span> y varianza <span class="math inline">\(np(1-p)\)</span>. Como regla práctica, la aproximación es buena si <span class="math inline">\(np \ge 5\)</span> y <span class="math inline">\(n(1 - p) \ge 5\)</span>. Este resultado es un caso particular del teorema central del límite, que estudiaremos en el capítulo 4.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="distribución-exponencial" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="distribución-exponencial"><span class="header-section-number">9</span> Distribución exponencial</h2>
+<p>La distribución exponencial modela el <strong>tiempo que transcurre hasta que ocurre un evento</strong>: el tiempo entre dos llamadas a una central, la duración de un componente electrónico hasta que falla, o el tiempo entre la llegada de dos clientes a un cajero <span class="citation" data-cites="walpole2012">(<a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 194</a>)</span>.</p>
+<div id="def-exponencial" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 16 (Distribución exponencial)</strong></span> Una variable aleatoria <span class="math inline">\(X\)</span> tiene <strong>distribución exponencial</strong> con parámetro <span class="math inline">\(\lambda &gt; 0\)</span>, lo que se escribe <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, si su densidad es <span class="math display">\[
+f(x) = \lambda e^{-\lambda x}, \qquad x \ge 0,
+\]</span> y cero para <span class="math inline">\(x &lt; 0\)</span>. Su función de distribución acumulada, su media y su varianza son <span class="math display">\[
+F(x) = 1 - e^{-\lambda x},
+\qquad
+E(X) = \frac{1}{\lambda},
+\qquad
+V(X) = \frac{1}{\lambda^2} .
+\]</span></p>
+</div>
+<p>El parámetro <span class="math inline">\(\lambda\)</span> es una <strong>tasa</strong> (eventos por unidad de tiempo), y su inverso, <span class="math inline">\(1/\lambda\)</span>, es el tiempo promedio entre eventos. La distribución es siempre asimétrica a la derecha: los tiempos cortos son los más probables, pero de vez en cuando se presentan tiempos muy largos (<a href="#fig-exponencial" class="quarto-xref">Figura&nbsp;9</a>). Como la desviación estándar es igual a la media, su coeficiente de variación es siempre 100 %.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-exponencial" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-exponencial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap3-distribuciones_files/figure-html/fig-exponencial-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-exponencial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9: Densidad de la distribución exponencial para tres valores del parámetro.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="exm-exponencial" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 10</strong></span> <strong>Vida útil de un componente.</strong> La duración de un componente electrónico tiene distribución exponencial con media 1000 horas, es decir, <span class="math inline">\(\lambda = 1/1000\)</span> fallas por hora.</p>
+<ol type="a">
+<li>Probabilidad de que dure más de 1500 horas: <span class="math inline">\(P(X &gt; 1500) = 1 - F(1500) = e^{-1500/1000} = e^{-1{,}5} \approx 0{,}223\)</span>.</li>
+<li>Probabilidad de que falle en las primeras 500 horas: <span class="math inline">\(P(X \le 500) = 1 - e^{-0{,}5} \approx 0{,}393\)</span>.</li>
+</ol>
+</div>
+<section id="relación-con-la-distribución-de-poisson" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="relación-con-la-distribución-de-poisson"><span class="header-section-number">9.1</span> Relación con la distribución de Poisson</h3>
+<p>La exponencial y la Poisson son dos caras del mismo fenómeno: si los eventos ocurren según un proceso de Poisson con una tasa de <span class="math inline">\(\lambda\)</span> eventos por unidad de tiempo, el <strong>número</strong> de eventos en una unidad de tiempo es <span class="math inline">\(\text{Poisson}(\lambda)\)</span> y el <strong>tiempo</strong> entre dos eventos consecutivos es <span class="math inline">\(\text{Exp}(\lambda)\)</span>.</p>
+<p>Retomemos la central del <a href="#exm-poisson" class="quarto-xref">Ejemplo&nbsp;6</a>, que recibe en promedio 3 llamadas por minuto. El tiempo entre llamadas es <span class="math inline">\(\text{Exp}(3)\)</span>, con media <span class="math inline">\(1/3\)</span> de minuto, es decir, 20 segundos. La probabilidad de esperar más de un minuto hasta la siguiente llamada es <span class="math inline">\(P(X &gt; 1) = e^{-3} \approx 0{,}050\)</span>, exactamente la probabilidad de que en un minuto no llegue ninguna llamada, que calculamos con la Poisson. Las dos distribuciones dan respuestas coherentes, como debe ser.</p>
+</section>
+<section id="la-propiedad-de-falta-de-memoria" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="la-propiedad-de-falta-de-memoria"><span class="header-section-number">9.2</span> La propiedad de falta de memoria</h3>
+<p>La exponencial tiene una propiedad que la distingue de todas las demás distribuciones continuas.</p>
+<div id="thm-falta-memoria" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 5 (Falta de memoria)</strong></span> Si <span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, entonces para cualesquiera <span class="math inline">\(s, t &gt; 0\)</span> <span class="math display">\[
+P(X &gt; s + t \mid X &gt; s) = P(X &gt; t) .
+\]</span></p>
+</div>
+<p>En palabras: si un componente con vida exponencial ya funcionó <span class="math inline">\(s\)</span> horas, la probabilidad de que funcione <span class="math inline">\(t\)</span> horas más es la misma que tenía al estrenarlo. El componente “no envejece”. La demostración es una aplicación directa de la probabilidad condicional: <span class="math display">\[
+P(X &gt; s + t \mid X &gt; s) = \frac{P(X &gt; s + t)}{P(X &gt; s)} = \frac{e^{-\lambda(s + t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X &gt; t) .
+\]</span> Por eso la exponencial es un buen modelo para componentes electrónicos, que fallan por causas accidentales, pero no para piezas mecánicas que se desgastan con el uso.</p>
+</section>
+</section>
+<section id="distribuciones-de-probabilidad-con-r" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="distribuciones-de-probabilidad-con-r"><span class="header-section-number">10</span> Distribuciones de probabilidad con R</h2>
+<p>R trae funciones para todas las distribuciones de este capítulo, y todas siguen el mismo patrón: el nombre de la distribución precedido de una de cuatro letras (<a href="#tbl-funciones-r-dist" class="quarto-xref">Tabla&nbsp;6</a>).</p>
+<div id="tbl-funciones-r-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-funciones-r-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;6: Las cuatro funciones de R para cada distribución.
+</figcaption>
+<div aria-describedby="tbl-funciones-r-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 42%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Prefijo</th>
+<th style="text-align: left;">Calcula</th>
+<th style="text-align: left;">Ejemplo con la normal</th>
+<th style="text-align: left;">Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>d</code></td>
+<td style="text-align: left;">Función de probabilidad o de densidad</td>
+<td style="text-align: left;"><code>dnorm(x, mean, sd)</code></td>
+<td style="text-align: left;"><span class="math inline">\(p(x)\)</span> o <span class="math inline">\(f(x)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>p</code></td>
+<td style="text-align: left;">Función de distribución acumulada</td>
+<td style="text-align: left;"><code>pnorm(q, mean, sd)</code></td>
+<td style="text-align: left;"><span class="math inline">\(P(X \le q)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>q</code></td>
+<td style="text-align: left;">Cuantil (inversa de la acumulada)</td>
+<td style="text-align: left;"><code>qnorm(p, mean, sd)</code></td>
+<td style="text-align: left;">el valor <span class="math inline">\(q\)</span> con <span class="math inline">\(P(X \le q) = p\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>r</code></td>
+<td style="text-align: left;">Números aleatorios (simulación)</td>
+<td style="text-align: left;"><code>rnorm(n, mean, sd)</code></td>
+<td style="text-align: left;">una muestra simulada de tamaño <span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="tbl-nombres-r-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nombres-r-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;7: Nombres y parámetros de las distribuciones en R.
+</figcaption>
+<div aria-describedby="tbl-nombres-r-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribución</th>
+<th style="text-align: left;">Nombre en R</th>
+<th style="text-align: left;">Parámetros en R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Binomial, <span class="math inline">\(\text{Bin}(n, p)\)</span></td>
+<td style="text-align: left;"><code>binom</code></td>
+<td style="text-align: left;"><code>size</code> <span class="math inline">\(= n\)</span>, <code>prob</code> <span class="math inline">\(= p\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poisson, <span class="math inline">\(\text{Poisson}(\lambda)\)</span></td>
+<td style="text-align: left;"><code>pois</code></td>
+<td style="text-align: left;"><code>lambda</code> <span class="math inline">\(= \lambda\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipergeométrica, <span class="math inline">\(\text{Hip}(N, K, n)\)</span></td>
+<td style="text-align: left;"><code>hyper</code></td>
+<td style="text-align: left;"><code>m</code> <span class="math inline">\(= K\)</span>, <code>n</code> <span class="math inline">\(= N - K\)</span>, <code>k</code> <span class="math inline">\(= n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uniforme, <span class="math inline">\(U(a, b)\)</span></td>
+<td style="text-align: left;"><code>unif</code></td>
+<td style="text-align: left;"><code>min</code> <span class="math inline">\(= a\)</span>, <code>max</code> <span class="math inline">\(= b\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Normal, <span class="math inline">\(N(\mu, \sigma^2)\)</span></td>
+<td style="text-align: left;"><code>norm</code></td>
+<td style="text-align: left;"><code>mean</code> <span class="math inline">\(= \mu\)</span>, <code>sd</code> <span class="math inline">\(= \sigma\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exponencial, <span class="math inline">\(\text{Exp}(\lambda)\)</span></td>
+<td style="text-align: left;"><code>exp</code></td>
+<td style="text-align: left;"><code>rate</code> <span class="math inline">\(= \lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="La normal en R usa la desviación estándar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+La normal en R usa la desviación estándar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escribimos <span class="math inline">\(N(\mu, \sigma^2)\)</span> con la <strong>varianza</strong>, pero las funciones de R reciben la <strong>desviación estándar</strong> (<code>sd</code>). Para <span class="math inline">\(N(250, 2500)\)</span> se escribe <code>pnorm(x, mean = 250, sd = 50)</code>, no <code>sd = 2500</code>.</p>
+</div>
+</div>
+<p>Por defecto, las funciones <code>p</code> calculan la probabilidad acumulada a la izquierda, <span class="math inline">\(P(X \le q)\)</span>. Con el argumento <code>lower.tail = FALSE</code> calculan la cola derecha, <span class="math inline">\(P(X &gt; q)\)</span>. En variables <strong>discretas</strong> hay que tener cuidado con los extremos: <span class="math inline">\(P(X \ge 3) = 1 - P(X \le 2)\)</span>, que en R es <code>1 - pbinom(2, ...)</code> o <code>pbinom(2, ..., lower.tail = FALSE)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exponencial: componente con vida media de 1000 horas</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pexp</span>(<span class="dv">1500</span>, <span class="at">rate =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1000</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)    <span class="co"># P(X &gt; 1500)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2231302</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uniforme: espera del bus</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">punif</span>(<span class="dv">10</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="co"># P(X &gt; 10)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3333333</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación: 5 tiempos de espera del bus y 5 puntajes de la prueba</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2027</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">15</span>), <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2.6  6.0  3.7 10.5  4.4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">250</span>, <span class="at">sd =</span> <span class="dv">50</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 225 235 318 260 275</code></pre>
+</div>
+</div>
+<p>Las funciones <code>r</code> serán fundamentales en el capítulo 4, donde las usaremos para simular muestras y estudiar cómo se comportan sus estadísticos.</p>
+<p>La <a href="#tbl-continuas" class="quarto-xref">Tabla&nbsp;8</a> resume las distribuciones continuas del capítulo.</p>
+<div id="tbl-continuas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-continuas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8: Resumen de las distribuciones continuas.
+</figcaption>
+<div aria-describedby="tbl-continuas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribución</th>
+<th style="text-align: left;">Uso típico</th>
+<th style="text-align: left;">Parámetros</th>
+<th style="text-align: center;"><span class="math inline">\(E(X)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(V(X)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Uniforme, <span class="math inline">\(U(a, b)\)</span></td>
+<td style="text-align: left;">Valores igualmente probables en un intervalo</td>
+<td style="text-align: left;"><span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{a+b}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{(b-a)^2}{12}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normal, <span class="math inline">\(N(\mu, \sigma^2)\)</span></td>
+<td style="text-align: left;">Mediciones, errores, promedios</td>
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exponencial, <span class="math inline">\(\text{Exp}(\lambda)\)</span></td>
+<td style="text-align: left;">Tiempo hasta un evento</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{\lambda}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{\lambda^2}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="ejercicios-propuestos" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ejercicios-propuestos"><span class="header-section-number">11</span> Ejercicios propuestos</h2>
+<section id="variables-aleatorias-discretas-valor-esperado-y-varianza" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="variables-aleatorias-discretas-valor-esperado-y-varianza"><span class="header-section-number">11.1</span> Variables aleatorias discretas, valor esperado y varianza</h3>
+<ol type="1">
+<li><p>Se lanzan dos monedas. Sea <span class="math inline">\(X\)</span> el número de caras. Construya la tabla que asigna un valor de <span class="math inline">\(X\)</span> a cada resultado del espacio muestral, su función de probabilidad y su función de distribución acumulada, y calcule <span class="math inline">\(E(X)\)</span> y <span class="math inline">\(V(X)\)</span>.</p></li>
+<li><p>Determine el valor de <span class="math inline">\(c\)</span> para que <span class="math inline">\(p(x) = c\,(x + 1)\)</span>, con <span class="math inline">\(x = 0, 1, 2, 3\)</span>, sea una función de probabilidad. Luego calcule <span class="math inline">\(P(X \ge 2)\)</span>, <span class="math inline">\(E(X)\)</span> y <span class="math inline">\(V(X)\)</span>.</p></li>
+<li><p>El número de pizzas de un pedido en la pizzería del capítulo 1 tiene, aproximadamente, la siguiente distribución:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(p(x)\)</span></td>
+<td style="text-align: center;">0,10</td>
+<td style="text-align: center;">0,25</td>
+<td style="text-align: center;">0,30</td>
+<td style="text-align: center;">0,25</td>
+<td style="text-align: center;">0,10</td>
+</tr>
+</tbody>
+</table>
+<ol type="a">
+<li>Verifique que es una función de probabilidad.</li>
+<li>Calcule el número esperado de pizzas por pedido y su desviación estándar.</li>
+<li>Si cada pizza cuesta 30 000 pesos y el domicilio 5000 pesos, ¿cuál es el valor esperado de un pedido? Use las propiedades del valor esperado.</li>
+</ol></li>
+<li><p>En una rifa se venden 1000 boletas a 10 000 pesos cada una. Hay un premio de 3 millones y dos premios de 1 millón. ¿Cuál es la ganancia esperada de una persona que compra una boleta? ¿Es un “juego justo”?</p></li>
+</ol>
+</section>
+<section id="distribuciones-binomial-de-poisson-e-hipergeométrica" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="distribuciones-binomial-de-poisson-e-hipergeométrica"><span class="header-section-number">11.2</span> Distribuciones binomial, de Poisson e hipergeométrica</h3>
+<ol start="5" type="1">
+<li><p>El 30 % de los clientes de un banco usa la aplicación móvil para pagar sus facturas. Si se eligen 12 clientes al azar:</p>
+<ol type="a">
+<li>¿cuál es la probabilidad de que exactamente 4 usen la aplicación?</li>
+<li>¿cuál es la probabilidad de que al menos 3 la usen?</li>
+<li>¿cuántos se espera que la usen? ¿Con qué desviación estándar? Resuelva a mano y verifique con <code>dbinom()</code> y <code>pbinom()</code>.</li>
+</ol></li>
+<li><p>Un examen tiene 10 preguntas de selección múltiple con cuatro opciones cada una. Un estudiante responde todas al azar.</p>
+<ol type="a">
+<li>¿Cuál es la probabilidad de que acierte 6 o más?</li>
+<li>¿Cuántas respuestas correctas se esperan?</li>
+</ol></li>
+<li><p>En una intersección ocurren en promedio 2 accidentes por semana. Suponiendo una distribución de Poisson, calcule la probabilidad de que:</p>
+<ol type="a">
+<li>en una semana no ocurra ningún accidente;</li>
+<li>en una semana ocurran más de 3;</li>
+<li>en dos semanas ocurran a lo sumo 2.</li>
+</ol></li>
+<li><p>Con los datos de llamadas por minuto del ejercicio 8 del capítulo 1, calcule la media y la varianza. ¿Son parecidas, como lo exige el modelo de Poisson? Compare las frecuencias relativas observadas con las probabilidades de una <span class="math inline">\(\text{Poisson}(\lambda)\)</span>, con <span class="math inline">\(\lambda\)</span> igual a la media de los datos.</p></li>
+<li><p>Un comité de 5 personas se elige al azar entre 8 ingenieros y 6 economistas. Sea <span class="math inline">\(X\)</span> el número de economistas en el comité.</p>
+<ol type="a">
+<li>¿Qué distribución tiene <span class="math inline">\(X\)</span>? Identifique sus parámetros.</li>
+<li>Calcule <span class="math inline">\(P(X = 2)\)</span> y <span class="math inline">\(P(X \ge 1)\)</span>.</li>
+<li>Calcule <span class="math inline">\(E(X)\)</span> y <span class="math inline">\(V(X)\)</span>.</li>
+</ol></li>
+<li><p>Una auditoría revisa 15 facturas elegidas al azar entre 200, de las cuales 12 tienen errores. Calcule la probabilidad de que la auditoría encuentre al menos una factura con errores usando la distribución hipergeométrica, y compárela con la aproximación binomial. ¿Es buena la aproximación? Justifique con la regla práctica.</p></li>
+</ol>
+</section>
+<section id="distribuciones-continuas" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="distribuciones-continuas"><span class="header-section-number">11.3</span> Distribuciones continuas</h3>
+<ol start="11" type="1">
+<li>El tiempo, en minutos, que tarda un estudiante en responder un cuestionario en línea tiene distribución uniforme entre 20 y 50 minutos.
+<ol type="a">
+<li>Escriba la función de densidad y dibújela.</li>
+<li>¿Cuál es la probabilidad de que tarde más de 40 minutos?</li>
+<li>Calcule la media y la desviación estándar del tiempo.</li>
+</ol></li>
+<li>El peso de los paquetes de café que llena una máquina tiene distribución normal con media 500 g y desviación estándar 8 g.
+<ol type="a">
+<li>¿Qué porcentaje de los paquetes pesa menos de 490 g?</li>
+<li>¿Qué porcentaje pesa entre 495 y 510 g?</li>
+<li>¿Por debajo de qué peso está el 2 % de los paquetes más livianos?</li>
+<li>Si la norma exige que a lo sumo el 1 % de los paquetes pese menos de 490 g, ¿en qué valor debe calibrarse la media de la máquina, manteniendo la misma desviación estándar?</li>
+</ol></li>
+<li>Los ingresos mensuales de los trabajadores de un sector tienen distribución normal con media 3,2 millones de pesos y desviación estándar 0,6 millones.
+<ol type="a">
+<li>¿Qué proporción de los trabajadores gana más de 4 millones?</li>
+<li>¿Cuál es el ingreso que separa al 10 % de los trabajadores que más ganan?</li>
+<li>En la práctica, los ingresos suelen ser asimétricos a la derecha. ¿Qué consecuencias tendría usar la normal como modelo en ese caso?</li>
+</ol></li>
+<li>Con la base <code>pizza_delivery.xlsx</code>:
+<ol type="a">
+<li>Construya el histograma de densidad de la temperatura de las pizzas y superponga la densidad normal con la media y la desviación estándar de los datos.</li>
+<li>Compare el porcentaje de pizzas que llegaron a menos de 65 °C en los datos con la probabilidad que predice la normal.</li>
+<li>¿Le parece razonable el modelo normal para la temperatura?</li>
+</ol></li>
+<li>Los clientes llegan a un cajero automático a una tasa promedio de 12 por hora, según un proceso de Poisson.
+<ol type="a">
+<li>¿Cuál es el tiempo promedio entre la llegada de dos clientes?</li>
+<li>¿Cuál es la probabilidad de que pasen más de 10 minutos sin que llegue ningún cliente? Resuélvalo con la exponencial y con la Poisson, y compare.</li>
+<li>Si ya pasaron 5 minutos sin clientes, ¿cuál es la probabilidad de que pasen al menos 10 minutos más? Use la falta de memoria.</li>
+</ol></li>
+<li>La vida útil de una batería tiene distribución exponencial con media de 3 años. El fabricante ofrece una garantía de reemplazo si la batería falla durante el primer año.
+<ol type="a">
+<li>¿Qué porcentaje de las baterías tendrá que reemplazar?</li>
+<li>¿Qué garantía debería ofrecer si quiere reemplazar como máximo el 10 % de las baterías?</li>
+</ol></li>
+<li><strong>Simulación en R.</strong> Genere con <code>rexp()</code> 1000 tiempos de una <span class="math inline">\(\text{Exp}(0{,}5)\)</span>. Construya su histograma de densidad, superponga la densidad teórica con <code>stat_function()</code> y compare la media y la desviación estándar de los datos simulados con los valores teóricos.</li>
+</ol>
+</section>
+</section>
+<section id="referencias" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referencias">Referencias</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-devore2008" class="csl-entry" role="listitem">
+Devore, J. L. (2008). <em>Probabilidad y estadística para ingeniería y ciencias</em> (7.ª ed.). Cengage Learning.
+</div>
+<div id="ref-montgomery2018" class="csl-entry" role="listitem">
+Montgomery, D. C., &amp; Runger, G. C. (2018). <em>Applied Statistics and Probability for Engineers</em> (7.ª ed.). Wiley.
+</div>
+<div id="ref-walpole2012" class="csl-entry" role="listitem">
+Walpole, R. E., Myers, R. H., Myers, S. L., &amp; Ye, K. (2012). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Pearson Educación.
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/fabiosepulveda\.github\.io\/estadistica1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Estadística I · Escuela de Matemáticas · Universidad Industrial de Santander</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

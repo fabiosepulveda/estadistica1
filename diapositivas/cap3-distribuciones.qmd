@@ -1,0 +1,677 @@
+---
+title: "Capítulo 3: Variables aleatorias y distribuciones de probabilidad"
+subtitle: "Estadística I"
+author: "Fabio Humberto Sepúlveda Murillo"
+institute: "Escuela de Matemáticas · Universidad Industrial de Santander"
+format:
+  revealjs:
+    menu:
+      side: left
+    transition: fade
+    code-overflow: wrap
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+theme_set(theme_minimal(base_size = 18))
+```
+
+## Contenido
+
+:::: {.columns}
+::: {.column width="50%"}
+1. Variables aleatorias
+2. Distribuciones discretas
+3. Valor esperado y varianza
+4. Distribución binomial
+5. Distribución de Poisson
+:::
+::: {.column width="50%"}
+6. Distribución hipergeométrica
+7. Distribuciones continuas
+8. Distribución normal
+9. Distribución exponencial
+10. Distribuciones con R
+:::
+::::
+
+## De los datos a los modelos
+
+:::: {.columns}
+::: {.column width="50%"}
+**Capítulo 1: datos observados**
+
+- Frecuencias relativas $h_i$
+- Media $\bar{x}$, desviación $s$
+- Histograma, ojiva
+:::
+::: {.column width="50%"}
+**Capítulo 3: modelos de probabilidad**
+
+- Probabilidades $p(x)$
+- Valor esperado $\mu$, desviación $\sigma$
+- Densidad $f(x)$, acumulada $F(x)$
+:::
+::::
+
+. . .
+
+Un **modelo** describe cómo se comportaría una variable si pudiéramos
+observarla infinitas veces. Sus características son los **parámetros**
+que aprenderemos a estimar en Estadística II.
+
+# Variables aleatorias {background-color="#2c5d8f"}
+
+## Variable aleatoria
+
+Una **variable aleatoria** asigna un número real a cada resultado del
+espacio muestral. Se denota con mayúscula ($X$); sus valores, con
+minúscula ($x$).
+
+. . .
+
+$X$ = número de piezas defectuosas entre tres:
+
+| Resultado | $NNN$ | $NND$ | $NDN$ | $DNN$ | $NDD$ | $DND$ | $DDN$ | $DDD$ |
+|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| $X$ | 0 | 1 | 1 | 1 | 2 | 2 | 2 | 3 |
+
+. . .
+
+:::: {.columns}
+::: {.column width="50%"}
+**Discreta:** valores que se pueden enumerar; surge de **contar**.
+:::
+::: {.column width="50%"}
+**Continua:** cualquier valor en un intervalo; surge de **medir**.
+:::
+::::
+
+# Distribuciones discretas {background-color="#2c5d8f"}
+
+## Función de probabilidad
+
+$$
+p(x) = P(X = x), \qquad p(x) \ge 0, \qquad \sum_{x} p(x) = 1
+$$
+
+Cada pieza es defectuosa con probabilidad 0,1, independientemente:
+
+:::: {.columns}
+::: {.column width="45%"}
+| $x$ | $p(x)$ | $F(x)$ |
+|:--:|:--:|:--:|
+| 0 | 0,729 | 0,729 |
+| 1 | 0,243 | 0,972 |
+| 2 | 0,027 | 0,999 |
+| 3 | 0,001 | 1 |
+:::
+::: {.column width="55%"}
+```{r}
+#| echo: false
+#| fig-width: 5.5
+#| fig-height: 3.8
+#| fig-align: center
+piezas <- data.frame(x = 0:3, p = dbinom(0:3, size = 3, prob = 0.1))
+ggplot(piezas, aes(x = x, y = p)) +
+  geom_segment(aes(xend = x, yend = 0), linewidth = 1.2, color = "steelblue") +
+  geom_point(size = 3, color = "steelblue") +
+  scale_x_continuous(breaks = 0:3) +
+  labs(x = "x (número de piezas defectuosas)", y = "p(x) = P(X = x)")
+```
+:::
+::::
+
+## Función de distribución acumulada
+
+$$
+F(x) = P(X \le x) = \sum_{t \le x} p(t)
+\qquad\qquad
+P(a < X \le b) = F(b) - F(a)
+$$
+
+- Es la versión teórica de la **frecuencia relativa acumulada** $H_i$ y de
+  la **ojiva** del capítulo 1.
+- A lo sumo una defectuosa: $F(1) = 0{,}972$.
+- Al menos una: $1 - F(0) = 0{,}271$.
+
+# Valor esperado y varianza {background-color="#2c5d8f"}
+
+## Valor esperado
+
+$$
+\mu = E(X) = \sum_{x} x\, p(x)
+$$
+
+- Promedio de los valores, **ponderado** por sus probabilidades.
+- Valor al que tiende el promedio si el experimento se repite muchas veces.
+- Compare: $\bar{x} = \sum x_i h_i$ (capítulo 1).
+
+. . .
+
+$$
+\sigma^2 = V(X) = \sum_{x} (x - \mu)^2 p(x) = E(X^2) - \mu^2
+$$
+
+## Ejemplo: piezas defectuosas
+
+::: {.incremental}
+- $E(X) = 0(0{,}729) + 1(0{,}243) + 2(0{,}027) + 3(0{,}001) = 0{,}3$
+- $E(X^2) = 0(0{,}729) + 1(0{,}243) + 4(0{,}027) + 9(0{,}001) = 0{,}36$
+- $V(X) = 0{,}36 - 0{,}3^2 = 0{,}27$, $\quad \sigma \approx 0{,}52$
+:::
+
+. . .
+
+En muchos grupos de tres piezas, se encuentran en promedio **0,3**
+defectuosas por grupo.
+
+## ¿Por qué ganan las aseguradoras?
+
+Póliza de vida a un año: cuesta **500 000** pesos. Si el asegurado fallece
+(probabilidad 0,002), se pagan **100 millones**.
+
+. . .
+
+$$
+E(G) = 500\,000 \times 0{,}998 + (-99\,500\,000) \times 0{,}002 = 300\,000
+$$
+
+. . .
+
+En **una** póliza se puede perder mucho; en **miles** de pólizas, se
+ganan en promedio 300 000 pesos por cada una.
+
+. . .
+
+**Propiedades:** $\quad E(aX + b) = a\,E(X) + b \qquad V(aX + b) = a^2\,V(X)$
+
+# Distribución binomial {background-color="#2c5d8f"}
+
+## Experimento binomial
+
+1. $n$ ensayos, fijo.
+2. Cada ensayo: **éxito** o **fracaso** (ensayo de Bernoulli).
+3. Probabilidad de éxito $p$ constante.
+4. Ensayos **independientes**.
+
+. . .
+
+$X$ = número de éxitos, $\quad X \sim \text{Bin}(n, p)$:
+$$
+P(X = x) = \binom{n}{x} p^x (1 - p)^{n - x}, \qquad x = 0, 1, \ldots, n
+$$
+$$
+E(X) = np \qquad\qquad V(X) = np(1 - p)
+$$
+
+. . .
+
+¿Por qué $\binom{n}{x}$? Hay ${}_{n}C_{x}$ formas de ubicar los $x$ éxitos.
+
+## Ejemplo: control de calidad
+
+5 % de piezas defectuosas; muestra de 10: $X \sim \text{Bin}(10;\ 0{,}05)$.
+
+::: {.incremental}
+- $P(X = 0) = 0{,}95^{10} \approx 0{,}599$
+- $P(X = 1) = 10 \times 0{,}05 \times 0{,}95^{9} \approx 0{,}315$
+- $P(X \ge 2) = 1 - 0{,}599 - 0{,}315 = 0{,}086$
+- $E(X) = 0{,}5$ defectuosas, $\sigma \approx 0{,}69$
+:::
+
+. . .
+
+```{r}
+#| echo: true
+dbinom(0:1, size = 10, prob = 0.05)
+1 - pbinom(1, size = 10, prob = 0.05)
+```
+
+## La forma depende de $p$
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4
+#| fig-align: center
+binom_df <- do.call(rbind, lapply(c(0.1, 0.5, 0.8), function(p) {
+  data.frame(x = 0:10, prob = dbinom(0:10, size = 10, prob = p),
+             p = paste("p =", format(p, decimal.mark = ",")))
+}))
+ggplot(binom_df, aes(x = x, y = prob)) +
+  geom_segment(aes(xend = x, yend = 0), linewidth = 1, color = "steelblue") +
+  geom_point(size = 2, color = "steelblue") +
+  facet_wrap(~ p) +
+  scale_x_continuous(breaks = seq(0, 10, by = 2)) +
+  labs(x = "x", y = "P(X = x)")
+```
+
+Asimétrica a la derecha si $p$ es pequeño, simétrica si $p = 0{,}5$,
+asimétrica a la izquierda si $p$ es grande.
+
+# Distribución de Poisson {background-color="#2c5d8f"}
+
+## Ocurrencias en un intervalo
+
+Llamadas por minuto, accidentes por día, defectos por metro de tela…
+
+$$
+P(X = x) = \frac{e^{-\lambda} \lambda^x}{x!}, \qquad x = 0, 1, 2, \ldots
+\qquad\qquad
+E(X) = V(X) = \lambda
+$$
+
+. . .
+
+Central con 3 llamadas por minuto en promedio, $X \sim \text{Poisson}(3)$:
+
+::: {.incremental}
+- Ninguna llamada: $P(X = 0) = e^{-3} \approx 0{,}050$
+- A lo sumo dos: $P(X \le 2) \approx 0{,}423$
+- Más de cinco: $P(X > 5) \approx 0{,}084$
+- En **dos** minutos: $\text{Poisson}(6)$
+:::
+
+## Forma y aproximación
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.8
+#| fig-align: center
+pois_df <- do.call(rbind, lapply(c(1, 4, 10), function(l) {
+  data.frame(x = 0:20, prob = dpois(0:20, lambda = l),
+             lambda = paste("lambda =", l))
+}))
+pois_df$lambda <- factor(pois_df$lambda, levels = paste("lambda =", c(1, 4, 10)))
+ggplot(pois_df, aes(x = x, y = prob)) +
+  geom_segment(aes(xend = x, yend = 0), linewidth = 0.9, color = "steelblue") +
+  geom_point(size = 1.8, color = "steelblue") +
+  facet_wrap(~ lambda) +
+  labs(x = "x", y = "P(X = x)")
+```
+
+::: {.callout-tip title="La ley de los eventos raros"}
+Si $n$ es grande y $p$ pequeño: $\text{Bin}(n, p) \approx \text{Poisson}(np)$.
+$\text{Bin}(1000;\ 0{,}002)$: $P(X \le 1) = 0{,}4057$; Poisson(2): $0{,}4060$.
+:::
+
+# Distribución hipergeométrica {background-color="#2c5d8f"}
+
+## Muestreo sin reemplazo
+
+Población de $N$ elementos con $K$ éxitos; muestra de $n$ **sin
+reemplazo**. $X \sim \text{Hip}(N, K, n)$:
+
+$$
+P(X = x) = \frac{\binom{K}{x}\binom{N - K}{n - x}}{\binom{N}{n}}
+\qquad
+E(X) = np, \quad V(X) = np(1 - p)\frac{N - n}{N - 1}, \quad p = \frac{K}{N}
+$$
+
+. . .
+
+Lote de 20 piezas con 4 defectuosas, se eligen 3: $\text{Hip}(20, 4, 3)$
+
+| $x$ | 0 | 1 | 2 | 3 |
+|:--|:--:|:--:|:--:|:--:|
+| $P(X = x)$ | 0,491 | 0,421 | 0,084 | 0,004 |
+
+## ¿Binomial o hipergeométrica?
+
+- Si $n/N < 0{,}05$, la binomial con $p = K/N$ es una buena aproximación.
+- Lote de 1000 con 100 defectuosas, se eligen 10:
+  hipergeométrica 0,3469; binomial 0,3487.
+
+. . .
+
+::: {.callout-warning title="Cuidado en R"}
+En `dhyper(x, m, n, k)`: `m` $= K$, `n` $= N - K$, `k` $=$ tamaño de la
+muestra. ¡La `n` de R **no** es nuestra $n$!
+:::
+
+```{r}
+#| echo: true
+dhyper(0:3, m = 4, n = 16, k = 3)
+```
+
+## Resumen: distribuciones discretas
+
+| Distribución | Cuenta | $E(X)$ | $V(X)$ | R |
+|:--|:--|:--:|:--:|:--|
+| $\text{Bin}(n, p)$ | Éxitos en $n$ ensayos | $np$ | $np(1-p)$ | `binom` |
+| $\text{Poisson}(\lambda)$ | Ocurrencias en un intervalo | $\lambda$ | $\lambda$ | `pois` |
+| $\text{Hip}(N, K, n)$ | Éxitos sin reemplazo | $np$ | $np(1-p)\frac{N-n}{N-1}$ | `hyper` |
+
+# Distribuciones continuas {background-color="#2c5d8f"}
+
+## Del histograma a la curva
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.8
+#| fig-align: center
+set.seed(42)
+tam <- c(100, 1000, 100000)
+sims <- do.call(rbind, lapply(tam, function(n) {
+  data.frame(x = rnorm(n, mean = 34, sd = 6.5),
+             muestra = paste("n =", format(n, big.mark = ".", scientific = FALSE)))
+}))
+sims$muestra <- factor(sims$muestra, levels = unique(sims$muestra))
+bins <- c(8, 20, 60)
+ggplot(sims, aes(x = x)) +
+  geom_histogram(data = subset(sims, muestra == levels(muestra)[1]),
+                 aes(y = after_stat(density)), bins = bins[1],
+                 fill = "lightsteelblue", color = "white") +
+  geom_histogram(data = subset(sims, muestra == levels(muestra)[2]),
+                 aes(y = after_stat(density)), bins = bins[2],
+                 fill = "lightsteelblue", color = "white") +
+  geom_histogram(data = subset(sims, muestra == levels(muestra)[3]),
+                 aes(y = after_stat(density)), bins = bins[3],
+                 fill = "lightsteelblue", color = "white") +
+  stat_function(fun = dnorm, args = list(mean = 34, sd = 6.5),
+                color = "firebrick", linewidth = 0.9) +
+  facet_wrap(~ muestra) +
+  labs(x = "x", y = "Densidad")
+```
+
+La curva límite es la **función de densidad** $f(x)$.
+
+## Función de densidad
+
+1. $f(x) \ge 0$
+2. Área total igual a 1: $\int_{-\infty}^{\infty} f(x)\,dx = 1$
+3. La probabilidad es un **área**: $P(a \le X \le b) = \int_{a}^{b} f(x)\,dx$
+
+. . .
+
+::: {.callout-important title="Consecuencia"}
+$P(X = a) = 0$: el área sobre un punto es cero. Por eso, en variables
+continuas, "menos de" y "como máximo" dan lo mismo.
+:::
+
+. . .
+
+$$
+F(x) = \int_{-\infty}^{x} f(t)\,dt
+\qquad
+\mu = \int x\,f(x)\,dx
+\qquad
+\sigma^2 = \int (x - \mu)^2 f(x)\,dx
+$$
+
+## Distribución uniforme
+
+$X \sim U(a, b)$: $\quad f(x) = \dfrac{1}{b - a}$, $\quad E(X) = \dfrac{a + b}{2}$, $\quad V(X) = \dfrac{(b - a)^2}{12}$
+
+. . .
+
+Un bus pasa cada 15 minutos: espera $X \sim U(0, 15)$.
+
+:::: {.columns}
+::: {.column width="55%"}
+```{r}
+#| echo: false
+#| fig-width: 6
+#| fig-height: 3
+#| fig-align: center
+ggplot() +
+  annotate("rect", xmin = 10, xmax = 15, ymin = 0, ymax = 1/15,
+           fill = "steelblue", alpha = 0.5) +
+  annotate("segment", x = 0, xend = 15, y = 1/15, yend = 1/15,
+           color = "steelblue", linewidth = 1.2) +
+  annotate("segment", x = c(-2, 15), xend = c(0, 17), y = 0, yend = 0,
+           color = "steelblue", linewidth = 1.2) +
+  annotate("text", x = 12.5, y = 0.035, label = "P(X > 10) = 1/3") +
+  scale_x_continuous(breaks = seq(0, 15, by = 5)) +
+  labs(x = "Tiempo de espera (minutos)", y = "f(x)")
+```
+:::
+::: {.column width="45%"}
+- $P(X > 10) = \frac{5}{15} = \frac{1}{3}$
+- $E(X) = 7{,}5$ minutos
+- $\sigma \approx 4{,}33$ minutos
+:::
+::::
+
+# Distribución normal {background-color="#2c5d8f"}
+
+## La distribución más importante
+
+$X \sim N(\mu, \sigma^2)$:
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}\; e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}
+$$
+
+```{r}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 3.6
+#| fig-align: center
+x <- seq(-8, 12, length.out = 500)
+normales <- rbind(
+  data.frame(x = x, y = dnorm(x, 0, 1.5), curva = "Media 0, desviación 1,5",
+             panel = "Cambia la media"),
+  data.frame(x = x, y = dnorm(x, 4, 1.5), curva = "Media 4, desviación 1,5",
+             panel = "Cambia la media"),
+  data.frame(x = x, y = dnorm(x, 2, 1), curva = "Media 2, desviación 1",
+             panel = "Cambia la desviación estándar"),
+  data.frame(x = x, y = dnorm(x, 2, 2.5), curva = "Media 2, desviación 2,5",
+             panel = "Cambia la desviación estándar")
+)
+normales$panel <- factor(normales$panel,
+                         levels = c("Cambia la media", "Cambia la desviación estándar"))
+ggplot(normales, aes(x = x, y = y, color = curva)) +
+  geom_line(linewidth = 1) +
+  facet_wrap(~ panel) +
+  labs(x = "x", y = "f(x)", color = NULL) +
+  theme(legend.position = "bottom")
+```
+
+Campana simétrica: media = mediana = moda $= \mu$.
+
+## Estandarización
+
+$$
+Z = \frac{X - \mu}{\sigma} \sim N(0, 1)
+\qquad\qquad
+P(X \le x) = \Phi\!\left(\frac{x - \mu}{\sigma}\right)
+$$
+
+$z$ = a cuántas desviaciones estándar está $x$ de la media.
+
+. . .
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.4
+#| fig-align: center
+z <- seq(-4, 4, length.out = 600)
+dens <- data.frame(z = z, f = dnorm(z))
+ggplot(dens, aes(x = z, y = f)) +
+  geom_area(data = subset(dens, abs(z) <= 3), fill = "steelblue", alpha = 0.2) +
+  geom_area(data = subset(dens, abs(z) <= 2), fill = "steelblue", alpha = 0.3) +
+  geom_area(data = subset(dens, abs(z) <= 1), fill = "steelblue", alpha = 0.5) +
+  geom_line(linewidth = 1) +
+  annotate("text", x = 0, y = 0.17, label = "68,27 %", size = 4.5) +
+  annotate("text", x = 0, y = 0.05, label = "95,45 %", size = 4) +
+  annotate("text", x = 3.4, y = 0.04, label = "99,73 %\nentre -3 y 3", size = 3.6) +
+  scale_x_continuous(breaks = -3:3) +
+  labs(x = "z", y = "Densidad")
+```
+
+La regla empírica del capítulo 1, **demostrada**: 68-95-99,7.
+
+## Ejemplo: puntajes de una prueba
+
+Puntajes $X \sim N(250,\ 50^2)$.
+
+::: {.incremental}
+- Más de 320: $z = 1{,}4$, $\quad P(Z > 1{,}4) = 0{,}0808$
+- Entre 200 y 300: $P(-1 < Z < 1) = 0{,}6827$
+- Percentil 95: $x = 250 + 1{,}645 \times 50 \approx 332$
+:::
+
+. . .
+
+| $\Phi(z)$ | 0,90 | 0,95 | 0,975 | 0,99 | 0,995 |
+|:--|:--:|:--:|:--:|:--:|:--:|
+| $z$ | 1,282 | 1,645 | 1,960 | 2,326 | 2,576 |
+
+. . .
+
+```{r}
+#| echo: true
+pnorm(320, mean = 250, sd = 50, lower.tail = FALSE)
+qnorm(0.95, mean = 250, sd = 50)
+```
+
+## ¿Son normales los tiempos de entrega?
+
+:::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 4
+#| fig-align: center
+pizza <- readxl::read_excel("datos/pizza_delivery.xlsx")
+ggplot(pizza, aes(x = time)) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 2.5,
+                 fill = "lightsteelblue", color = "white") +
+  stat_function(fun = dnorm,
+                args = list(mean = mean(pizza$time), sd = sd(pizza$time)),
+                color = "firebrick", linewidth = 1) +
+  labs(x = "Tiempo de entrega (minutos)", y = "Densidad")
+```
+:::
+::: {.column width="40%"}
+Normal con $\bar{x} = 34{,}23$ y $s = 6{,}46$:
+
+| | Datos | Normal |
+|:--|:--:|:--:|
+| $\le 30$ min | 0,250 | 0,256 |
+| $> 40$ min | 0,180 | 0,186 |
+
+El modelo funciona muy bien.
+:::
+::::
+
+# Distribución exponencial {background-color="#2c5d8f"}
+
+## Tiempo hasta un evento
+
+$X \sim \text{Exp}(\lambda)$:
+$$
+f(x) = \lambda e^{-\lambda x}, \quad x \ge 0
+\qquad
+F(x) = 1 - e^{-\lambda x}
+\qquad
+E(X) = \frac{1}{\lambda}, \quad V(X) = \frac{1}{\lambda^2}
+$$
+
+```{r}
+#| echo: false
+#| fig-width: 8
+#| fig-height: 3.4
+#| fig-align: center
+x <- seq(0, 6, length.out = 400)
+expo <- rbind(data.frame(x = x, y = dexp(x, 0.5), tasa = "Tasa 0,5 (media 2)"),
+              data.frame(x = x, y = dexp(x, 1),   tasa = "Tasa 1 (media 1)"),
+              data.frame(x = x, y = dexp(x, 2),   tasa = "Tasa 2 (media 0,5)"))
+ggplot(expo, aes(x = x, y = y, color = tasa)) +
+  geom_line(linewidth = 1) +
+  labs(x = "x", y = "f(x)", color = NULL) +
+  theme(legend.position = "bottom")
+```
+
+## Ejemplos
+
+**Vida útil** con media 1000 horas ($\lambda = 1/1000$):
+
+::: {.incremental}
+- Dura más de 1500 h: $e^{-1{,}5} \approx 0{,}223$
+- Falla antes de 500 h: $1 - e^{-0{,}5} \approx 0{,}393$
+:::
+
+. . .
+
+**Relación con la Poisson:** 3 llamadas por minuto →
+tiempo entre llamadas $\text{Exp}(3)$, media 20 segundos.
+
+$P(\text{esperar más de 1 minuto}) = e^{-3} = P(\text{ninguna llamada en 1 minuto})$
+
+## Falta de memoria
+
+$$
+P(X > s + t \mid X > s) = P(X > t)
+$$
+
+. . .
+
+Un componente que ya funcionó $s$ horas tiene la **misma** probabilidad de
+durar $t$ horas más que uno nuevo: "no envejece".
+
+. . .
+
+Buen modelo para fallas **accidentales** (componentes electrónicos), no
+para piezas que se **desgastan**.
+
+# Distribuciones con R {background-color="#2c5d8f"}
+
+## Cuatro prefijos, seis distribuciones
+
+:::: {.columns}
+::: {.column width="50%"}
+| Prefijo | Calcula |
+|:--:|:--|
+| `d` | $p(x)$ o $f(x)$ |
+| `p` | $P(X \le q)$ |
+| `q` | cuantiles |
+| `r` | simulación |
+:::
+::: {.column width="50%"}
+| Distribución | R |
+|:--|:--|
+| Binomial | `binom` |
+| Poisson | `pois` |
+| Hipergeométrica | `hyper` |
+| Uniforme | `unif` |
+| Normal | `norm` |
+| Exponencial | `exp` |
+:::
+::::
+
+::: {.callout-warning title="Cuidado"}
+`pnorm(x, mean, sd)` recibe la **desviación estándar**, no la varianza.
+Cola derecha: `lower.tail = FALSE`.
+:::
+
+## Ejemplos en R
+
+```{r}
+#| echo: true
+pexp(1500, rate = 1/1000, lower.tail = FALSE)    # componente
+punif(10, min = 0, max = 15, lower.tail = FALSE) # bus
+set.seed(2027)
+round(rnorm(5, mean = 250, sd = 50))             # 5 puntajes simulados
+```
+
+Las funciones `r` serán la base del **capítulo 4**: distribuciones
+muestrales.
+
+## Para practicar
+
+- Los **17 ejercicios** del capítulo están en los apuntes.
+- Incluyen seguros, rifas, bancos, accidentes, auditorías, café, ingresos,
+  cajeros, baterías y la base de la pizzería.
+
+## Referencias {.smaller .scrollable}
+
+::: {#refs}
+:::

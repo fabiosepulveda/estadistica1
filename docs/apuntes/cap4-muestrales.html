@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Capítulo 4: Distribuciones muestrales – Estadística I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-80108d5cb44f5b9fc79a3a6e84303618.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-249f407ffdbc08f6e4c3f777220c47f4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-80108d5cb44f5b9fc79a3a6e84303618.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Estadística I</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../programa.html"> 
+<span class="menu-text">Programa</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-apuntes" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Apuntes</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-apuntes">    
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap1-descriptiva.html">
+ <span class="dropdown-text">1. Estadística descriptiva</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap2-probabilidad.html">
+ <span class="dropdown-text">2. Teoría de la probabilidad</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap3-distribuciones.html">
+ <span class="dropdown-text">3. Variables aleatorias y distribuciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../apuntes/cap4-muestrales.html">
+ <span class="dropdown-text">4. Distribuciones muestrales</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapositivas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Diapositivas</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-diapositivas">    
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap1-descriptiva.html">
+ <span class="dropdown-text">1. Estadística descriptiva</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap2-probabilidad.html">
+ <span class="dropdown-text">2. Teoría de la probabilidad</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap3-distribuciones.html">
+ <span class="dropdown-text">3. Variables aleatorias y distribuciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../diapositivas/cap4-muestrales.html">
+ <span class="dropdown-text">4. Distribuciones muestrales</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fabiosepulveda/estadistica1"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#población-muestra-y-muestreo" id="toc-población-muestra-y-muestreo" class="nav-link active" data-scroll-target="#población-muestra-y-muestreo"><span class="header-section-number">1</span> Población, muestra y muestreo</a>
+  <ul class="collapse">
+  <li><a href="#un-recordatorio" id="toc-un-recordatorio" class="nav-link" data-scroll-target="#un-recordatorio"><span class="header-section-number">1.1</span> Un recordatorio</a></li>
+  <li><a href="#muestreo-probabilístico-y-no-probabilístico" id="toc-muestreo-probabilístico-y-no-probabilístico" class="nav-link" data-scroll-target="#muestreo-probabilístico-y-no-probabilístico"><span class="header-section-number">1.2</span> Muestreo probabilístico y no probabilístico</a></li>
+  <li><a href="#técnicas-de-muestreo-probabilístico" id="toc-técnicas-de-muestreo-probabilístico" class="nav-link" data-scroll-target="#técnicas-de-muestreo-probabilístico"><span class="header-section-number">1.3</span> Técnicas de muestreo probabilístico</a></li>
+  <li><a href="#técnicas-de-muestreo-no-probabilístico" id="toc-técnicas-de-muestreo-no-probabilístico" class="nav-link" data-scroll-target="#técnicas-de-muestreo-no-probabilístico"><span class="header-section-number">1.4</span> Técnicas de muestreo no probabilístico</a></li>
+  <li><a href="#la-técnica-que-usaremos-en-el-resto-del-curso" id="toc-la-técnica-que-usaremos-en-el-resto-del-curso" class="nav-link" data-scroll-target="#la-técnica-que-usaremos-en-el-resto-del-curso"><span class="header-section-number">1.5</span> La técnica que usaremos en el resto del curso</a></li>
+  </ul></li>
+  <li><a href="#estadísticos-y-distribuciones-muestrales" id="toc-estadísticos-y-distribuciones-muestrales" class="nav-link" data-scroll-target="#estadísticos-y-distribuciones-muestrales"><span class="header-section-number">2</span> Estadísticos y distribuciones muestrales</a>
+  <ul class="collapse">
+  <li><a href="#un-ejemplo-pequeño-con-todas-las-muestras" id="toc-un-ejemplo-pequeño-con-todas-las-muestras" class="nav-link" data-scroll-target="#un-ejemplo-pequeño-con-todas-las-muestras"><span class="header-section-number">2.1</span> Un ejemplo pequeño, con todas las muestras</a></li>
+  <li><a href="#un-ejemplo-grande-por-simulación" id="toc-un-ejemplo-grande-por-simulación" class="nav-link" data-scroll-target="#un-ejemplo-grande-por-simulación"><span class="header-section-number">2.2</span> Un ejemplo grande, por simulación</a></li>
+  </ul></li>
+  <li><a href="#distribución-muestral-de-la-media" id="toc-distribución-muestral-de-la-media" class="nav-link" data-scroll-target="#distribución-muestral-de-la-media"><span class="header-section-number">3</span> Distribución muestral de la media</a></li>
+  <li><a href="#teorema-central-del-límite" id="toc-teorema-central-del-límite" class="nav-link" data-scroll-target="#teorema-central-del-límite"><span class="header-section-number">4</span> Teorema central del límite</a></li>
+  <li><a href="#distribución-muestral-de-la-proporción" id="toc-distribución-muestral-de-la-proporción" class="nav-link" data-scroll-target="#distribución-muestral-de-la-proporción"><span class="header-section-number">5</span> Distribución muestral de la proporción</a></li>
+  <li><a href="#distribución-chi-cuadrado" id="toc-distribución-chi-cuadrado" class="nav-link" data-scroll-target="#distribución-chi-cuadrado"><span class="header-section-number">6</span> Distribución chi-cuadrado</a>
+  <ul class="collapse">
+  <li><a href="#cuantiles-de-la-chi-cuadrado" id="toc-cuantiles-de-la-chi-cuadrado" class="nav-link" data-scroll-target="#cuantiles-de-la-chi-cuadrado"><span class="header-section-number">6.1</span> Cuantiles de la chi-cuadrado</a></li>
+  </ul></li>
+  <li><a href="#distribución-t-de-student" id="toc-distribución-t-de-student" class="nav-link" data-scroll-target="#distribución-t-de-student"><span class="header-section-number">7</span> Distribución t de Student</a></li>
+  <li><a href="#distribución-f" id="toc-distribución-f" class="nav-link" data-scroll-target="#distribución-f"><span class="header-section-number">8</span> Distribución F</a></li>
+  <li><a href="#distribuciones-muestrales-con-r" id="toc-distribuciones-muestrales-con-r" class="nav-link" data-scroll-target="#distribuciones-muestrales-con-r"><span class="header-section-number">9</span> Distribuciones muestrales con R</a>
+  <ul class="collapse">
+  <li><a href="#simular-distribuciones-muestrales" id="toc-simular-distribuciones-muestrales" class="nav-link" data-scroll-target="#simular-distribuciones-muestrales"><span class="header-section-number">9.1</span> Simular distribuciones muestrales</a></li>
+  <li><a href="#funciones-de-las-distribuciones-muestrales" id="toc-funciones-de-las-distribuciones-muestrales" class="nav-link" data-scroll-target="#funciones-de-las-distribuciones-muestrales"><span class="header-section-number">9.2</span> Funciones de las distribuciones muestrales</a></li>
+  <li><a href="#resumen-del-capítulo" id="toc-resumen-del-capítulo" class="nav-link" data-scroll-target="#resumen-del-capítulo"><span class="header-section-number">9.3</span> Resumen del capítulo</a></li>
+  </ul></li>
+  <li><a href="#ejercicios-propuestos" id="toc-ejercicios-propuestos" class="nav-link" data-scroll-target="#ejercicios-propuestos"><span class="header-section-number">10</span> Ejercicios propuestos</a>
+  <ul class="collapse">
+  <li><a href="#muestreo" id="toc-muestreo" class="nav-link" data-scroll-target="#muestreo"><span class="header-section-number">10.1</span> Muestreo</a></li>
+  <li><a href="#distribución-muestral-de-la-media-y-teorema-central-del-límite" id="toc-distribución-muestral-de-la-media-y-teorema-central-del-límite" class="nav-link" data-scroll-target="#distribución-muestral-de-la-media-y-teorema-central-del-límite"><span class="header-section-number">10.2</span> Distribución muestral de la media y teorema central del límite</a></li>
+  <li><a href="#distribución-muestral-de-la-proporción-1" id="toc-distribución-muestral-de-la-proporción-1" class="nav-link" data-scroll-target="#distribución-muestral-de-la-proporción-1"><span class="header-section-number">10.3</span> Distribución muestral de la proporción</a></li>
+  <li><a href="#distribuciones-chi-cuadrado-t-y-f" id="toc-distribuciones-chi-cuadrado-t-y-f" class="nav-link" data-scroll-target="#distribuciones-chi-cuadrado-t-y-f"><span class="header-section-number">10.4</span> Distribuciones chi-cuadrado, t y F</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="cap4-muestrales.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Capítulo 4: Distribuciones muestrales</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="Objetivos del capítulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Objetivos del capítulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al terminar este capítulo, usted estará en capacidad de:</p>
+<ul>
+<li>distinguir entre muestreo probabilístico y no probabilístico, y describir las principales técnicas de muestreo;</li>
+<li>definir el muestreo aleatorio simple y el concepto de muestra aleatoria, que se usarán en el resto del curso;</li>
+<li>entender por qué un estadístico es una variable aleatoria y qué es su distribución muestral;</li>
+<li>describir la distribución muestral de la media y de la proporción;</li>
+<li>comprender y aplicar el teorema central del límite;</li>
+<li>conocer las distribuciones chi-cuadrado, t de Student y F, y su papel en la inferencia;</li>
+<li>usar R para seleccionar muestras y simular distribuciones muestrales.</li>
+</ul>
+</div>
+</div>
+<p>En los capítulos 2 y 3 calculamos probabilidades suponiendo que conocíamos el modelo y sus parámetros: la proporción <span class="math inline">\(p\)</span> de piezas defectuosas, la media <span class="math inline">\(\mu\)</span> y la desviación estándar <span class="math inline">\(\sigma\)</span> de una normal. En la práctica ocurre lo contrario: los parámetros de la población son <strong>desconocidos</strong>, y lo único que tenemos es una muestra. Este capítulo construye el puente entre las dos situaciones: estudia cómo se comportan los estadísticos calculados con muestras aleatorias, y es la base sobre la que se apoyan la estimación y las pruebas de hipótesis, que se estudiarán en el curso de Estadística II <span class="citation" data-cites="walpole2012">(<a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 233</a>)</span>.</p>
+<section id="población-muestra-y-muestreo" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="población-muestra-y-muestreo"><span class="header-section-number">1</span> Población, muestra y muestreo</h2>
+<section id="un-recordatorio" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="un-recordatorio"><span class="header-section-number">1.1</span> Un recordatorio</h3>
+<p>En el capítulo 1 definimos la <strong>población</strong> como el conjunto completo de unidades de interés, de tamaño <span class="math inline">\(N\)</span>, y la <strong>muestra</strong> como el subconjunto que efectivamente se observa, de tamaño <span class="math inline">\(n\)</span>. Vimos también que una medida calculada con toda la población es un <strong>parámetro</strong>, fijo pero generalmente desconocido, mientras que una calculada con la muestra es un <strong>estadístico</strong>, que se conoce pero cambia de una muestra a otra. Y advertimos que, para que una muestra permita sacar conclusiones confiables sobre la población, debe ser <strong>representativa</strong>. La pregunta ahora es: ¿cómo se elige una muestra para que lo sea?</p>
+<div id="def-muestreo" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 1 (Muestreo)</strong></span> El <strong>muestreo</strong> es el procedimiento mediante el cual se selecciona una muestra de una población. Para llevarlo a cabo se necesita un <strong>marco muestral</strong>: un listado o mecanismo que identifica a todas las unidades de la población y del cual se extrae la muestra, como el listado de estudiantes matriculados, el directorio de empresas de una ciudad o la base de datos de clientes de un banco.</p>
+</div>
+</section>
+<section id="muestreo-probabilístico-y-no-probabilístico" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="muestreo-probabilístico-y-no-probabilístico"><span class="header-section-number">1.2</span> Muestreo probabilístico y no probabilístico</h3>
+<div id="def-tipos-muestreo" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 2 (Muestreo probabilístico y no probabilístico)</strong></span> En un <strong>muestreo probabilístico</strong>, cada unidad de la población tiene una probabilidad <strong>conocida y mayor que cero</strong> de ser seleccionada, y la selección se hace mediante un mecanismo aleatorio. En un <strong>muestreo no probabilístico</strong>, la selección depende del criterio del investigador, de la disponibilidad de las unidades o de su decisión de participar, de modo que no es posible conocer la probabilidad de selección de cada unidad.</p>
+</div>
+<p>La diferencia es fundamental. Solo con un muestreo probabilístico se pueden usar las herramientas de la probabilidad para <strong>cuantificar el error</strong> de las conclusiones: decir, por ejemplo, que una estimación tiene un margen de error de 3 puntos porcentuales con una confianza del 95 %. En un muestreo no probabilístico, en cambio, no hay forma de saber qué tan lejos de la realidad pueden estar los resultados, porque la muestra puede tener <strong>sesgos de selección</strong> desconocidos <span class="citation" data-cites="anderson2008">(<a href="#ref-anderson2008" role="doc-biblioref">Anderson et&nbsp;al., 2008, pp. 262, 290</a>)</span>.</p>
+</section>
+<section id="técnicas-de-muestreo-probabilístico" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="técnicas-de-muestreo-probabilístico"><span class="header-section-number">1.3</span> Técnicas de muestreo probabilístico</h3>
+<p>Las técnicas probabilísticas más usadas son las siguientes. Para ilustrarlas, supongamos que se quiere estudiar a los 20 000 estudiantes de una universidad.</p>
+<ul>
+<li><strong>Muestreo aleatorio simple.</strong> Se eligen <span class="math inline">\(n\)</span> unidades del marco muestral de tal forma que todas las muestras posibles de tamaño <span class="math inline">\(n\)</span> tengan la misma probabilidad de ser seleccionadas, como en un sorteo. Ejemplo: se eligen 400 estudiantes al azar del listado de matriculados.</li>
+<li><strong>Muestreo sistemático.</strong> Se ordena el marco muestral, se elige al azar un punto de partida entre las primeras <span class="math inline">\(k = N/n\)</span> unidades y, a partir de él, se toma una de cada <span class="math inline">\(k\)</span>. Ejemplo: con <span class="math inline">\(k = 50\)</span>, si el punto de partida es el estudiante 17, se eligen el 17, el 67, el 117, y así sucesivamente. Es muy práctico en controles de calidad de líneas de producción.</li>
+<li><strong>Muestreo estratificado.</strong> La población se divide en grupos homogéneos, llamados <strong>estratos</strong>, y se toma una muestra aleatoria simple dentro de cada uno. Ejemplo: se divide a los estudiantes por facultad y se elige una muestra en cada facultad, lo que garantiza que todas queden representadas. Suele dar estimaciones más precisas que el muestreo aleatorio simple.</li>
+<li><strong>Muestreo por conglomerados.</strong> La población está naturalmente organizada en grupos, llamados <strong>conglomerados</strong>, que se parecen entre sí; se elige al azar una muestra de conglomerados y se estudian todas sus unidades. Ejemplo: se eligen al azar 20 grupos de clase y se encuesta a todos sus estudiantes. Reduce costos cuando la población está muy dispersa.</li>
+<li><strong>Muestreo polietápico.</strong> Combina las técnicas anteriores en varias etapas. Ejemplo: se eligen municipios, dentro de ellos manzanas y dentro de ellas hogares. Las grandes encuestas oficiales, como la Gran Encuesta Integrada de Hogares del DANE, usan diseños de este tipo.</li>
+</ul>
+<p>Observe la diferencia entre estratos y conglomerados: en el muestreo estratificado se toman unidades de <strong>todos</strong> los estratos, que son grupos distintos entre sí; en el muestreo por conglomerados se toman <strong>algunos</strong> conglomerados completos, que deberían parecerse entre sí.</p>
+</section>
+<section id="técnicas-de-muestreo-no-probabilístico" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="técnicas-de-muestreo-no-probabilístico"><span class="header-section-number">1.4</span> Técnicas de muestreo no probabilístico</h3>
+<ul>
+<li><strong>Muestreo por conveniencia.</strong> Se eligen las unidades más fáciles de conseguir. Ejemplo: encuestar a los estudiantes que pasan por la cafetería a las 10 de la mañana.</li>
+<li><strong>Muestreo intencional o por juicio.</strong> El investigador elige las unidades que considera representativas o informativas. Ejemplo: entrevistar a los profesores que el investigador considera expertos en un tema.</li>
+<li><strong>Muestreo por cuotas.</strong> Se fija de antemano cuántas unidades de cada grupo se deben incluir (por ejemplo, tantos hombres y tantas mujeres de cada facultad), pero dentro de cada grupo se eligen por conveniencia.</li>
+<li><strong>Muestreo de bola de nieve.</strong> Cada participante recomienda a otros. Se usa para poblaciones difíciles de ubicar, como trabajadores informales de un sector o personas con una enfermedad poco frecuente.</li>
+<li><strong>Muestras autoseleccionadas.</strong> Las unidades deciden si participan, como en las encuestas abiertas en redes sociales o en una página web.</li>
+</ul>
+<p>Estas técnicas son útiles en estudios exploratorios, en investigación cualitativa o cuando no existe un marco muestral, pero sus resultados no pueden generalizarse a la población con un margen de error conocido <span class="citation" data-cites="anderson2008">(<a href="#ref-anderson2008" role="doc-biblioref">Anderson et&nbsp;al., 2008, p. 290</a>)</span>. La <a href="#tbl-tecnicas-muestreo" class="quarto-xref">Tabla&nbsp;1</a> resume las técnicas.</p>
+<div id="tbl-tecnicas-muestreo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tecnicas-muestreo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;1: Principales técnicas de muestreo.
+</figcaption>
+<div aria-describedby="tbl-tecnicas-muestreo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Técnica</th>
+<th style="text-align: left;">Idea central</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Probabilístico</td>
+<td style="text-align: left;">Aleatorio simple</td>
+<td style="text-align: left;">Todas las muestras de tamaño <span class="math inline">\(n\)</span> son igualmente probables</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Probabilístico</td>
+<td style="text-align: left;">Sistemático</td>
+<td style="text-align: left;">Una de cada <span class="math inline">\(k\)</span> unidades, con arranque aleatorio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probabilístico</td>
+<td style="text-align: left;">Estratificado</td>
+<td style="text-align: left;">Muestra aleatoria dentro de cada estrato</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Probabilístico</td>
+<td style="text-align: left;">Por conglomerados</td>
+<td style="text-align: left;">Se eligen grupos completos al azar</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probabilístico</td>
+<td style="text-align: left;">Polietápico</td>
+<td style="text-align: left;">Varias etapas de selección</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No probabilístico</td>
+<td style="text-align: left;">Por conveniencia</td>
+<td style="text-align: left;">Las unidades más accesibles</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No probabilístico</td>
+<td style="text-align: left;">Intencional</td>
+<td style="text-align: left;">Elegidas por el criterio del investigador</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">No probabilístico</td>
+<td style="text-align: left;">Por cuotas</td>
+<td style="text-align: left;">Cuotas por grupo, llenadas por conveniencia</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">No probabilístico</td>
+<td style="text-align: left;">Bola de nieve</td>
+<td style="text-align: left;">Los participantes reclutan a otros</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="la-técnica-que-usaremos-en-el-resto-del-curso" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="la-técnica-que-usaremos-en-el-resto-del-curso"><span class="header-section-number">1.5</span> La técnica que usaremos en el resto del curso</h3>
+<p>Los métodos de estimación y de pruebas de hipótesis que se estudiarán en Estadística II suponen que los datos provienen de un <strong>muestreo aleatorio simple</strong>. Las demás técnicas probabilísticas requieren fórmulas ajustadas a su diseño, que se estudian en cursos de muestreo.</p>
+<div id="def-mas" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3 (Muestreo aleatorio simple)</strong></span> Una muestra de tamaño <span class="math inline">\(n\)</span> de una población de tamaño <span class="math inline">\(N\)</span> es una <strong>muestra aleatoria simple</strong> si se selecciona de manera que <strong>todas</strong> las muestras posibles de tamaño <span class="math inline">\(n\)</span> tienen la misma probabilidad de ser elegidas. Si el muestreo es <strong>sin reemplazo</strong>, hay <span class="math inline">\({}_{N}C_{n} = \binom{N}{n}\)</span> muestras posibles, y cada una tiene probabilidad <span class="math inline">\(1/\binom{N}{n}\)</span>. Si es <strong>con reemplazo</strong>, por el principio multiplicativo hay <span class="math inline">\(N^n\)</span> muestras posibles (secuencias ordenadas, en las que una misma unidad puede aparecer más de una vez), y cada una tiene probabilidad <span class="math inline">\(1/N^n\)</span>.</p>
+</div>
+<p>Observe la conexión con las técnicas de conteo del capítulo 2: el número de muestras posibles es una combinación. Por ejemplo, de una población de 20 piezas se pueden extraer <span class="math inline">\({}_{20}C_{3} = 1140\)</span> muestras distintas de tamaño 3 sin reemplazo, y <span class="math inline">\(20^3 = 8000\)</span> con reemplazo.</p>
+<p>Para desarrollar la teoría conviene expresar el muestreo aleatorio simple en términos de variables aleatorias. Antes de seleccionar la muestra, el valor que se observará en la primera unidad es desconocido: es una variable aleatoria <span class="math inline">\(X_1\)</span>; lo mismo ocurre con la segunda, <span class="math inline">\(X_2\)</span>, y así sucesivamente.</p>
+<div id="def-muestra-aleatoria" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4 (Muestra aleatoria)</strong></span> Las variables aleatorias <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> forman una <strong>muestra aleatoria</strong> de tamaño <span class="math inline">\(n\)</span> de una población con distribución <span class="math inline">\(f(x)\)</span> si son <strong>independientes</strong> y cada una tiene la <strong>misma distribución</strong> <span class="math inline">\(f(x)\)</span> de la población. Se dice que son <strong>independientes e idénticamente distribuidas</strong>, lo que se abrevia <strong>i.i.d.</strong></p>
+</div>
+<p>Una muestra aleatoria simple con reemplazo produce exactamente una muestra aleatoria i.i.d. Sin reemplazo, las extracciones no son estrictamente independientes (recuerde el ejemplo de las piezas del capítulo 2), pero cuando la población es mucho mayor que la muestra (como regla práctica, <span class="math inline">\(n/N &lt; 0{,}05\)</span>), la diferencia es despreciable y se trabaja como si lo fueran. Este es el <strong>modelo</strong> que supondremos en el resto del curso.</p>
+<p>En R, una muestra aleatoria simple de un marco muestral se selecciona con la función <code>sample()</code>, que conocimos en el capítulo 2. Por ejemplo, para elegir 8 de las 1266 entregas de la pizzería:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pizza <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/pizza_delivery.xlsx"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2027</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(pizza), <span class="at">size =</span> <span class="dv">8</span>)   <span class="co"># números de fila elegidos</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>seleccion</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1224  987  696  406  491 1064  916  249</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pizza[seleccion, <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"branch"</span>, <span class="st">"time"</span>, <span class="st">"temperature"</span>)]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+     id branch  time temperature
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+1  1224 East    25.7        73.3
+2   987 East    27          48.2
+3   696 East    37.4        62.9
+4   406 West    27.6        57  
+5   491 Centre  38.4        53  
+6  1064 West    40.6        61.5
+7   916 Centre  40.9        61.9
+8   249 West    40.5        55.5</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Muestras sistemáticas y estratificadas en R">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Muestras sistemáticas y estratificadas en R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una muestra sistemática de una de cada <span class="math inline">\(k\)</span> filas se obtiene con <code>seq(inicio, nrow(datos), by = k)</code>, donde <code>inicio</code> es <code>sample(1:k, 1)</code>. Para muestras estratificadas y diseños más complejos existen paquetes especializados, como <code>sampling</code> y <code>survey</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="estadísticos-y-distribuciones-muestrales" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="estadísticos-y-distribuciones-muestrales"><span class="header-section-number">2</span> Estadísticos y distribuciones muestrales</h2>
+<div id="def-estadistico-va" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 5 (Estadístico)</strong></span> Un <strong>estadístico</strong> es cualquier función de las variables de una muestra aleatoria <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> que no depende de parámetros desconocidos. Los más importantes son la <strong>media muestral</strong> y la <strong>varianza muestral</strong>, <span class="math display">\[
+\bar{X} = \frac{1}{n}\sum_{i=1}^{n} X_i,
+\qquad
+S^2 = \frac{1}{n-1}\sum_{i=1}^{n} (X_i - \bar{X})^2,
+\]</span> y la <strong>proporción muestral</strong> <span class="math inline">\(\hat{p}\)</span>, la fracción de unidades de la muestra que tienen cierta característica.</p>
+</div>
+<p>Las fórmulas son las mismas del capítulo 1, pero ahora están escritas con <strong>mayúsculas</strong>: antes de seleccionar la muestra, <span class="math inline">\(\bar{X}\)</span> es una variable aleatoria, porque su valor depende de qué unidades resulten elegidas. Una vez seleccionada la muestra, se obtiene un número concreto, el <strong>valor observado</strong> del estadístico, que se escribe con minúscula, <span class="math inline">\(\bar{x}\)</span>. Como toda variable aleatoria, un estadístico tiene una distribución de probabilidad.</p>
+<div id="def-distribucion-muestral" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 6 (Distribución muestral)</strong></span> La <strong>distribución muestral</strong> de un estadístico es su distribución de probabilidad: describe todos los valores que puede tomar el estadístico, considerando todas las muestras posibles de tamaño <span class="math inline">\(n\)</span>, y la probabilidad de cada uno.</p>
+</div>
+<section id="un-ejemplo-pequeño-con-todas-las-muestras" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="un-ejemplo-pequeño-con-todas-las-muestras"><span class="header-section-number">2.1</span> Un ejemplo pequeño, con todas las muestras</h3>
+<p>Para ver qué es una distribución muestral, tomemos una población diminuta, en la que podamos listar todas las muestras. Una empresa tiene cinco empleados, con 2, 4, 6, 8 y 10 años de experiencia. La media de la población es <span class="math inline">\(\mu = 6\)</span> años y su varianza es <span class="math display">\[
+\sigma^2 = \frac{(2-6)^2 + (4-6)^2 + (6-6)^2 + (8-6)^2 + (10-6)^2}{5} = 8 .
+\]</span></p>
+<p>Si se toman muestras de tamaño <span class="math inline">\(n = 2\)</span> <strong>con reemplazo</strong>, por el principio multiplicativo hay <span class="math inline">\(5 \times 5 = 25\)</span> muestras posibles, todas igualmente probables. Calculando la media de cada una y contando cuántas veces aparece cada valor, se obtiene la distribución muestral de <span class="math inline">\(\bar{X}\)</span> de la <a href="#tbl-dist-muestral-pequena" class="quarto-xref">Tabla&nbsp;2</a>.</p>
+<div id="tbl-dist-muestral-pequena" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dist-muestral-pequena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;2: Distribución muestral de la media para muestras de tamaño 2, con reemplazo, de la población 2, 4, 6, 8, 10.
+</figcaption>
+<div aria-describedby="tbl-dist-muestral-pequena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(\bar{x}\)</span></th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+<th style="text-align: center;">8</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Número de muestras</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(P(\bar{X} = \bar{x})\)</span></td>
+<td style="text-align: center;">1/25</td>
+<td style="text-align: center;">2/25</td>
+<td style="text-align: center;">3/25</td>
+<td style="text-align: center;">4/25</td>
+<td style="text-align: center;">5/25</td>
+<td style="text-align: center;">4/25</td>
+<td style="text-align: center;">3/25</td>
+<td style="text-align: center;">2/25</td>
+<td style="text-align: center;">1/25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Por ejemplo, <span class="math inline">\(\bar{x} = 4\)</span> se obtiene con las muestras <span class="math inline">\((2, 6)\)</span>, <span class="math inline">\((6, 2)\)</span> y <span class="math inline">\((4, 4)\)</span>. Con esta distribución: <span class="math display">\[
+E(\bar{X}) = \sum \bar{x}\, P(\bar{X} = \bar{x}) = 6,
+\qquad
+V(\bar{X}) = \sum (\bar{x} - 6)^2\, P(\bar{X} = \bar{x}) = \frac{100}{25} = 4 .
+\]</span> Observe dos cosas. Primero, la media de la distribución muestral, 6, <strong>coincide con la media de la población</strong>. Segundo, su varianza, 4, es la varianza de la población <strong>dividida entre el tamaño de la muestra</strong>: <span class="math inline">\(8/2 = 4\)</span>. Además, mientras la población tiene una distribución “plana”, la de <span class="math inline">\(\bar{X}\)</span> se concentra alrededor de <span class="math inline">\(\mu\)</span> y tiene forma de triángulo (<a href="#fig-dist-muestral-pequena" class="quarto-xref">Figura&nbsp;1</a>). No es casualidad: son las tres propiedades que formalizaremos en las secciones siguientes.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dist-muestral-pequena" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dist-muestral-pequena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-dist-muestral-pequena-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dist-muestral-pequena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Izquierda: distribución de la población (años de experiencia). Derecha: distribución muestral de la media para muestras de tamaño 2.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="un-ejemplo-grande-por-simulación" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="un-ejemplo-grande-por-simulación"><span class="header-section-number">2.2</span> Un ejemplo grande, por simulación</h3>
+<p>Con poblaciones reales es imposible listar todas las muestras: de las 1266 entregas de la pizzería se pueden extraer <span class="math inline">\({}_{1266}C_{25} \approx 1{,}8 \times 10^{52}\)</span> muestras distintas de tamaño 25. Pero podemos <strong>simular</strong>: extraer con R miles de muestras, calcular la media de cada una y mirar su distribución. Tratemos las 1266 entregas como si fueran toda la población. Su tiempo medio de entrega es <span class="math inline">\(\mu = 34{,}23\)</span> minutos y su desviación estándar poblacional es <span class="math inline">\(\sigma = 6{,}46\)</span> minutos. La <a href="#fig-sim-pizza" class="quarto-xref">Figura&nbsp;2</a> muestra las medias de 5000 muestras aleatorias de tamaño 25.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-sim-pizza" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sim-pizza-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-sim-pizza-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sim-pizza-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Distribución de las medias de 5000 muestras aleatorias de tamaño 25 de los tiempos de entrega. La línea vertical marca la media de la población.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Cada muestra da una media distinta, pero todas se agrupan alrededor de la media de la población, con mucha menos dispersión que los tiempos individuales: mientras los tiempos de entrega se alejan en promedio unos 6,5 minutos de la media, las medias de muestras de tamaño 25 se alejan apenas alrededor de 1,3 minutos. Y la distribución de las medias tiene forma de campana.</p>
+</section>
+</section>
+<section id="distribución-muestral-de-la-media" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="distribución-muestral-de-la-media"><span class="header-section-number">3</span> Distribución muestral de la media</h2>
+<p>Las propiedades que observamos en los dos ejemplos valen en general.</p>
+<div id="thm-media-muestral" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 1 (Media y varianza de la media muestral)</strong></span> Si <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> es una muestra aleatoria de una población con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>, entonces <span class="math display">\[
+E(\bar{X}) = \mu
+\qquad \text{y} \qquad
+V(\bar{X}) = \frac{\sigma^2}{n} .
+\]</span></p>
+</div>
+<p>La primera igualdad dice que la media muestral no tiende a sobreestimar ni a subestimar a <span class="math inline">\(\mu\)</span>: en promedio, sobre todas las muestras posibles, acierta. La segunda dice que la variabilidad de <span class="math inline">\(\bar{X}\)</span> disminuye a medida que aumenta el tamaño de la muestra.</p>
+<div id="def-error-estandar" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 7 (Error estándar)</strong></span> La desviación estándar de la distribución muestral de un estadístico se llama <strong>error estándar</strong>. El error estándar de la media es <span class="math display">\[
+\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} .
+\]</span></p>
+</div>
+<p>Para la pizzería, el error estándar de la media con <span class="math inline">\(n = 25\)</span> es <span class="math inline">\(6{,}46/\sqrt{25} = 1{,}29\)</span> minutos, lo que coincide con lo que mostró la simulación. Como el tamaño de la muestra aparece dentro de una raíz cuadrada, para reducir el error estándar <strong>a la mitad</strong> hay que <strong>cuadruplicar</strong> el tamaño de la muestra. Esta relación tendrá un papel central cuando se calculen tamaños de muestra en Estadística II.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Muestreo sin reemplazo de una población finita">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Muestreo sin reemplazo de una población finita
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la muestra se toma sin reemplazo de una población de tamaño <span class="math inline">\(N\)</span>, la media sigue siendo <span class="math inline">\(E(\bar{X}) = \mu\)</span>, pero la varianza se multiplica por el <strong>factor de corrección por población finita</strong>, el mismo de la distribución hipergeométrica: <span class="math display">\[
+V(\bar{X}) = \frac{\sigma^2}{n} \cdot \frac{N - n}{N - 1} .
+\]</span> Si <span class="math inline">\(n/N &lt; 0{,}05\)</span>, el factor es prácticamente 1 y se puede omitir.</p>
+</div>
+</div>
+<p>Si además la población es normal, se conoce exactamente la forma de la distribución muestral.</p>
+<div id="thm-media-normal" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 2 (Media muestral de una población normal)</strong></span> Si <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> es una muestra aleatoria de una población <span class="math inline">\(N(\mu, \sigma^2)\)</span>, entonces, para cualquier tamaño de muestra, <span class="math display">\[
+\bar{X} \sim N\!\left(\mu, \frac{\sigma^2}{n}\right)
+\qquad \text{y} \qquad
+Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1) .
+\]</span></p>
+</div>
+<div id="exm-media-normal" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 1</strong></span> Una máquina llena botellas con un volumen que tiene distribución normal con media 500 ml y desviación estándar 8 ml.</p>
+<ol type="a">
+<li>La probabilidad de que <strong>una</strong> botella tenga menos de 495 ml es <span class="math inline">\(P(X &lt; 495) = P(Z &lt; -0{,}625) \approx 0{,}266\)</span>.</li>
+<li>Un inspector toma una muestra de <strong>16</strong> botellas. El error estándar de la media es <span class="math inline">\(8/\sqrt{16} = 2\)</span> ml, y la probabilidad de que el volumen <strong>promedio</strong> sea menor que 495 ml es <span class="math display">\[
+P(\bar{X} &lt; 495) = P\!\left(Z &lt; \frac{495 - 500}{2}\right) = P(Z &lt; -2{,}5) \approx 0{,}006 .
+\]</span></li>
+</ol>
+<p>Que una botella tenga menos de 495 ml es frecuente (una de cada cuatro), pero que el promedio de 16 lo tenga es muy raro. Si el inspector observara un promedio así, tendría buenas razones para sospechar que la máquina está mal calibrada: esa es, precisamente, la lógica de las pruebas de hipótesis, que se estudian en Estadística II.</p>
+</div>
+</section>
+<section id="teorema-central-del-límite" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="teorema-central-del-límite"><span class="header-section-number">4</span> Teorema central del límite</h2>
+<p>El resultado anterior exige que la población sea normal. Pero ¿qué pasa si no lo es, como en los tiempos de espera, los ingresos o la vida útil de un componente, que son muy asimétricos? La respuesta es uno de los resultados más importantes de toda la estadística.</p>
+<div id="thm-tcl" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3 (Teorema central del límite)</strong></span> Si <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> es una muestra aleatoria de <strong>cualquier</strong> población con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span> finita, entonces, cuando <span class="math inline">\(n\)</span> es grande, la distribución de <span class="math inline">\(\bar{X}\)</span> es aproximadamente normal: <span class="math display">\[
+\bar{X} \approx N\!\left(\mu, \frac{\sigma^2}{n}\right)
+\qquad \text{o, equivalentemente,} \qquad
+Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \approx N(0, 1),
+\]</span> y la aproximación mejora a medida que <span class="math inline">\(n\)</span> aumenta.</p>
+</div>
+<p>Lo extraordinario del teorema es que no importa la forma de la población: el promedio de muchas observaciones independientes siempre tiende a una normal. Esto explica por qué la distribución normal aparece en todas partes y por qué es la base de la mayoría de los métodos de inferencia <span class="citation" data-cites="montgomery2018">(<a href="#ref-montgomery2018" role="doc-biblioref">Montgomery &amp; Runger, 2018, pp. 15, 152</a>)</span>.</p>
+<p>La <a href="#fig-tcl" class="quarto-xref">Figura&nbsp;3</a> lo muestra con una simulación. La población es exponencial con media 1, muy asimétrica a la derecha. Con <span class="math inline">\(n = 1\)</span>, las “medias” son las observaciones individuales y reproducen la asimetría de la población. Con <span class="math inline">\(n = 5\)</span>, la distribución de <span class="math inline">\(\bar{X}\)</span> ya es menos asimétrica; con <span class="math inline">\(n = 30\)</span>, es prácticamente una campana.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-tcl" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tcl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-tcl-1.png" class="img-fluid figure-img" width="816">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tcl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Teorema central del límite: distribución de la media de 10 000 muestras de una población exponencial con media 1, para tres tamaños de muestra. La curva roja es la normal que predice el teorema.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="¿Qué tan grande debe ser n?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Qué tan grande debe ser n?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Depende de la forma de la población. Si la población es normal, basta cualquier <span class="math inline">\(n\)</span> (es el teorema anterior). Si es aproximadamente simétrica, la aproximación suele ser buena aun con muestras pequeñas. Si es asimétrica, se necesitan más datos. Como regla práctica, se suele aceptar que con <span class="math inline">\(n \ge 30\)</span> la aproximación es adecuada en la mayoría de las situaciones, aunque para poblaciones muy asimétricas puede requerirse un tamaño mayor <span class="citation" data-cites="walpole2012">(<a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 234</a>)</span>.</p>
+</div>
+</div>
+<div id="exm-tcl" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 2</strong></span> El tiempo de atención a un cliente en un banco tiene distribución exponencial con media de 4 minutos; su desviación estándar es, por tanto, también de 4 minutos. ¿Cuál es la probabilidad de que el tiempo promedio de atención de 40 clientes supere los 5 minutos?</p>
+<p>La población no es normal, pero con <span class="math inline">\(n = 40\)</span> el teorema central del límite permite aproximar la distribución de <span class="math inline">\(\bar{X}\)</span> con una normal de media 4 y error estándar <span class="math inline">\(4/\sqrt{40} \approx 0{,}632\)</span>: <span class="math display">\[
+P(\bar{X} &gt; 5) \approx P\!\left(Z &gt; \frac{5 - 4}{4/\sqrt{40}}\right) = P(Z &gt; 1{,}58) \approx 0{,}057 .
+\]</span></p>
+</div>
+</section>
+<section id="distribución-muestral-de-la-proporción" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="distribución-muestral-de-la-proporción"><span class="header-section-number">5</span> Distribución muestral de la proporción</h2>
+<p>Muchas preguntas se refieren a proporciones: ¿qué fracción de los clientes está satisfecha?, ¿qué porcentaje de las piezas es defectuoso?, ¿qué proporción de los hogares tiene acceso a internet? Si en una muestra de tamaño <span class="math inline">\(n\)</span> hay <span class="math inline">\(X\)</span> unidades con la característica de interés, la <strong>proporción muestral</strong> es <span class="math display">\[
+\hat{p} = \frac{X}{n} .
+\]</span></p>
+<p>Cuando la proporción de la población que tiene la característica es <span class="math inline">\(p\)</span>, el número <span class="math inline">\(X\)</span> tiene distribución <span class="math inline">\(\text{Bin}(n, p)\)</span>, con media <span class="math inline">\(np\)</span> y varianza <span class="math inline">\(np(1-p)\)</span>. Por las propiedades del valor esperado y la varianza del capítulo 3, con <span class="math inline">\(a = 1/n\)</span>:</p>
+<div id="thm-proporcion-muestral" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 4 (Distribución muestral de la proporción)</strong></span> Si <span class="math inline">\(\hat{p}\)</span> es la proporción muestral en una muestra aleatoria de tamaño <span class="math inline">\(n\)</span> de una población con proporción <span class="math inline">\(p\)</span>, entonces <span class="math display">\[
+E(\hat{p}) = p
+\qquad \text{y} \qquad
+V(\hat{p}) = \frac{p(1 - p)}{n},
+\]</span> de modo que su error estándar es <span class="math inline">\(\sigma_{\hat{p}} = \sqrt{p(1-p)/n}\)</span>. Además, si <span class="math inline">\(np \ge 5\)</span> y <span class="math inline">\(n(1 - p) \ge 5\)</span>, por el teorema central del límite, <span class="math display">\[
+\hat{p} \approx N\!\left(p, \frac{p(1 - p)}{n}\right) .
+\]</span></p>
+</div>
+<p>La proporción muestral es, en realidad, una media muestral: si se asigna el valor 1 a cada unidad que tiene la característica y 0 a las demás, <span class="math inline">\(\hat{p}\)</span> es el promedio de esos unos y ceros. Por eso el teorema central del límite también se aplica a ella.</p>
+<div id="exm-proporcion" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3</strong></span> En la pizzería, el 75,0 % de todas las entregas tardó más de 30 minutos, de modo que <span class="math inline">\(p = 0{,}75\)</span>. Si un supervisor revisa una muestra aleatoria de 100 entregas, ¿cuál es la probabilidad de que la proporción de entregas demoradas en la muestra sea inferior al 70 %?</p>
+<p>Se cumple que <span class="math inline">\(np = 75\)</span> y <span class="math inline">\(n(1 - p) = 25\)</span>, ambos mayores que 5. El error estándar es <span class="math inline">\(\sqrt{0{,}75 \times 0{,}25/100} \approx 0{,}0433\)</span>, y <span class="math display">\[
+P(\hat{p} &lt; 0{,}70) \approx P\!\left(Z &lt; \frac{0{,}70 - 0{,}75}{0{,}0433}\right) = P(Z &lt; -1{,}15) \approx 0{,}124 .
+\]</span> Es decir, aunque en la población la proporción es 0,75, en más de una de cada diez muestras de tamaño 100 se obtendría una proporción menor que 0,70, solo por azar. Tener presente esta variabilidad es esencial para no sacar conclusiones apresuradas a partir de una sola muestra.</p>
+</div>
+</section>
+<section id="distribución-chi-cuadrado" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="distribución-chi-cuadrado"><span class="header-section-number">6</span> Distribución chi-cuadrado</h2>
+<p>La media muestral sirve para hacer inferencias sobre la media de la población. Pero muchas veces interesa también la <strong>variabilidad</strong>: un fabricante necesita que el contenido de sus botellas no varíe demasiado, y un inversionista compara la volatilidad de dos activos. Para hacer inferencias sobre la varianza <span class="math inline">\(\sigma^2\)</span> se necesita conocer la distribución muestral de <span class="math inline">\(S^2\)</span>, y para ello se usa la distribución chi-cuadrado, que se escribe <span class="math inline">\(\chi^2\)</span> y se lee “ji cuadrado” o “chi cuadrado” <span class="citation" data-cites="walpole2012">(<a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 243</a>)</span>.</p>
+<div id="def-chi-cuadrado" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 8 (Distribución chi-cuadrado)</strong></span> Si <span class="math inline">\(Z_1, Z_2, \ldots, Z_\nu\)</span> son variables aleatorias independientes, cada una con distribución normal estándar, la variable <span class="math display">\[
+\chi^2 = Z_1^2 + Z_2^2 + \cdots + Z_\nu^2
+\]</span> tiene <strong>distribución chi-cuadrado con <span class="math inline">\(\nu\)</span> grados de libertad</strong>, lo que se escribe <span class="math inline">\(\chi^2 \sim \chi^2(\nu)\)</span>. Su media y su varianza son <span class="math display">\[
+E(\chi^2) = \nu
+\qquad \text{y} \qquad
+V(\chi^2) = 2\nu .
+\]</span></p>
+</div>
+<p>El parámetro <span class="math inline">\(\nu\)</span> (letra griega “nu”) se llama <strong>grados de libertad</strong>: es el número de términos independientes que se suman. Como es una suma de cuadrados, la chi-cuadrado solo toma valores positivos. Su distribución es asimétrica a la derecha, y a medida que aumentan los grados de libertad se vuelve más simétrica y se desplaza hacia la derecha (<a href="#fig-chi-cuadrado" class="quarto-xref">Figura&nbsp;4</a>); por el teorema central del límite, para <span class="math inline">\(\nu\)</span> grande se parece a una normal.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chi-cuadrado" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chi-cuadrado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-chi-cuadrado-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chi-cuadrado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Densidad de la distribución chi-cuadrado para distintos grados de libertad (gl).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>El resultado que hace útil a esta distribución es el siguiente.</p>
+<div id="thm-varianza-muestral" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 5 (Distribución de la varianza muestral)</strong></span> Si <span class="math inline">\(S^2\)</span> es la varianza de una muestra aleatoria de tamaño <span class="math inline">\(n\)</span> de una población <strong>normal</strong> con varianza <span class="math inline">\(\sigma^2\)</span>, entonces <span class="math display">\[
+\frac{(n - 1)\,S^2}{\sigma^2} \sim \chi^2(n - 1) .
+\]</span></p>
+</div>
+<p>Los grados de libertad son <span class="math inline">\(n - 1\)</span>, y no <span class="math inline">\(n\)</span>, por la misma razón que explicamos en el capítulo 1 al dividir entre <span class="math inline">\(n - 1\)</span> en la varianza muestral: como las desviaciones <span class="math inline">\(X_i - \bar{X}\)</span> suman cero, solo <span class="math inline">\(n - 1\)</span> de ellas son libres. Este resultado <strong>exige que la población sea normal</strong>: a diferencia de lo que ocurre con la media, el teorema central del límite no lo rescata cuando la población no lo es, y con poblaciones muy asimétricas las conclusiones sobre la varianza pueden ser muy engañosas.</p>
+<section id="cuantiles-de-la-chi-cuadrado" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="cuantiles-de-la-chi-cuadrado"><span class="header-section-number">6.1</span> Cuantiles de la chi-cuadrado</h3>
+<p>En este curso usaremos la siguiente notación para los cuantiles: <span class="math inline">\(\chi^2_{p;\,\nu}\)</span> es el valor que deja una probabilidad <span class="math inline">\(p\)</span> <strong>a su izquierda</strong> en una <span class="math inline">\(\chi^2(\nu)\)</span>, es decir, <span class="math inline">\(P\big(\chi^2 \le \chi^2_{p;\,\nu}\big) = p\)</span>. Es la misma convención de la función <code>qchisq()</code> de R.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Cuidado con las tablas impresas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Cuidado con las tablas impresas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Muchos libros y tablas impresas usan la convención contraria: escriben <span class="math inline">\(\chi^2_{\alpha}\)</span> para el valor que deja una probabilidad <span class="math inline">\(\alpha\)</span> a su <strong>derecha</strong>. Con esa notación, nuestro <span class="math inline">\(\chi^2_{0{,}975;\,9}\)</span> se escribiría <span class="math inline">\(\chi^2_{0{,}025}\)</span>. Antes de usar una tabla o una fórmula de otro texto, verifique siempre qué convención emplea. Lo mismo ocurre con las distribuciones t y F.</p>
+</div>
+</div>
+<div id="exm-chi-cuadrado" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 4</strong></span> El volumen de las botellas del <a href="#exm-media-normal" class="quarto-xref">Ejemplo&nbsp;1</a> tiene distribución normal con <span class="math inline">\(\sigma = 8\)</span> ml. Un inspector toma una muestra de <span class="math inline">\(n = 10\)</span> botellas y calcula su desviación estándar. ¿Cuál es la probabilidad de que la desviación estándar muestral supere los 10 ml?</p>
+<p>Como <span class="math inline">\((n-1)S^2/\sigma^2 \sim \chi^2(9)\)</span>, <span class="math display">\[
+P(S &gt; 10) = P(S^2 &gt; 100) = P\!\left(\chi^2 &gt; \frac{9 \times 100}{64}\right) = P(\chi^2 &gt; 14{,}06) \approx 0{,}120 .
+\]</span> Además, el 95 % central de la distribución <span class="math inline">\(\chi^2(9)\)</span> está entre <span class="math inline">\(\chi^2_{0{,}025;\,9} = 2{,}700\)</span> y <span class="math inline">\(\chi^2_{0{,}975;\,9} = 19{,}023\)</span>; estos dos valores serán los que se usan en Estadística II para construir un intervalo de confianza para <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="dv">9</span> <span class="sc">*</span> <span class="dv">100</span> <span class="sc">/</span> <span class="dv">64</span>, <span class="at">df =</span> <span class="dv">9</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)   <span class="co"># P(chi2 &gt; 14.06)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1201193</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">df =</span> <span class="dv">9</span>)                     <span class="co"># cuantiles 0.025 y 0.975</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2.700389 19.022768</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="distribución-t-de-student" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="distribución-t-de-student"><span class="header-section-number">7</span> Distribución t de Student</h2>
+<p>En el capítulo 3 vimos que, si la población es normal, <span class="math inline">\(Z = (\bar{X} - \mu)/(\sigma/\sqrt{n})\)</span> tiene distribución normal estándar. Pero esa fórmula usa <span class="math inline">\(\sigma\)</span>, la desviación estándar de la <strong>población</strong>, que casi nunca se conoce. Lo natural es reemplazarla por la desviación estándar de la muestra, <span class="math inline">\(S\)</span>. El problema es que <span class="math inline">\(S\)</span> también varía de una muestra a otra, de modo que el cociente resultante tiene más variabilidad que <span class="math inline">\(Z\)</span> y ya no es normal.</p>
+<p>Este problema lo resolvió en 1908 el químico inglés William Sealy Gosset, que trabajaba en la cervecería Guinness en Dublín y analizaba muestras pequeñas de cebada y de cerveza. Como la empresa no permitía a sus empleados publicar con su nombre, firmó su artículo con el seudónimo <strong>Student</strong>, y por eso la distribución se conoce como <strong>t de Student</strong> <span class="citation" data-cites="walpole2012 anderson2008">(<a href="#ref-anderson2008" role="doc-biblioref">Anderson et&nbsp;al., 2008, p. 307</a>; <a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 248</a>)</span>.</p>
+<div id="def-t-student" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 9 (Distribución t de Student)</strong></span> Si <span class="math inline">\(Z \sim N(0, 1)\)</span> y <span class="math inline">\(V \sim \chi^2(\nu)\)</span> son independientes, la variable <span class="math display">\[
+T = \frac{Z}{\sqrt{V/\nu}}
+\]</span> tiene <strong>distribución t de Student con <span class="math inline">\(\nu\)</span> grados de libertad</strong>, lo que se escribe <span class="math inline">\(T \sim t(\nu)\)</span>.</p>
+</div>
+<p>Sus propiedades principales son (<a href="#fig-t-student" class="quarto-xref">Figura&nbsp;5</a>):</p>
+<ul>
+<li>es <strong>simétrica</strong> alrededor de 0 y tiene forma de campana, como la normal estándar;</li>
+<li>tiene <strong>colas más pesadas</strong> que la normal: asigna más probabilidad a los valores alejados del centro, lo que refleja la variabilidad adicional que introduce estimar <span class="math inline">\(\sigma\)</span> con <span class="math inline">\(S\)</span>;</li>
+<li>su media es 0 (si <span class="math inline">\(\nu &gt; 1\)</span>) y su varianza es <span class="math inline">\(\nu/(\nu - 2)\)</span> (si <span class="math inline">\(\nu &gt; 2\)</span>), mayor que 1;</li>
+<li>a medida que aumentan los grados de libertad, se acerca a la normal estándar; con más de 30 grados de libertad, las diferencias son pequeñas.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-t-student" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-t-student-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-t-student-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t-student-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Densidad de la distribución t de Student para distintos grados de libertad (gl), comparada con la normal estándar.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="thm-t-media" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 6 (Distribución de la media muestral con desviación estándar desconocida)</strong></span> Si <span class="math inline">\(\bar{X}\)</span> y <span class="math inline">\(S\)</span> son la media y la desviación estándar de una muestra aleatoria de tamaño <span class="math inline">\(n\)</span> de una población <strong>normal</strong> con media <span class="math inline">\(\mu\)</span>, entonces <span class="math display">\[
+T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t(n - 1) .
+\]</span></p>
+</div>
+<p>Compare con el <a href="#thm-media-normal" class="quarto-xref">Teorema&nbsp;2</a>: la única diferencia es que <span class="math inline">\(\sigma\)</span> se reemplazó por <span class="math inline">\(S\)</span> y, a cambio, la normal estándar se reemplazó por una <span class="math inline">\(t\)</span> con <span class="math inline">\(n - 1\)</span> grados de libertad. El supuesto de normalidad es aquí menos crítico que para la varianza: la distribución t funciona razonablemente bien con poblaciones aproximadamente simétricas, y cuando <span class="math inline">\(n\)</span> es grande el teorema central del límite garantiza que el resultado es aproximadamente válido aunque la población no sea normal.</p>
+<p>Usaremos la misma notación de cuantiles: <span class="math inline">\(t_{p;\,\nu}\)</span> es el valor que deja una probabilidad <span class="math inline">\(p\)</span> a su izquierda en una <span class="math inline">\(t(\nu)\)</span>. Por la simetría, <span class="math inline">\(t_{1-p;\,\nu} = -t_{p;\,\nu}\)</span>. La <a href="#tbl-t-vs-z" class="quarto-xref">Tabla&nbsp;3</a> muestra cómo los cuantiles de la <span class="math inline">\(t\)</span> se acercan a los de la normal a medida que crecen los grados de libertad.</p>
+<div id="tbl-t-vs-z" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-t-vs-z-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3: Cuantil 0,975 de la distribución t para distintos grados de libertad, comparado con el de la normal estándar.
+</figcaption>
+<div aria-describedby="tbl-t-vs-z-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Grados de libertad</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">10</th>
+<th style="text-align: center;">30</th>
+<th style="text-align: center;">100</th>
+<th style="text-align: center;">Normal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cuantil 0,975</td>
+<td style="text-align: center;">12,706</td>
+<td style="text-align: center;">2,571</td>
+<td style="text-align: center;">2,228</td>
+<td style="text-align: center;">2,042</td>
+<td style="text-align: center;">1,984</td>
+<td style="text-align: center;">1,960</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Con pocos grados de libertad los cuantiles de la <span class="math inline">\(t\)</span> son bastante mayores que los de la normal: en Estadística II se verá que esto produce intervalos de confianza más anchos, el precio que se paga por no conocer <span class="math inline">\(\sigma\)</span>.</p>
+<div id="exm-t-student" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 5</strong></span> Supongamos que no se conoce la desviación estándar del volumen de las botellas. Se toma una muestra de <span class="math inline">\(n = 16\)</span> botellas, y el estadístico <span class="math inline">\(T = (\bar{X} - 500)/(S/\sqrt{16})\)</span> resulta igual a 2,1. Si la máquina estuviera bien calibrada (<span class="math inline">\(\mu = 500\)</span>), <span class="math inline">\(T\)</span> tendría distribución <span class="math inline">\(t(15)\)</span>, y la probabilidad de obtener un valor de 2,1 o mayor sería <span class="math display">\[
+P(T \ge 2{,}1) \approx 0{,}027 .
+\]</span> Un valor tan poco probable haría dudar de que la media realmente sea 500 ml. Este razonamiento es la base de la prueba t, que se estudia en Estadística II.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="fl">2.1</span>, <span class="at">df =</span> <span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)       <span class="co"># P(T &gt;= 2.1) con 15 gl</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02652763</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">100</span>))       <span class="co"># cuantiles 0.975</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.706205  2.570582  2.228139  2.042272  1.983972</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>)                               <span class="co"># comparación con la normal</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+</section>
+<section id="distribución-f" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="distribución-f"><span class="header-section-number">8</span> Distribución F</h2>
+<p>Para comparar la variabilidad de <strong>dos</strong> poblaciones, por ejemplo la precisión de dos máquinas o la volatilidad de dos acciones, se usa el cociente de las dos varianzas muestrales. Su distribución es la distribución F <span class="citation" data-cites="walpole2012 montgomery2018">(<a href="#ref-montgomery2018" role="doc-biblioref">Montgomery &amp; Runger, 2018, p. 269</a>; <a href="#ref-walpole2012" role="doc-biblioref">Walpole et&nbsp;al., 2012, p. 251</a>)</span>.</p>
+<div id="def-f" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 10 (Distribución F)</strong></span> Si <span class="math inline">\(U \sim \chi^2(\nu_1)\)</span> y <span class="math inline">\(V \sim \chi^2(\nu_2)\)</span> son independientes, la variable <span class="math display">\[
+F = \frac{U/\nu_1}{V/\nu_2}
+\]</span> tiene <strong>distribución F con <span class="math inline">\(\nu_1\)</span> y <span class="math inline">\(\nu_2\)</span> grados de libertad</strong>, lo que se escribe <span class="math inline">\(F \sim F(\nu_1, \nu_2)\)</span>. A <span class="math inline">\(\nu_1\)</span> se le llama grados de libertad del <strong>numerador</strong> y a <span class="math inline">\(\nu_2\)</span>, del <strong>denominador</strong>.</p>
+</div>
+<p>Como es un cociente de cantidades positivas, la F solo toma valores positivos; es asimétrica a la derecha (<a href="#fig-f" class="quarto-xref">Figura&nbsp;6</a>) y su forma depende de los dos grados de libertad, cuyo <strong>orden importa</strong>: <span class="math inline">\(F(5, 10)\)</span> y <span class="math inline">\(F(10, 5)\)</span> son distribuciones distintas. Sus cuantiles, con la misma notación <span class="math inline">\(F_{p;\,\nu_1,\nu_2}\)</span>, cumplen una propiedad útil: <span class="math display">\[
+F_{p;\,\nu_1,\nu_2} = \frac{1}{F_{1-p;\,\nu_2,\nu_1}} .
+\]</span> Por ejemplo, <span class="math inline">\(F_{0{,}95;\,10,15} = 2{,}544\)</span> y <span class="math inline">\(F_{0{,}05;\,10,15} = 1/F_{0{,}95;\,15,10} = 0{,}351\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-f" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap4-muestrales_files/figure-html/fig-f-1.png" class="img-fluid figure-img" width="624">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-f-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Densidad de la distribución F para distintos grados de libertad del numerador y del denominador.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="thm-cociente-varianzas" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 7 (Distribución del cociente de varianzas muestrales)</strong></span> Si <span class="math inline">\(S_1^2\)</span> y <span class="math inline">\(S_2^2\)</span> son las varianzas de dos muestras aleatorias <strong>independientes</strong>, de tamaños <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span>, de dos poblaciones <strong>normales</strong> con varianzas <span class="math inline">\(\sigma_1^2\)</span> y <span class="math inline">\(\sigma_2^2\)</span>, entonces <span class="math display">\[
+F = \frac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2} \sim F(n_1 - 1,\ n_2 - 1) .
+\]</span> En particular, si las dos poblaciones tienen la misma varianza, <span class="math inline">\(S_1^2/S_2^2 \sim F(n_1 - 1,\ n_2 - 1)\)</span>.</p>
+</div>
+<p>El resultado se obtiene aplicando el <a href="#thm-varianza-muestral" class="quarto-xref">Teorema&nbsp;5</a> a cada muestra y la definición de la F. Igual que para una sola varianza, <strong>exige que ambas poblaciones sean normales</strong>.</p>
+<div id="exm-f" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 6</strong></span> Dos máquinas llenan botellas con la misma variabilidad. Se toman muestras independientes de 11 botellas de cada una. ¿Cuál es la probabilidad de que la varianza muestral de la primera sea más de 2,5 veces la de la segunda?</p>
+<p>Como las varianzas poblacionales son iguales, <span class="math inline">\(S_1^2/S_2^2 \sim F(10, 10)\)</span>, y <span class="math display">\[
+P\!\left(\frac{S_1^2}{S_2^2} &gt; 2{,}5\right) \approx 0{,}082 .
+\]</span> Es decir, aunque las dos máquinas sean igual de precisas, en más del 8 % de los casos una muestra de 11 botellas mostrará una varianza 2,5 veces mayor que la otra, solo por azar. Con muestras pequeñas, las varianzas muestrales son muy inestables.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pf</span>(<span class="fl">2.5</span>, <span class="at">df1 =</span> <span class="dv">10</span>, <span class="at">df2 =</span> <span class="dv">10</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)   <span class="co"># P(F &gt; 2.5)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08225366</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">10</span>, <span class="at">df2 =</span> <span class="dv">15</span>)                      <span class="co"># cuantil 0.95 de F(10, 15)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.543719</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> <span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">15</span>, <span class="at">df2 =</span> <span class="dv">10</span>)                  <span class="co"># cuantil 0.05 de F(10, 15)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3514918</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Una familia de distribuciones emparentadas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Una familia de distribuciones emparentadas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las distribuciones de este capítulo se construyen todas a partir de la normal: el cuadrado de una normal estándar es una <span class="math inline">\(\chi^2(1)\)</span>; una suma de <span class="math inline">\(\nu\)</span> de ellos, una <span class="math inline">\(\chi^2(\nu)\)</span>; una normal dividida entre la raíz de una chi-cuadrado sobre sus grados de libertad, una <span class="math inline">\(t\)</span>; y el cociente de dos chi-cuadrado sobre sus grados de libertad, una <span class="math inline">\(F\)</span>. Por eso también se cumple que si <span class="math inline">\(T \sim t(\nu)\)</span>, entonces <span class="math inline">\(T^2 \sim F(1, \nu)\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="distribuciones-muestrales-con-r" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="distribuciones-muestrales-con-r"><span class="header-section-number">9</span> Distribuciones muestrales con R</h2>
+<section id="simular-distribuciones-muestrales" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="simular-distribuciones-muestrales"><span class="header-section-number">9.1</span> Simular distribuciones muestrales</h3>
+<p>La forma general de simular la distribución muestral de un estadístico con R tiene tres pasos: generar una muestra, calcular el estadístico y repetir muchas veces con <code>replicate()</code>. Así se construyeron las figuras de este capítulo. Por ejemplo, para la distribución de la media de muestras de tamaño 25 de los tiempos de entrega de la pizzería:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>medias <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">5000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(pizza<span class="sc">$</span>time, <span class="at">size =</span> <span class="dv">25</span>)))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(medias)                          <span class="co"># cercana a mu</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 34.23858</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(medias)                            <span class="co"># cercana a sigma / sqrt(25)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.291792</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(pizza<span class="sc">$</span>time) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">25</span>)             <span class="co"># error estándar teórico (aprox.)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.292334</code></pre>
+</div>
+</div>
+<p>Con la misma idea se puede comprobar el <a href="#thm-t-media" class="quarto-xref">Teorema&nbsp;6</a>. La siguiente simulación toma 10 000 muestras de tamaño 5 de una población normal, calcula el estadístico <span class="math inline">\(T\)</span> de cada una y cuenta en qué proporción de las muestras <span class="math inline">\(|T|\)</span> supera 1,96, el valor que deja un 5 % en las dos colas de la normal:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>T_sim <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, {</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  (<span class="fu">mean</span>(x) <span class="sc">-</span> <span class="dv">10</span>) <span class="sc">/</span> (<span class="fu">sd</span>(x) <span class="sc">/</span> <span class="fu">sqrt</span>(n))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">abs</span>(T_sim) <span class="sc">&gt;</span> <span class="fl">1.96</span>)                <span class="co"># proporción observada en las colas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.123</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fl">1.96</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># lo que predice la t(4)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1215546</code></pre>
+</div>
+</div>
+<p>La proporción de valores extremos está muy por encima del 5 % que daría la normal, y muy cerca de lo que predice la <span class="math inline">\(t\)</span> con 4 grados de libertad: con muestras pequeñas, usar la normal en lugar de la <span class="math inline">\(t\)</span> subestimaría la probabilidad de obtener valores extremos.</p>
+</section>
+<section id="funciones-de-las-distribuciones-muestrales" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="funciones-de-las-distribuciones-muestrales"><span class="header-section-number">9.2</span> Funciones de las distribuciones muestrales</h3>
+<p>Las distribuciones chi-cuadrado, t y F siguen el mismo patrón de prefijos <code>d</code>, <code>p</code>, <code>q</code> y <code>r</code> del capítulo 3 (<a href="#tbl-r-muestrales" class="quarto-xref">Tabla&nbsp;4</a>).</p>
+<div id="tbl-r-muestrales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-r-muestrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;4: Funciones de R para las distribuciones chi-cuadrado, t y F.
+</figcaption>
+<div aria-describedby="tbl-r-muestrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribución</th>
+<th style="text-align: left;">Nombre en R</th>
+<th style="text-align: left;">Parámetros</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Chi-cuadrado, <span class="math inline">\(\chi^2(\nu)\)</span></td>
+<td style="text-align: left;"><code>chisq</code></td>
+<td style="text-align: left;"><code>df</code> <span class="math inline">\(= \nu\)</span></td>
+<td style="text-align: left;"><code>qchisq(0.975, df = 9)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">t de Student, <span class="math inline">\(t(\nu)\)</span></td>
+<td style="text-align: left;"><code>t</code></td>
+<td style="text-align: left;"><code>df</code> <span class="math inline">\(= \nu\)</span></td>
+<td style="text-align: left;"><code>qt(0.975, df = 15)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F, <span class="math inline">\(F(\nu_1, \nu_2)\)</span></td>
+<td style="text-align: left;"><code>f</code></td>
+<td style="text-align: left;"><code>df1</code> <span class="math inline">\(= \nu_1\)</span>, <code>df2</code> <span class="math inline">\(= \nu_2\)</span></td>
+<td style="text-align: left;"><code>qf(0.95, df1 = 10, df2 = 15)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="resumen-del-capítulo" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="resumen-del-capítulo"><span class="header-section-number">9.3</span> Resumen del capítulo</h3>
+<p>La <a href="#tbl-resumen-muestrales" class="quarto-xref">Tabla&nbsp;5</a> reúne las distribuciones muestrales de este capítulo. Cada una será la base de un método de inferencia en el curso de Estadística II.</p>
+<div id="tbl-resumen-muestrales" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-resumen-muestrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;5: Resumen de las distribuciones muestrales.
+</figcaption>
+<div aria-describedby="tbl-resumen-muestrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Estadístico</th>
+<th style="text-align: left;">Supuestos</th>
+<th style="text-align: left;">Distribución</th>
+<th style="text-align: left;">Se usa para</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}}\)</span></td>
+<td style="text-align: left;">Población normal, o <span class="math inline">\(n\)</span> grande (TCL)</td>
+<td style="text-align: left;"><span class="math inline">\(N(0, 1)\)</span></td>
+<td style="text-align: left;">La media, con <span class="math inline">\(\sigma\)</span> conocida</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\bar{X} - \mu}{S/\sqrt{n}}\)</span></td>
+<td style="text-align: left;">Población normal</td>
+<td style="text-align: left;"><span class="math inline">\(t(n - 1)\)</span></td>
+<td style="text-align: left;">La media, con <span class="math inline">\(\sigma\)</span> desconocida</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{\hat{p} - p}{\sqrt{p(1-p)/n}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(np \ge 5\)</span> y <span class="math inline">\(n(1 - p) \ge 5\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\approx N(0, 1)\)</span></td>
+<td style="text-align: left;">Una proporción</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{(n - 1)S^2}{\sigma^2}\)</span></td>
+<td style="text-align: left;">Población normal</td>
+<td style="text-align: left;"><span class="math inline">\(\chi^2(n - 1)\)</span></td>
+<td style="text-align: left;">Una varianza</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\)</span></td>
+<td style="text-align: left;">Dos poblaciones normales, muestras independientes</td>
+<td style="text-align: left;"><span class="math inline">\(F(n_1 - 1,\ n_2 - 1)\)</span></td>
+<td style="text-align: left;">Comparar dos varianzas</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="ejercicios-propuestos" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejercicios-propuestos"><span class="header-section-number">10</span> Ejercicios propuestos</h2>
+<section id="muestreo" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="muestreo"><span class="header-section-number">10.1</span> Muestreo</h3>
+<ol type="1">
+<li><p>Para cada situación, identifique la técnica de muestreo utilizada e indique si es probabilística o no probabilística.</p>
+<ol type="a">
+<li>Para estudiar la satisfacción de los usuarios de un hospital, se encuesta a los pacientes que esperan en la sala de urgencias un lunes por la mañana.</li>
+<li>Una empresa con 2000 empleados ordena su nómina alfabéticamente, elige al azar un número entre 1 y 20 y, a partir de él, encuesta a uno de cada 20 empleados.</li>
+<li>Para estimar el gasto en transporte de los hogares de una ciudad, se eligen al azar 30 barrios y se encuesta a todos los hogares de esos barrios.</li>
+<li>Una universidad divide a sus estudiantes por facultad y elige al azar una muestra proporcional al tamaño de cada facultad.</li>
+<li>Un periódico publica en su página web una pregunta y reporta el porcentaje de personas que votaron “sí”.</li>
+<li>Para estudiar a los vendedores ambulantes de una ciudad, se entrevista a algunos y se les pide que refieran a otros colegas.</li>
+</ol></li>
+<li><p>Explique por qué los resultados de la situación e del ejercicio 1 no pueden usarse para estimar la opinión de los lectores del periódico, aunque hayan respondido miles de personas.</p></li>
+<li><p>Una población tiene 50 unidades.</p>
+<ol type="a">
+<li>¿Cuántas muestras aleatorias simples distintas de tamaño 5, sin reemplazo, se pueden extraer?</li>
+<li>¿Cuál es la probabilidad de que una muestra particular sea la seleccionada?</li>
+<li>Seleccione en R una muestra aleatoria simple de tamaño 5 de los números 1 a 50 y una muestra sistemática con <span class="math inline">\(k = 10\)</span>.</li>
+</ol></li>
+</ol>
+</section>
+<section id="distribución-muestral-de-la-media-y-teorema-central-del-límite" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="distribución-muestral-de-la-media-y-teorema-central-del-límite"><span class="header-section-number">10.2</span> Distribución muestral de la media y teorema central del límite</h3>
+<ol start="4" type="1">
+<li>Una población está formada por los valores 1, 3, 5 y 7.
+<ol type="a">
+<li>Calcule la media y la varianza de la población.</li>
+<li>Liste las 16 muestras de tamaño 2 con reemplazo y calcule la media de cada una.</li>
+<li>Construya la distribución muestral de <span class="math inline">\(\bar{X}\)</span> y verifique que <span class="math inline">\(E(\bar{X}) = \mu\)</span> y <span class="math inline">\(V(\bar{X}) = \sigma^2/n\)</span>.</li>
+</ol></li>
+<li>El peso de los estudiantes de una universidad tiene media 65 kg y desviación estándar 12 kg.
+<ol type="a">
+<li>¿Cuál es el error estándar de la media en muestras de tamaño 36? ¿Y de tamaño 144?</li>
+<li>Use el teorema central del límite para calcular la probabilidad de que la media de una muestra de 36 estudiantes esté entre 62 y 68 kg.</li>
+<li>¿De qué tamaño debe ser la muestra para que el error estándar sea de 1 kg?</li>
+</ol></li>
+<li>La duración de unas bombillas tiene distribución exponencial con media de 800 horas. Se prueban 50 bombillas.
+<ol type="a">
+<li>¿Por qué no se puede usar el <a href="#thm-media-normal" class="quarto-xref">Teorema&nbsp;2</a> y sí el teorema central del límite?</li>
+<li>Calcule la probabilidad aproximada de que la duración promedio de las 50 bombillas sea menor que 700 horas.</li>
+</ol></li>
+<li><strong>Simulación en R.</strong> Con la base <code>pizza_delivery.xlsx</code>, tratando las 1266 entregas como población:
+<ol type="a">
+<li>Simule 5000 muestras de tamaño 10 y otras 5000 de tamaño 50 de la temperatura de las pizzas, y calcule la media de cada muestra.</li>
+<li>Compare la media y la desviación estándar de las medias simuladas con los valores teóricos <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma/\sqrt{n}\)</span>.</li>
+<li>Construya los histogramas de las dos distribuciones simuladas. ¿Qué observa?</li>
+</ol></li>
+</ol>
+</section>
+<section id="distribución-muestral-de-la-proporción-1" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="distribución-muestral-de-la-proporción-1"><span class="header-section-number">10.3</span> Distribución muestral de la proporción</h3>
+<ol start="8" type="1">
+<li>Según una encuesta nacional, el 62 % de los hogares de una región tiene conexión a internet fijo. Si se toma una muestra aleatoria de 400 hogares:
+<ol type="a">
+<li>¿Cuál es la media y el error estándar de la proporción muestral?</li>
+<li>¿Cuál es la probabilidad de que la proporción muestral esté entre 0,58 y 0,66?</li>
+<li>¿Qué pasaría con esa probabilidad si la muestra fuera de 1600 hogares?</li>
+</ol></li>
+<li>Un proceso produce un 4 % de piezas defectuosas. En una muestra de 200 piezas, ¿cuál es la probabilidad de encontrar más de un 6 % de defectuosas? Verifique que se cumplen las condiciones para usar la aproximación normal.</li>
+</ol>
+</section>
+<section id="distribuciones-chi-cuadrado-t-y-f" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="distribuciones-chi-cuadrado-t-y-f"><span class="header-section-number">10.4</span> Distribuciones chi-cuadrado, t y F</h3>
+<ol start="10" type="1">
+<li><p>Use R para encontrar:</p>
+<ol type="a">
+<li><span class="math inline">\(\chi^2_{0{,}05;\,10}\)</span> y <span class="math inline">\(\chi^2_{0{,}95;\,10}\)</span>;</li>
+<li><span class="math inline">\(t_{0{,}975;\,8}\)</span> y <span class="math inline">\(t_{0{,}025;\,8}\)</span>. ¿Qué relación hay entre ellos?</li>
+<li><span class="math inline">\(F_{0{,}95;\,6,12}\)</span> y <span class="math inline">\(F_{0{,}05;\,6,12}\)</span>, y verifique la propiedad <span class="math inline">\(F_{p;\,\nu_1,\nu_2} = 1/F_{1-p;\,\nu_2,\nu_1}\)</span>;</li>
+<li><span class="math inline">\(P\big(\chi^2(15) &gt; 25\big)\)</span>, <span class="math inline">\(P\big(t(20) &lt; -1{,}5\big)\)</span> y <span class="math inline">\(P\big(F(4, 20) &gt; 3\big)\)</span>.</li>
+</ol></li>
+<li><p>El peso de los paquetes que llena una máquina tiene distribución normal con desviación estándar de 8 g. Se toma una muestra de 20 paquetes.</p>
+<ol type="a">
+<li>¿Cuál es la probabilidad de que la varianza muestral supere los 100 g²?</li>
+<li>¿Entre qué dos valores se encuentra el 95 % central de la varianza muestral?</li>
+</ol></li>
+<li><p>Construya en R una tabla con los cuantiles <span class="math inline">\(t_{0{,}95;\,\nu}\)</span> y <span class="math inline">\(t_{0{,}975;\,\nu}\)</span> para <span class="math inline">\(\nu = 2, 5, 10, 20, 30, 60\)</span> y 120, y compárelos con <span class="math inline">\(z_{0{,}95}\)</span> y <span class="math inline">\(z_{0{,}975}\)</span>. ¿A partir de cuántos grados de libertad la diferencia con la normal es menor que 0,05?</p></li>
+<li><p>El tiempo que tardan los estudiantes en resolver un examen tiene distribución normal con media 50 minutos. En una muestra de 12 estudiantes, la desviación estándar fue de 9 minutos. ¿Cuál es la probabilidad de que la media muestral supere los 54 minutos? ¿Por qué debe usarse la distribución t y no la normal?</p></li>
+<li><p>Dos proveedores entregan piezas cuyo diámetro tiene distribución normal con la misma varianza. Se toman muestras independientes de 8 piezas del primero y 10 del segundo. Calcule la probabilidad de que la varianza muestral del primero sea más del triple que la del segundo.</p></li>
+<li><p><strong>Simulación en R.</strong> Tome 10 000 muestras de tamaño 10 de una población <span class="math inline">\(N(0, 1)\)</span> y calcule, para cada una, el estadístico <span class="math inline">\((n-1)S^2/\sigma^2 = 9S^2\)</span>. Construya el histograma de densidad y superponga la densidad <span class="math inline">\(\chi^2(9)\)</span>. Repita el ejercicio con muestras de una población exponencial con media 1 (cuya varianza también es 1). ¿Qué ocurre? ¿Qué le dice esto sobre el supuesto de normalidad del <a href="#thm-varianza-muestral" class="quarto-xref">Teorema&nbsp;5</a>?</p></li>
+<li><p><strong>Simulación en R.</strong> Repita la simulación de la sección <em>Simular distribuciones muestrales</em> con <span class="math inline">\(n = 5\)</span>, 15 y 30. ¿Cómo cambia la proporción de muestras con <span class="math inline">\(|T| &gt; 1{,}96\)</span>? Relacione su respuesta con la <a href="#tbl-t-vs-z" class="quarto-xref">Tabla&nbsp;3</a>.</p></li>
+</ol>
+</section>
+</section>
+<section id="referencias" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referencias">Referencias</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-anderson2008" class="csl-entry" role="listitem">
+Anderson, D. R., Sweeney, D. J., &amp; Williams, T. A. (2008). <em>Estadística para administración y economía</em> (10.ª ed.). Cengage Learning.
+</div>
+<div id="ref-montgomery2018" class="csl-entry" role="listitem">
+Montgomery, D. C., &amp; Runger, G. C. (2018). <em>Applied Statistics and Probability for Engineers</em> (7.ª ed.). Wiley.
+</div>
+<div id="ref-walpole2012" class="csl-entry" role="listitem">
+Walpole, R. E., Myers, R. H., Myers, S. L., &amp; Ye, K. (2012). <em>Probabilidad y estadística para ingeniería y ciencias</em> (9.ª ed.). Pearson Educación.
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/fabiosepulveda\.github\.io\/estadistica1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Estadística I · Escuela de Matemáticas · Universidad Industrial de Santander</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
